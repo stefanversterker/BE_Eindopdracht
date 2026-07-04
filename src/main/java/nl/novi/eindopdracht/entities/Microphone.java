@@ -1,4 +1,12 @@
 package nl.novi.eindopdracht.entities;
 
-public class Microphone {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "microphones")
+public class Microphone extends Equipment {
+
+    //Getters and setters
+
 }
