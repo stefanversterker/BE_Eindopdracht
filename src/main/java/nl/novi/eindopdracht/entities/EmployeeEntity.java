@@ -1,11 +1,13 @@
 package nl.novi.eindopdracht.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import nl.novi.eindopdracht.enums.DriversLicense;
 
-public class Employee extends Person{
+@Entity
+public class EmployeeEntity extends PersonEntity {
 
     @Column(name = "driver's license")
     @Enumerated(EnumType.STRING)

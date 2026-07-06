@@ -4,35 +4,35 @@ import jakarta.persistence.*;
 import nl.novi.eindopdracht.enums.EventRole;
 
 @Entity
-public class EventAssignment extends BaseEntity {
+public class EventAssignmentEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    private Event event;
+    private EventEntity eventEntity;
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private PersonEntity personEntity;
 
     @Enumerated(EnumType.STRING)
     private EventRole eventRole;
 
     //Getters and setters
 
-    public Event getEvent() {
-        return event;
+    public EventEntity getEvent() {
+        return eventEntity;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEvent(EventEntity eventEntity) {
+        this.eventEntity = eventEntity;
     }
 
-    public Person getPerson() {
-        return person;
+    public PersonEntity getPerson() {
+        return personEntity;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(PersonEntity personEntity) {
+        this.personEntity = personEntity;
     }
 
     public EventRole getEventRole() {

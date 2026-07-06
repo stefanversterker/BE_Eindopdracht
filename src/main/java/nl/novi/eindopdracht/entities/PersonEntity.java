@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "persons")
-public abstract class Person extends BaseEntity {
+public abstract class PersonEntity extends BaseEntity {
 
     @Column(name = "first_name")
     private String firstName;
@@ -21,11 +21,11 @@ public abstract class Person extends BaseEntity {
     @Column(name = "phone")
     private String phone;
 
-    @OneToOne(mappedBy = "person")
-    private PerformerProfile performerProfile;
+    @OneToOne(mappedBy = "personEntity")
+    private PerformerProfileEntity performerProfileEntity;
 
-    @OneToMany(mappedBy = "person")
-    private List<EventAssignment> eventAssignments = new ArrayList<>();
+    @OneToMany(mappedBy = "personEntity")
+    private List<EventAssignmentEntity> eventAssignmentEntities = new ArrayList<>();
 
     //Getters and setters
 
@@ -61,19 +61,19 @@ public abstract class Person extends BaseEntity {
         this.phone = phone;
     }
 
-    public PerformerProfile getPerformerProfile() {
-        return performerProfile;
+    public PerformerProfileEntity getPerformerProfile() {
+        return performerProfileEntity;
     }
 
-    public void setPerformerProfile(PerformerProfile performerProfile) {
-        this.performerProfile = performerProfile;
+    public void setPerformerProfile(PerformerProfileEntity performerProfileEntity) {
+        this.performerProfileEntity = performerProfileEntity;
     }
 
-    public List<EventAssignment> getEventAssignments() {
-        return eventAssignments;
+    public List<EventAssignmentEntity> getEventAssignments() {
+        return eventAssignmentEntities;
     }
 
-    public void setEventAssignments(List<EventAssignment> eventAssignments) {
-        this.eventAssignments = eventAssignments;
+    public void setEventAssignments(List<EventAssignmentEntity> eventAssignmentEntities) {
+        this.eventAssignmentEntities = eventAssignmentEntities;
     }
 }

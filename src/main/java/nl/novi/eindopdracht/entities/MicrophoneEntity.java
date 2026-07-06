@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "microphones")
-public class Microphone extends Equipment {
+public class MicrophoneEntity extends EquipmentEntity {
 
     //Getters and setters
 

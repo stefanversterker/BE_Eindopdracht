@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 //Here I use @Entity instead of @MappedSuperclass because I want to enable users to request an Equipment Table, so it's more than just a superclass.
 @Entity
-public abstract class Equipment extends BaseEntity {
+public abstract class EquipmentEntity extends BaseEntity {
 
     private String brand;
 
