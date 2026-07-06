@@ -1,0 +1,17 @@
+package nl.novi.eindopdracht.enums;
+
+public enum DriversLicense {
+    BROMFIETS,
+    MOTOR,
+    AUTO,
+    AUTO_MET_AANHANGER,
+    VRACHTWAGEN,
+    VRACHTWAGEN_MET_AANHANGER,
+    LICHTE_VRACHTWAGEN,
+    LICHTE_VRACHTWAGEN_MET_AANHANGER,
+    BUS,
+    BUS_MET_AANHANGER,
+    KLEINE_BUS,
+    KLEINE_BUS_MET_AANHANGER,
+    TREKKER
+}
