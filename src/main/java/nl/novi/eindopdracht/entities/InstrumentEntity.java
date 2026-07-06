@@ -11,7 +11,7 @@ public class InstrumentEntity extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "instrument")
+    @OneToMany(mappedBy = "instrumentEntity")
     private List<PerformerProfileEntity> performerProfileEntities = new ArrayList<>();
 
     //Getters and setters

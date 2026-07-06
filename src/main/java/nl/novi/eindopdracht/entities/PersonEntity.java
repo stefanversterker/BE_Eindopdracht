@@ -21,10 +21,10 @@ public abstract class PersonEntity extends BaseEntity {
     @Column(name = "phone")
     private String phone;
 
-    @OneToOne(mappedBy = "person")
+    @OneToOne(mappedBy = "personEntity")
     private PerformerProfileEntity performerProfileEntity;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "personEntity")
     private List<EventAssignmentEntity> eventAssignmentEntities = new ArrayList<>();
 
     //Getters and setters

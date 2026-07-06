@@ -14,10 +14,10 @@ public class EventEntity extends BaseEntity {
 
     private String venue;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "eventEntity")
     private List<PerformanceEntity> performanceEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "eventEntity")
     private List<EventAssignmentEntity> eventAssignmentEntities = new ArrayList<>();
 
     //Getters and setters

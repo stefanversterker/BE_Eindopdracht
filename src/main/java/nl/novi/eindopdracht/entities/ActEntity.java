@@ -15,10 +15,10 @@ public class ActEntity extends BaseEntity {
 
     private String email;
 
-    @OneToMany(mappedBy = "act")
+    @OneToMany(mappedBy = "actEntity")
     private List<PerformerActEntity> performerActEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "act")
+    @OneToMany(mappedBy = "actEntity")
     private List<PerformanceEntity> performanceEntities = new ArrayList<>();
 
     //Getters and setters
