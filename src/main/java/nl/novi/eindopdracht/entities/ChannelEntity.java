@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "channels")
-public class Channel extends BaseEntity {
+public class ChannelEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "mixer_id")
-    private Mixer mixer;
+    private MixerEntity mixerEntity;
 
 
     private Integer number;
@@ -17,17 +17,17 @@ public class Channel extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "source")
-    private Source source;
+    private SourceEntity sourceEntity;
 
 
     //Getters and setters
 
-    public Mixer getMixer() {
-        return mixer;
+    public MixerEntity getMixer() {
+        return mixerEntity;
     }
 
-    public void setMixer(Mixer mixer) {
-        this.mixer = mixer;
+    public void setMixer(MixerEntity mixerEntity) {
+        this.mixerEntity = mixerEntity;
     }
 
     public int getNumber() {
@@ -46,12 +46,12 @@ public class Channel extends BaseEntity {
         this.label = label;
     }
 
-    public Source getSource() {
-        return source;
+    public SourceEntity getSource() {
+        return sourceEntity;
     }
 
-    public void setSource(Source source) {
-        this.source = source;
+    public void setSource(SourceEntity sourceEntity) {
+        this.sourceEntity = sourceEntity;
     }
 
 }

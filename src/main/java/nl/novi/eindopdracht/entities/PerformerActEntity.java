@@ -11,34 +11,34 @@ import jakarta.persistence.*;
         )
 )
 
-public class PerformerAct extends BaseEntity{
+public class PerformerActEntity extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "performer_id")
-    private PerformerProfile performer;
+    private PerformerProfileEntity performer;
 
     @ManyToOne
     @JoinColumn(name = "act_id")
-    private Act act;
+    private ActEntity actEntity;
 
     //Getters and setters
 
     private String role;
 
-    public PerformerProfile getPerformer() {
+    public PerformerProfileEntity getPerformer() {
         return performer;
     }
 
-    public void setPerformer(PerformerProfile performer) {
+    public void setPerformer(PerformerProfileEntity performer) {
         this.performer = performer;
     }
 
-    public Act getAct() {
-        return act;
+    public ActEntity getAct() {
+        return actEntity;
     }
 
-    public void setAct(Act act) {
-        this.act = act;
+    public void setAct(ActEntity actEntity) {
+        this.actEntity = actEntity;
     }
 
     public String getRole() {

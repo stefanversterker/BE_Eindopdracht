@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "acts")
-public class Act extends BaseEntity {
+public class ActEntity extends BaseEntity {
 
     private String name;
 
@@ -16,10 +16,10 @@ public class Act extends BaseEntity {
     private String email;
 
     @OneToMany(mappedBy = "act")
-    private List<PerformerAct> performerActs = new ArrayList<>();
+    private List<PerformerActEntity> performerActEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "act")
-    private List<Performance> performances = new ArrayList<>();
+    private List<PerformanceEntity> performanceEntities = new ArrayList<>();
 
     //Getters and setters
 
@@ -48,19 +48,19 @@ public class Act extends BaseEntity {
         this.email = email;
     }
 
-    public List<PerformerAct> getPerformerActs() {
-        return performerActs;
+    public List<PerformerActEntity> getPerformerActs() {
+        return performerActEntities;
     }
 
-    public void setPerformerActs(List<PerformerAct> performerActs) {
-        this.performerActs = performerActs;
+    public void setPerformerActs(List<PerformerActEntity> performerActEntities) {
+        this.performerActEntities = performerActEntities;
     }
 
-    public List<Performance> getPerformances() {
-        return performances;
+    public List<PerformanceEntity> getPerformances() {
+        return performanceEntities;
     }
 
-    public void setPerformances(List<Performance> performances) {
-        this.performances = performances;
+    public void setPerformances(List<PerformanceEntity> performanceEntities) {
+        this.performanceEntities = performanceEntities;
     }
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import nl.novi.eindopdracht.enums.DriversLicense;
 
-public class Employee extends Person{
+public class EmployeeEntity extends PersonEntity {
 
     @Column(name = "driver's license")
     @Enumerated(EnumType.STRING)

@@ -7,12 +7,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "instruments")
-public class Instrument extends BaseEntity {
+public class InstrumentEntity extends BaseEntity {
 
     private String name;
 
     @OneToMany(mappedBy = "instrument")
-    private List<PerformerProfile> performerProfiles = new ArrayList<>();
+    private List<PerformerProfileEntity> performerProfileEntities = new ArrayList<>();
 
     //Getters and setters
 
@@ -24,11 +24,11 @@ public class Instrument extends BaseEntity {
         this.name = name;
     }
 
-    public List<PerformerProfile> getPerformerProfiles() {
-        return performerProfiles;
+    public List<PerformerProfileEntity> getPerformerProfiles() {
+        return performerProfileEntities;
     }
 
-    public void setPerformerProfiles(List<PerformerProfile> performerProfile) {
-        this.performerProfiles = performerProfile;
+    public void setPerformerProfiles(List<PerformerProfileEntity> performerProfileEntity) {
+        this.performerProfileEntities = performerProfileEntity;
     }
 }
