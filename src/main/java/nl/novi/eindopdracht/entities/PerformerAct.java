@@ -46,4 +46,6 @@ public class PerformerAct extends BaseEntity{
     public void setRole(String role) {
         this.role = role;
     }
+
+
 }

@@ -2,6 +2,9 @@ package nl.novi.eindopdracht.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "persons")
 public abstract class Person extends BaseEntity {
@@ -20,6 +23,9 @@ public abstract class Person extends BaseEntity {
 
     @OneToOne(mappedBy = "person")
     private PerformerProfile performerProfile;
+
+    @OneToMany(mappedBy = "person")
+    private List<EventAssignment> eventAssignments = new ArrayList<>();
 
     //Getters and setters
 
@@ -61,5 +67,13 @@ public abstract class Person extends BaseEntity {
 
     public void setPerformerProfile(PerformerProfile performerProfile) {
         this.performerProfile = performerProfile;
+    }
+
+    public List<EventAssignment> getEventAssignments() {
+        return eventAssignments;
+    }
+
+    public void setEventAssignments(List<EventAssignment> eventAssignments) {
+        this.eventAssignments = eventAssignments;
     }
 }

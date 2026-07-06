@@ -18,6 +18,9 @@ public class Act extends BaseEntity {
     @OneToMany(mappedBy = "act")
     private List<PerformerAct> performerActs = new ArrayList<>();
 
+    @OneToMany(mappedBy = "act")
+    private List<Performance> performances = new ArrayList<>();
+
     //Getters and setters
 
     public String getName() {
@@ -50,5 +53,13 @@ public class Act extends BaseEntity {
 
     public void setPerformerActs(List<PerformerAct> performerActs) {
         this.performerActs = performerActs;
+    }
+
+    public List<Performance> getPerformances() {
+        return performances;
+    }
+
+    public void setPerformances(List<Performance> performances) {
+        this.performances = performances;
     }
 }

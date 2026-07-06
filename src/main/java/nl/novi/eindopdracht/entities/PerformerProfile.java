@@ -43,4 +43,6 @@ public class PerformerProfile extends BaseEntity {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+
 }
