@@ -1,8 +1,7 @@
 package nl.novi.eindopdracht.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import nl.novi.eindopdracht.enums.EventRole;
 
 @Entity
 public class EventAssignment extends BaseEntity {
@@ -15,7 +14,10 @@ public class EventAssignment extends BaseEntity {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private EventRole eventRole;
+
+    //Getters and setters
 
     public Event getEvent() {
         return event;
@@ -33,11 +35,11 @@ public class EventAssignment extends BaseEntity {
         this.person = person;
     }
 
-    public String getRole() {
-        return role;
+    public EventRole getEventRole() {
+        return eventRole;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setEventRole(EventRole eventRole) {
+        this.eventRole = eventRole;
     }
 }

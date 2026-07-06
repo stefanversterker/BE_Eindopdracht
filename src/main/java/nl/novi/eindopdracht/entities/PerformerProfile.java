@@ -20,6 +20,8 @@ public class PerformerProfile extends BaseEntity {
     @JoinColumn(name = "person_id")
     private Person person;
 
+    //Getters and setters
+
     public Instrument getInstrument() {
         return instrument;
     }

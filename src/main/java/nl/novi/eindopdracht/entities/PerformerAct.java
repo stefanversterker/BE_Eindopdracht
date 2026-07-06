@@ -21,6 +21,8 @@ public class PerformerAct extends BaseEntity{
     @JoinColumn(name = "act_id")
     private Act act;
 
+    //Getters and setters
+
     private String role;
 
     public PerformerProfile getPerformer() {

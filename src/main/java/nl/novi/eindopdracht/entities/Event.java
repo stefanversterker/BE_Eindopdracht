@@ -22,6 +22,8 @@ public class Event extends BaseEntity {
     @OneToMany(mappedBy = "event")
     private List<EventAssignment> eventAssignments = new ArrayList<>();
 
+    //Getters and setters
+
     public Date getDate() {
         return date;
     }

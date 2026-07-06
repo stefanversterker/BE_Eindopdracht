@@ -23,6 +23,7 @@ public class Act extends BaseEntity {
 
     //Getters and setters
 
+
     public String getName() {
         return name;
     }

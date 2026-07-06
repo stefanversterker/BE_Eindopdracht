@@ -15,6 +15,8 @@ public class Performance extends BaseEntity {
     @JoinColumn(name = "act_id")
     private Act act;
 
+    //Getters and setters
+
     public Event getEvent() {
         return event;
     }
