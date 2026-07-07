@@ -18,7 +18,6 @@ public class EventRequestDto {
 
     // Getters and Setters
 
-
     public LocalDate getDate() {
         return date;
     }
