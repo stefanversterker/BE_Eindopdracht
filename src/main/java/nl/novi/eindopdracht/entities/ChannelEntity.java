@@ -10,13 +10,12 @@ public class ChannelEntity extends BaseEntity {
     @JoinColumn(name = "mixer_id")
     private MixerEntity mixerEntity;
 
-
     private Integer number;
 
     private String label;
 
     @ManyToOne
-    @JoinColumn(name = "source")
+    @JoinColumn(name = "source_id")
     private SourceEntity sourceEntity;
 
 
