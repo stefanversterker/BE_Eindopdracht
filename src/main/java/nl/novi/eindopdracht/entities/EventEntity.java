@@ -3,6 +3,7 @@ package nl.novi.eindopdracht.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Entity
 public class EventEntity extends BaseEntity {
 
-    private Date date;
+    private LocalDate date;
 
     private String venue;
 
@@ -22,11 +23,11 @@ public class EventEntity extends BaseEntity {
 
     //Getters and setters
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
