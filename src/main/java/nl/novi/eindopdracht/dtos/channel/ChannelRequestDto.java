@@ -4,14 +4,14 @@ import jakarta.validation.constraints.*;
 
 public class ChannelRequestDto {
 
-    @NotNull(message = "Channel number is required")
-    @Min(value = 1, message = "Channel number must be at least 1")
-    @Max(value = 99, message = "Channel number cannot exceed 99")
+    @NotNull(message = "Channel number is required.")
+    @Min(value = 1, message = "Channel number must be at least 1.")
+    @Max(value = 99, message = "Channel number cannot exceed 99.")
     private Integer number;
 
     @NotBlank(message = "Label is required.")
     @Size(min = 2, max = 10,
-            message = "Label must be between 2 and 10 characters")
+            message = "Label must be between 2 and 10 characters.")
     private String label;
 
     public Integer getNumber() {

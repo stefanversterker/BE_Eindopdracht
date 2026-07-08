@@ -9,11 +9,11 @@ import java.util.Date;
 
 public class EventRequestDto {
 
-    @NotNull(message = "Date is required")
-    @FutureOrPresent(message = "Date must be in the future or present")
+    @NotNull(message = "Date is required.")
+    @FutureOrPresent(message = "Date must be in the future or present.")
     private LocalDate date;
 
-    @NotBlank(message = "Venue is required")
+    @NotBlank(message = "Venue is required.")
     private String venue;
 
     // Getters and Setters

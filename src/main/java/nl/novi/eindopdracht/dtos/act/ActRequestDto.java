@@ -6,21 +6,21 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class ActRequestDto {
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Name is required.")
     @Size(min = 2, max = 100,
-            message = "Name must be between 2 and 100 characters")
+            message = "Name must be between 2 and 100 characters.")
     private String name;
 
     @Size(max = 20)
     @NotBlank
     @Pattern(
             regexp = "^[0-9+()\\- ]+$",
-            message = "Invalid phone number"
+            message = "Invalid phone number."
     )
     private String phone;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email address")
+    @NotBlank(message = "Email is required.")
+    @Email(message = "Invalid email address.")
     private String email;
 
     public String getName() {
