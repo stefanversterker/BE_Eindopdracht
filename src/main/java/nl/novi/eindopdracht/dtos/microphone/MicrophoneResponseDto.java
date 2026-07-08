@@ -1,28 +1,28 @@
-package nl.novi.eindopdracht.entities;
+package nl.novi.eindopdracht.dtos.microphone;
 
-import jakarta.persistence.*;
+import nl.novi.eindopdracht.dtos.equipment.EquipmentResponseDto;
 import nl.novi.eindopdracht.enums.PolarPattern;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-@Entity
-public class MicrophoneEntity extends EquipmentEntity {
+public class MicrophoneResponseDto extends EquipmentResponseDto {
 
-    @ElementCollection(targetClass = PolarPattern.class)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(
-            name = "microphone_polar_patterns",
-            joinColumns = @JoinColumn(name = "microphone_id")
-    )
-    @Column(name = "polar_pattern")
+    private Long id;
+
     private Set<PolarPattern> polarPatterns = new HashSet<>();
 
     private boolean phantomRequired;
 
-    //Getters and setters
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Set<PolarPattern> getPolarPatterns() {
         return polarPatterns;
