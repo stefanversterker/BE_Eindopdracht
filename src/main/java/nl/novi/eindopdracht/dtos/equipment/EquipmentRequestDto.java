@@ -15,7 +15,7 @@ public class EquipmentRequestDto {
             message = "Model must be between 2 and 50 characters.")
     private String model;
 
-    //Getters and Setters
+    // Getters and Setters
 
     public String getBrand() {
         return brand;
