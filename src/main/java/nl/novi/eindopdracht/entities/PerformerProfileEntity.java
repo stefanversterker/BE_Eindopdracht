@@ -20,7 +20,7 @@ public class PerformerProfileEntity extends BaseEntity {
     @JoinColumn(name = "person_id")
     private PersonEntity personEntity;
 
-    // Getters and setters
+    // Getters and Setters
 
     public List<PerformerActEntity> getActs() {
         return acts;

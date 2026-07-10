@@ -15,10 +15,8 @@ public abstract class PersonEntity extends BaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "phone")
     private String phone;
 
     @OneToOne(mappedBy = "personEntity")
