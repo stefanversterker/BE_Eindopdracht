@@ -7,7 +7,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "persons")
-public abstract class PersonEntity extends BaseEntity {
+//I used the joined inheritance stategy to nulls in person objects that are not employees. The joined strategy creates separate tables instead.
+@Inheritance(strategy = InheritanceType.JOINED)
+public class PersonEntity extends BaseEntity {
 
     @Column(name = "first_name")
     private String firstName;
@@ -21,6 +23,9 @@ public abstract class PersonEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "personEntity")
     private PerformerProfileEntity performerProfileEntity;
+
+    @OneToOne(mappedBy = "personEntity")
+    private EmployeeProfileEntity employeeProfileEntity;
 
     @OneToMany(mappedBy = "personEntity")
     private List<EventAssignmentEntity> eventAssignmentEntities = new ArrayList<>();
@@ -65,6 +70,30 @@ public abstract class PersonEntity extends BaseEntity {
 
     public void setPerformerProfile(PerformerProfileEntity performerProfileEntity) {
         this.performerProfileEntity = performerProfileEntity;
+    }
+
+    public PerformerProfileEntity getPerformerProfileEntity() {
+        return performerProfileEntity;
+    }
+
+    public void setPerformerProfileEntity(PerformerProfileEntity performerProfileEntity) {
+        this.performerProfileEntity = performerProfileEntity;
+    }
+
+    public EmployeeProfileEntity getEmployeeProfileEntity() {
+        return employeeProfileEntity;
+    }
+
+    public void setEmployeeProfileEntity(EmployeeProfileEntity employeeProfileEntity) {
+        this.employeeProfileEntity = employeeProfileEntity;
+    }
+
+    public List<EventAssignmentEntity> getEventAssignmentEntities() {
+        return eventAssignmentEntities;
+    }
+
+    public void setEventAssignmentEntities(List<EventAssignmentEntity> eventAssignmentEntities) {
+        this.eventAssignmentEntities = eventAssignmentEntities;
     }
 
     public List<EventAssignmentEntity> getEventAssignments() {

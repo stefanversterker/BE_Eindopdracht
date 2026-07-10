@@ -1,6 +1,5 @@
 package nl.novi.eindopdracht.dtos.person;
 
-import jakarta.persistence.Column;
 
 public class PersonResponseDto {
 

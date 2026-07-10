@@ -1,6 +1,5 @@
 package nl.novi.eindopdracht.dtos.person;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -22,8 +21,8 @@ public class PersonRequestDto {
     @Email(message = "Invalid email address.")
     private String email;
 
-    @Size(max = 20)
-    @NotBlank
+    @Size(max = 20, message = "Phone number may not exceed 20 characters.")
+    @NotBlank(message = "Phone number is required.")
     @Pattern(
             regexp = "^[0-9+()\\- ]+$",
             message = "Invalid phone number."
