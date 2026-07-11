@@ -4,20 +4,17 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "sources")
-public class SourceEntity extends BaseEntity{
+public class SourceEntity extends BaseEntity {
 
-    @Column(name = "name")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "performer_id")
-    private PerformerProfileEntity performer;
+    @JoinColumn(
+            name = "performer_instrument_id",
+            nullable = false)
+    private PerformerInstrumentEntity performerInstrumentEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "instrument_id")
-    private InstrumentEntity instrumentEntity;
-
-    //Getters and setters
+    // Getters and Setters
 
     public String getName() {
         return name;
@@ -27,19 +24,13 @@ public class SourceEntity extends BaseEntity{
         this.name = name;
     }
 
-    public PerformerProfileEntity getPerformer() {
-        return performer;
+    public PerformerInstrumentEntity getPerformerInstrumentEntity() {
+        return performerInstrumentEntity;
     }
 
-    public void setPerformer(PerformerProfileEntity performer) {
-        this.performer = performer;
+    public void setPerformerInstrumentEntity(PerformerInstrumentEntity performerInstrumentEntity) {
+        this.performerInstrumentEntity = performerInstrumentEntity;
     }
 
-    public InstrumentEntity getInstrument() {
-        return instrumentEntity;
-    }
-
-    public void setInstrument(InstrumentEntity instrumentEntity) {
-        this.instrumentEntity = instrumentEntity;
-    }
 }
+

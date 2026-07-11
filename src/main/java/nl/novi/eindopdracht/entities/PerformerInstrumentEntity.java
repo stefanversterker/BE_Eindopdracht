@@ -3,6 +3,10 @@ package nl.novi.eindopdracht.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class PerformerInstrumentEntity extends BaseEntity {
@@ -14,6 +18,9 @@ public class PerformerInstrumentEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "instrument_id")
     private InstrumentEntity instrumentEntity;
+
+    @OneToMany(mappedBy = "performerInstrumentEntity")
+    private List<SourceEntity> sources = new ArrayList<>();
 
     // Getters and Setters
 
@@ -33,5 +40,11 @@ public class PerformerInstrumentEntity extends BaseEntity {
         this.instrumentEntity = instrumentEntity;
     }
 
+    public List<SourceEntity> getSources() {
+        return sources;
+    }
 
+    public void setSources(List<SourceEntity> sources) {
+        this.sources = sources;
+    }
 }

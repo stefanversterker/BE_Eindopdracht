@@ -12,7 +12,6 @@ public class EmployeeProfileRequestDto {
 
     // Getters and Setters
 
-
     public Long getPersonId() {
         return personId;
     }
