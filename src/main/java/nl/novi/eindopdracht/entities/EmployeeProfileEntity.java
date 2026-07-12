@@ -16,7 +16,7 @@ public class EmployeeProfileEntity extends BaseEntity {
             unique = true)
     private PersonEntity personEntity;
 
-    //Getters and setters
+    // Getters and setters
 
     public DriversLicense getDriversLicense() {
         return driversLicense;
@@ -33,4 +33,5 @@ public class EmployeeProfileEntity extends BaseEntity {
     public void setPersonEntity(PersonEntity personEntity) {
         this.personEntity = personEntity;
     }
+
 }

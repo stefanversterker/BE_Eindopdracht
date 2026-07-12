@@ -14,6 +14,8 @@ public class ChannelRequestDto {
             message = "Label must be between 2 and 10 characters.")
     private String label;
 
+    // Getters and setters
+
     public Integer getNumber() {
         return number;
     }

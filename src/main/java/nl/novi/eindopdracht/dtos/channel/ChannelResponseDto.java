@@ -12,6 +12,8 @@ public class ChannelResponseDto {
 
     private String sourceName;
 
+    // Getters and setters
+
     public Long getId() {
         return id;
     }
@@ -51,4 +53,6 @@ public class ChannelResponseDto {
     public void setSourceName(String sourceName) {
         this.sourceName = sourceName;
     }
+
+
 }
