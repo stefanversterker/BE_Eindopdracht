@@ -23,7 +23,7 @@ public class PerformerActEntity extends BaseEntity{
 
     private String role;
 
-    //Getters and setters
+    // Getters and Setters
 
     public PerformerProfileEntity getPerformer() {
         return performerEntity;
@@ -49,4 +49,19 @@ public class PerformerActEntity extends BaseEntity{
         this.role = role;
     }
 
+    public PerformerProfileEntity getPerformerEntity() {
+        return performerEntity;
+    }
+
+    public void setPerformerEntity(PerformerProfileEntity performerEntity) {
+        this.performerEntity = performerEntity;
+    }
+
+    public ActEntity getActEntity() {
+        return actEntity;
+    }
+
+    public void setActEntity(ActEntity actEntity) {
+        this.actEntity = actEntity;
+    }
 }

@@ -42,4 +42,5 @@ public class PerformerActRequestDto {
     public void setRole(String role) {
         this.role = role;
     }
+
 }

@@ -34,4 +34,5 @@ public class EquipmentResponseDto {
     public void setModel(String model) {
         this.model = model;
     }
+
 }

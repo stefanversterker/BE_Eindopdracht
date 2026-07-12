@@ -30,6 +30,7 @@ public class InstrumentEntity extends BaseEntity {
 
     public void setPerformerInstruments(List<PerformerInstrumentEntity> performerInstruments) {
         this.performerInstruments = performerInstruments;
+
     }
 
 

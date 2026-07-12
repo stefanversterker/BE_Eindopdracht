@@ -34,4 +34,12 @@ public abstract class EquipmentEntity extends BaseEntity {
     public void setModel(String model) {
         this.model = model;
     }
+
+    public List<EquipmentEventAssignmentEntity> getEquipmentEventAssignments() {
+        return equipmentEventAssignments;
+    }
+
+    public void setEquipmentEventAssignments(List<EquipmentEventAssignmentEntity> equipmentEventAssignments) {
+        this.equipmentEventAssignments = equipmentEventAssignments;
+    }
 }

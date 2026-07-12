@@ -33,4 +33,5 @@ public class EventRequestDto {
     public void setVenue(String venue) {
         this.venue = venue;
     }
+
 }

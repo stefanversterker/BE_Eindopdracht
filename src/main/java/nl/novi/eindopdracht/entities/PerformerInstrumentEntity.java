@@ -1,14 +1,19 @@
 package nl.novi.eindopdracht.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {
+                        "performer_profile_id",
+                        "instrument_id"
+                }
+        )
+)
 public class PerformerInstrumentEntity extends BaseEntity {
 
     @ManyToOne

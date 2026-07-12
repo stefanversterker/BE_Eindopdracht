@@ -36,4 +36,5 @@ public class EventResponseDto {
     public void setVenue(String venue) {
         this.venue = venue;
     }
+
 }

@@ -39,4 +39,5 @@ public class MicrophoneEntity extends EquipmentEntity {
     public void setPhantomRequired(boolean phantomRequired) {
         this.phantomRequired = phantomRequired;
     }
+
 }

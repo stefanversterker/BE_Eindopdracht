@@ -46,4 +46,5 @@ public class EventAssignmentResponseDto {
     public void setRole(EventRole role) {
         this.role = role;
     }
+
 }

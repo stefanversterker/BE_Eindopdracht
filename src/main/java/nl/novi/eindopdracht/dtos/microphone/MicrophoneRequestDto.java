@@ -32,4 +32,5 @@ public class MicrophoneRequestDto extends EquipmentRequestDto {
     public void setPhantomRequired(boolean phantomRequired) {
         this.phantomRequired = phantomRequired;
     }
+
 }

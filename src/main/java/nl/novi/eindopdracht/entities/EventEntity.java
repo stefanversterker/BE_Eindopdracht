@@ -24,7 +24,7 @@ public class EventEntity extends BaseEntity {
     @OneToMany(mappedBy = "eventEntity")
     private List<EquipmentEventAssignmentEntity> equipmentEventAssignments = new ArrayList<>();
 
-    //Getters and setters
+    // Getters and Setters
 
     public LocalDate getDate() {
         return date;
@@ -65,4 +65,5 @@ public class EventEntity extends BaseEntity {
     public void setEquipmentEventAssignments(List<EquipmentEventAssignmentEntity> equipmentEventAssignments) {
         this.equipmentEventAssignments = equipmentEventAssignments;
     }
+
 }

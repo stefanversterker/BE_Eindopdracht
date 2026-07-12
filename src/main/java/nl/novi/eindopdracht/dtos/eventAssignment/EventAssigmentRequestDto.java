@@ -39,4 +39,6 @@ public class EventAssigmentRequestDto {
     public void setRole(EventRole role) {
         this.role = role;
     }
+
+
 }
