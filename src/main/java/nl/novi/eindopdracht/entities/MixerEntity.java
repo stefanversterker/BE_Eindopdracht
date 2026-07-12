@@ -11,7 +11,7 @@ public class MixerEntity extends EquipmentEntity {
     @OneToMany(mappedBy = "mixerEntity")
     private List<ChannelEntity> channelEntities = new ArrayList<>();
 
-    //Getters and setters
+    // Getters and Setters
 
     public List<ChannelEntity> getChannels() {
         return channelEntities;

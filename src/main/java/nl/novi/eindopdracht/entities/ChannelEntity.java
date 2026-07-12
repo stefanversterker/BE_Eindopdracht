@@ -10,31 +10,29 @@ public class ChannelEntity extends BaseEntity {
     @JoinColumn(name = "mixer_id")
     private MixerEntity mixerEntity;
 
-
     private Integer number;
 
     private String label;
 
     @ManyToOne
-    @JoinColumn(name = "source")
+    @JoinColumn(name = "source_id")
     private SourceEntity sourceEntity;
 
+    // Getters and setters
 
-    //Getters and setters
-
-    public MixerEntity getMixer() {
+    public MixerEntity getMixerEntity() {
         return mixerEntity;
     }
 
-    public void setMixer(MixerEntity mixerEntity) {
+    public void setMixerEntity(MixerEntity mixerEntity) {
         this.mixerEntity = mixerEntity;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -46,12 +44,11 @@ public class ChannelEntity extends BaseEntity {
         this.label = label;
     }
 
-    public SourceEntity getSource() {
+    public SourceEntity getSourceEntity() {
         return sourceEntity;
     }
 
-    public void setSource(SourceEntity sourceEntity) {
+    public void setSourceEntity(SourceEntity sourceEntity) {
         this.sourceEntity = sourceEntity;
     }
-
 }

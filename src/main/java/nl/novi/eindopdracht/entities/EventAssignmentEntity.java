@@ -42,4 +42,20 @@ public class EventAssignmentEntity extends BaseEntity {
     public void setEventRole(EventRole eventRole) {
         this.eventRole = eventRole;
     }
+
+    public EventEntity getEventEntity() {
+        return eventEntity;
+    }
+
+    public void setEventEntity(EventEntity eventEntity) {
+        this.eventEntity = eventEntity;
+    }
+
+    public PersonEntity getPersonEntity() {
+        return personEntity;
+    }
+
+    public void setPersonEntity(PersonEntity personEntity) {
+        this.personEntity = personEntity;
+    }
 }

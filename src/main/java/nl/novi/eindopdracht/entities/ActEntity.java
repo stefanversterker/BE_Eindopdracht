@@ -21,8 +21,7 @@ public class ActEntity extends BaseEntity {
     @OneToMany(mappedBy = "actEntity")
     private List<PerformanceEntity> performanceEntities = new ArrayList<>();
 
-    //Getters and setters
-
+    // Getters and setters
 
     public String getName() {
         return name;
@@ -61,6 +60,22 @@ public class ActEntity extends BaseEntity {
     }
 
     public void setPerformances(List<PerformanceEntity> performanceEntities) {
+        this.performanceEntities = performanceEntities;
+    }
+
+    public List<PerformerActEntity> getPerformerActEntities() {
+        return performerActEntities;
+    }
+
+    public void setPerformerActEntities(List<PerformerActEntity> performerActEntities) {
+        this.performerActEntities = performerActEntities;
+    }
+
+    public List<PerformanceEntity> getPerformanceEntities() {
+        return performanceEntities;
+    }
+
+    public void setPerformanceEntities(List<PerformanceEntity> performanceEntities) {
         this.performanceEntities = performanceEntities;
     }
 }

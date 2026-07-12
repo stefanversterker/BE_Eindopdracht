@@ -9,9 +9,9 @@ import java.util.List;
 @Table(name = "performers")
 public class PerformerProfileEntity extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "instrument_id")
-    private InstrumentEntity instrumentEntity;
+
+    @OneToMany(mappedBy = "performerProfileEntity")
+    private List<PerformerInstrumentEntity> performerInstruments = new ArrayList<>();
 
     @OneToMany(mappedBy = "performer")
     private List<PerformerActEntity> acts = new ArrayList<>();
@@ -20,15 +20,7 @@ public class PerformerProfileEntity extends BaseEntity {
     @JoinColumn(name = "person_id")
     private PersonEntity personEntity;
 
-    //Getters and setters
-
-    public InstrumentEntity getInstrument() {
-        return instrumentEntity;
-    }
-
-    public void setInstrument(InstrumentEntity instrumentEntity) {
-        this.instrumentEntity = instrumentEntity;
-    }
+    // Getters and Setters
 
     public List<PerformerActEntity> getActs() {
         return acts;
@@ -46,5 +38,19 @@ public class PerformerProfileEntity extends BaseEntity {
         this.personEntity = personEntity;
     }
 
+    public List<PerformerInstrumentEntity> getPerformerInstruments() {
+        return performerInstruments;
+    }
 
+    public void setPerformerInstruments(List<PerformerInstrumentEntity> performerInstruments) {
+        this.performerInstruments = performerInstruments;
+    }
+
+    public PersonEntity getPersonEntity() {
+        return personEntity;
+    }
+
+    public void setPersonEntity(PersonEntity personEntity) {
+        this.personEntity = personEntity;
+    }
 }

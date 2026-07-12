@@ -15,7 +15,7 @@ public class PerformanceEntity extends BaseEntity {
     @JoinColumn(name = "act_id")
     private ActEntity actEntity;
 
-    //Getters and setters
+    // Getters and Setters
 
     public EventEntity getEvent() {
         return eventEntity;
@@ -30,6 +30,22 @@ public class PerformanceEntity extends BaseEntity {
     }
 
     public void setAct(ActEntity actEntity) {
+        this.actEntity = actEntity;
+    }
+
+    public EventEntity getEventEntity() {
+        return eventEntity;
+    }
+
+    public void setEventEntity(EventEntity eventEntity) {
+        this.eventEntity = eventEntity;
+    }
+
+    public ActEntity getActEntity() {
+        return actEntity;
+    }
+
+    public void setActEntity(ActEntity actEntity) {
         this.actEntity = actEntity;
     }
 }

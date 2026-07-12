@@ -14,23 +14,23 @@ import jakarta.persistence.*;
 public class PerformerActEntity extends BaseEntity{
 
     @ManyToOne
-    @JoinColumn(name = "performer_id")
-    private PerformerProfileEntity performer;
+    @JoinColumn(name = "performer_id", nullable = false)
+    private PerformerProfileEntity performerEntity;
 
     @ManyToOne
-    @JoinColumn(name = "act_id")
+    @JoinColumn(name = "act_id", nullable = false)
     private ActEntity actEntity;
-
-    //Getters and setters
 
     private String role;
 
+    // Getters and Setters
+
     public PerformerProfileEntity getPerformer() {
-        return performer;
+        return performerEntity;
     }
 
     public void setPerformer(PerformerProfileEntity performer) {
-        this.performer = performer;
+        this.performerEntity = performerEntity;
     }
 
     public ActEntity getAct() {
@@ -49,5 +49,19 @@ public class PerformerActEntity extends BaseEntity{
         this.role = role;
     }
 
+    public PerformerProfileEntity getPerformerEntity() {
+        return performerEntity;
+    }
 
+    public void setPerformerEntity(PerformerProfileEntity performerEntity) {
+        this.performerEntity = performerEntity;
+    }
+
+    public ActEntity getActEntity() {
+        return actEntity;
+    }
+
+    public void setActEntity(ActEntity actEntity) {
+        this.actEntity = actEntity;
+    }
 }

@@ -3,6 +3,7 @@ package nl.novi.eindopdracht.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,23 +11,26 @@ import java.util.List;
 @Entity
 public class EventEntity extends BaseEntity {
 
-    private Date date;
+    private LocalDate date;
 
     private String venue;
 
     @OneToMany(mappedBy = "eventEntity")
-    private List<PerformanceEntity> performanceEntities = new ArrayList<>();
+    private List<PerformanceEntity> performances = new ArrayList<>();
 
     @OneToMany(mappedBy = "eventEntity")
-    private List<EventAssignmentEntity> eventAssignmentEntities = new ArrayList<>();
+    private List<EventAssignmentEntity> eventAssignments = new ArrayList<>();
 
-    //Getters and setters
+    @OneToMany(mappedBy = "eventEntity")
+    private List<EquipmentEventAssignmentEntity> equipmentEventAssignments = new ArrayList<>();
 
-    public Date getDate() {
+    // Getters and Setters
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -39,20 +43,27 @@ public class EventEntity extends BaseEntity {
     }
 
     public List<PerformanceEntity> getPerformances() {
-        return performanceEntities;
+        return performances;
     }
 
-    public void setPerformances(List<PerformanceEntity> performanceEntities) {
-        this.performanceEntities = performanceEntities;
+    public void setPerformances(List<PerformanceEntity> performances) {
+        this.performances = performances;
     }
 
     public List<EventAssignmentEntity> getEventAssignments() {
-        return eventAssignmentEntities;
+        return eventAssignments;
     }
 
-    public void setEventAssignments(List<EventAssignmentEntity> eventAssignmentEntities) {
-        this.eventAssignmentEntities = eventAssignmentEntities;
+    public void setEventAssignments(List<EventAssignmentEntity> eventAssignments) {
+        this.eventAssignments = eventAssignments;
     }
 
+    public List<EquipmentEventAssignmentEntity> getEquipmentEventAssignments() {
+        return equipmentEventAssignments;
+    }
+
+    public void setEquipmentEventAssignments(List<EquipmentEventAssignmentEntity> equipmentEventAssignments) {
+        this.equipmentEventAssignments = equipmentEventAssignments;
+    }
 
 }

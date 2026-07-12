@@ -12,7 +12,7 @@ public class InstrumentEntity extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "instrumentEntity")
-    private List<PerformerProfileEntity> performerProfileEntities = new ArrayList<>();
+    private List<PerformerInstrumentEntity> performerInstruments = new ArrayList<>();
 
     //Getters and setters
 
@@ -24,11 +24,14 @@ public class InstrumentEntity extends BaseEntity {
         this.name = name;
     }
 
-    public List<PerformerProfileEntity> getPerformerProfiles() {
-        return performerProfileEntities;
+    public List<PerformerInstrumentEntity> getPerformerInstruments() {
+        return performerInstruments;
     }
 
-    public void setPerformerProfiles(List<PerformerProfileEntity> performerProfileEntity) {
-        this.performerProfileEntities = performerProfileEntity;
+    public void setPerformerInstruments(List<PerformerInstrumentEntity> performerInstruments) {
+        this.performerInstruments = performerInstruments;
+
     }
+
+
 }
