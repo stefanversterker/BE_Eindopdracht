@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ActDtoMapper implements DtoMapper<ActResponseDto, ActRequestDto, ActEntity>{
+public class ActDtoMapper implements DtoMapper<ActResponseDto, ActRequestDto, ActEntity> {
 
     @Override
     public ActResponseDto mapToDto(ActEntity entity){
