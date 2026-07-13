@@ -51,4 +51,5 @@ public class ChannelEntity extends BaseEntity {
     public void setSourceEntity(SourceEntity sourceEntity) {
         this.sourceEntity = sourceEntity;
     }
+
 }
