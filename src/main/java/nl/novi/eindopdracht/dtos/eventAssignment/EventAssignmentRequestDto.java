@@ -3,7 +3,7 @@ package nl.novi.eindopdracht.dtos.eventAssignment;
 import jakarta.validation.constraints.NotNull;
 import nl.novi.eindopdracht.enums.EventRole;
 
-public class EventAssigmentRequestDto {
+public class EventAssignmentRequestDto {
 
     @NotNull
     private Long eventId;
@@ -12,9 +12,10 @@ public class EventAssigmentRequestDto {
     private Long personId;
 
     @NotNull
-    private EventRole role;
+    private EventRole eventRole;
 
     // Getters and Setters
+
 
     public Long getEventId() {
         return eventId;
@@ -32,13 +33,11 @@ public class EventAssigmentRequestDto {
         this.personId = personId;
     }
 
-    public EventRole getRole() {
-        return role;
+    public EventRole getEventRole() {
+        return eventRole;
     }
 
-    public void setRole(EventRole role) {
-        this.role = role;
+    public void setEventRole(EventRole eventRole) {
+        this.eventRole = eventRole;
     }
-
-
 }

@@ -4,7 +4,6 @@ import nl.novi.eindopdracht.dtos.equipmentEventAssignment.EquipmentEventAssignme
 import nl.novi.eindopdracht.dtos.equipmentEventAssignment.EquipmentEventAssignmentResponseDto;
 import nl.novi.eindopdracht.entities.EquipmentEventAssignmentEntity;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,5 +32,4 @@ public class EquipmentEventAssignmentDtoMapper implements DtoMapper<EquipmentEve
 
         return entity;
     }
-
 }
