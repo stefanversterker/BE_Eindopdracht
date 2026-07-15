@@ -1,10 +1,7 @@
 package nl.novi.eindopdracht.mappers;
 
-import nl.novi.eindopdracht.dtos.act.ActRequestDto;
-import nl.novi.eindopdracht.dtos.act.ActResponseDto;
 import nl.novi.eindopdracht.dtos.microphone.MicrophoneRequestDto;
 import nl.novi.eindopdracht.dtos.microphone.MicrophoneResponseDto;
-import nl.novi.eindopdracht.entities.ActEntity;
 import nl.novi.eindopdracht.entities.MicrophoneEntity;
 import org.springframework.stereotype.Component;
 
