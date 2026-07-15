@@ -1,5 +1,7 @@
 package nl.novi.eindopdracht.dtos.performerAct;
 
+import java.util.Set;
+
 public class PerformerActResponseDto {
 
     private Long id;
@@ -8,7 +10,7 @@ public class PerformerActResponseDto {
 
     private Long actId;
 
-    private String role;
+    private Set<String> roles;
 
     // Getters and Setters
 
@@ -36,13 +38,11 @@ public class PerformerActResponseDto {
         this.actId = actId;
     }
 
-    public String getRole() {
-        return role;
+    public Set<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
-
-
 }

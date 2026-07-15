@@ -1,8 +1,11 @@
 package nl.novi.eindopdracht.dtos.performerAct;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.Set;
 
 public class PerformerActRequestDto {
 
@@ -12,10 +15,16 @@ public class PerformerActRequestDto {
     @NotNull(message = "Act ID is required.")
     private Long actId;
 
-    @NotBlank(message = "Role is required.")
-    @Size(min = 2, max = 50,
-            message = "Role must be between 2 and 50 characters.")
-    private String role;
+    @NotEmpty(message = "At least one role is required.")
+    private Set<
+            @NotBlank(message = "Role cannot be blank.")
+            @Size(
+                    min = 2,
+                    max = 50,
+                    message = "Role must be between 2 and 50 characters."
+            )
+                    String
+            > roles;
 
     // Getters and Setters
 
@@ -35,12 +44,11 @@ public class PerformerActRequestDto {
         this.actId = actId;
     }
 
-    public String getRole() {
-        return role;
+    public Set<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
-
 }

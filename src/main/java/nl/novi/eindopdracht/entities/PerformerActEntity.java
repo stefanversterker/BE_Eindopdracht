@@ -2,6 +2,9 @@ package nl.novi.eindopdracht.entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 // I used the @UniqueConstraint because performer_id - act_id pairs should only be allowed to occur once
 @Table(
@@ -11,7 +14,7 @@ import jakarta.persistence.*;
         )
 )
 
-public class PerformerActEntity extends BaseEntity{
+public class PerformerActEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "performer_id", nullable = false)
@@ -21,33 +24,15 @@ public class PerformerActEntity extends BaseEntity{
     @JoinColumn(name = "act_id", nullable = false)
     private ActEntity actEntity;
 
-    private String role;
+    @ElementCollection
+    @CollectionTable(
+            name = "performer_act_roles",
+            joinColumns = @JoinColumn(name = "performer_act_id")
+    )
+    @Column(name = "role")
+    private Set<String> roles = new HashSet<>();
 
     // Getters and Setters
-
-    public PerformerProfileEntity getPerformer() {
-        return performerEntity;
-    }
-
-    public void setPerformer(PerformerProfileEntity performer) {
-        this.performerEntity = performerEntity;
-    }
-
-    public ActEntity getAct() {
-        return actEntity;
-    }
-
-    public void setAct(ActEntity actEntity) {
-        this.actEntity = actEntity;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public PerformerProfileEntity getPerformerEntity() {
         return performerEntity;
@@ -64,4 +49,13 @@ public class PerformerActEntity extends BaseEntity{
     public void setActEntity(ActEntity actEntity) {
         this.actEntity = actEntity;
     }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
 }
+
