@@ -4,11 +4,10 @@ public class PerformerProfileResponseDto {
 
     private Long id;
 
-    private Long instrumentId;
-
     private Long personId;
 
     // Getters and Setters
+
 
     public Long getId() {
         return id;
@@ -18,14 +17,6 @@ public class PerformerProfileResponseDto {
         this.id = id;
     }
 
-    public Long getInstrumentId() {
-        return instrumentId;
-    }
-
-    public void setInstrumentId(Long instrumentId) {
-        this.instrumentId = instrumentId;
-    }
-
     public Long getPersonId() {
         return personId;
     }
@@ -33,5 +24,4 @@ public class PerformerProfileResponseDto {
     public void setPersonId(Long personId) {
         this.personId = personId;
     }
-
 }
