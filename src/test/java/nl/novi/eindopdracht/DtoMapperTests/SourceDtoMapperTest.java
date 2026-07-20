@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class SourceDtoMapperTest {
@@ -23,13 +22,19 @@ public class SourceDtoMapperTest {
     @Test
     void shouldMapEntityToDto() {
 
+        // Arrange
+
         PerformerInstrumentEntity performerInstrument = new PerformerInstrumentEntity();
         performerInstrument.setId(5L);
+
+        // Act
 
         SourceEntity entity = new SourceEntity();
         entity.setId(1L);
         entity.setName("Kick");
         entity.setPerformerInstrumentEntity(performerInstrument);
+
+        // Assert
 
         SourceResponseDto dto = mapper.mapToDto(entity);
 
