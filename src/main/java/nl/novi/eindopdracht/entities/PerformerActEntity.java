@@ -18,7 +18,7 @@ public class PerformerActEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "performer_id", nullable = false)
-    private PerformerProfileEntity performerEntity;
+    private PerformerProfileEntity performer;
 
     @ManyToOne
     @JoinColumn(name = "act_id", nullable = false)
@@ -35,11 +35,11 @@ public class PerformerActEntity extends BaseEntity {
     // Getters and Setters
 
     public PerformerProfileEntity getPerformerEntity() {
-        return performerEntity;
+        return performer;
     }
 
     public void setPerformerEntity(PerformerProfileEntity performerEntity) {
-        this.performerEntity = performerEntity;
+        this.performer = performerEntity;
     }
 
     public ActEntity getActEntity() {
