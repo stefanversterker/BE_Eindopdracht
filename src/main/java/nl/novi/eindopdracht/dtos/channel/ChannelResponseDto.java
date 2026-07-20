@@ -10,9 +10,11 @@ public class ChannelResponseDto {
 
     private Long mixerId;
 
+    private Long sourceId;
+
     private String sourceName;
 
-    // Getters and setters
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -44,6 +46,14 @@ public class ChannelResponseDto {
 
     public void setMixerId(Long mixerId) {
         this.mixerId = mixerId;
+    }
+
+    public Long getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(Long sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getSourceName() {

@@ -11,9 +11,10 @@ public class EventAssignmentResponseDto {
 
     private Long personId;
 
-    private EventRole role;
+    private EventRole eventRole;
 
     // Getters and Setters
+
 
     public Long getId() {
         return id;
@@ -39,12 +40,11 @@ public class EventAssignmentResponseDto {
         this.personId = personId;
     }
 
-    public EventRole getRole() {
-        return role;
+    public EventRole getEventRole() {
+        return eventRole;
     }
 
-    public void setRole(EventRole role) {
-        this.role = role;
+    public void setEventRole(EventRole eventRole) {
+        this.eventRole = eventRole;
     }
-
 }

@@ -23,6 +23,8 @@ public class ActRequestDto {
     @Email(message = "Invalid email address.")
     private String email;
 
+    // Getters and Setters
+
     public String getName() {
         return name;
     }

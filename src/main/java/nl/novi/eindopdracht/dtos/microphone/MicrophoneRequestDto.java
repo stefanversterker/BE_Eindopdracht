@@ -16,7 +16,6 @@ public class MicrophoneRequestDto extends EquipmentRequestDto {
 
     // Getters and Setters
 
-
     public Set<PolarPattern> getPolarPatterns() {
         return polarPatterns;
     }
