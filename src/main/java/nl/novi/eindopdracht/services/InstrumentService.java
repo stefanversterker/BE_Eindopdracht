@@ -34,7 +34,7 @@ public class InstrumentService {
     @Transactional(readOnly = true)
     public InstrumentResponseDto getInstrumentById(long id) {
         InstrumentEntity entity = instrumentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Instrument with id " + id + "not found."));
+                .orElseThrow(() -> new RecordNotFoundException("Instrument with id " + id + " not found."));
 
         return instrumentDtoMapper.mapToDto(entity);
     }
