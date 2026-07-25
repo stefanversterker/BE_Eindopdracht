@@ -31,6 +31,5 @@ public class SourceEntity extends BaseEntity {
     public void setPerformerInstrumentEntity(PerformerInstrumentEntity performerInstrumentEntity) {
         this.performerInstrumentEntity = performerInstrumentEntity;
     }
-
 }
 
