@@ -6,7 +6,9 @@ public class SourceResponseDto {
 
     private String name;
 
-    private Long PerformerInstrumentId;
+    private Long performerInstrumentId;
+
+    private Long channelId;
 
     // Getters and Setters
 
@@ -27,10 +29,18 @@ public class SourceResponseDto {
     }
 
     public Long getPerformerInstrumentId() {
-        return PerformerInstrumentId;
+        return performerInstrumentId;
     }
 
     public void setPerformerInstrumentId(Long performerInstrumentId) {
-        PerformerInstrumentId = performerInstrumentId;
+        performerInstrumentId = performerInstrumentId;
+    }
+
+    public Long getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Long channelId) {
+        this.channelId = channelId;
     }
 }

@@ -14,6 +14,9 @@ public class SourceEntity extends BaseEntity {
             nullable = false)
     private PerformerInstrumentEntity performerInstrumentEntity;
 
+    @OneToOne(mappedBy = "sourceEntity")
+    private ChannelEntity channelEntity;
+
     // Getters and Setters
 
     public String getName() {
@@ -30,6 +33,14 @@ public class SourceEntity extends BaseEntity {
 
     public void setPerformerInstrumentEntity(PerformerInstrumentEntity performerInstrumentEntity) {
         this.performerInstrumentEntity = performerInstrumentEntity;
+    }
+
+    public ChannelEntity getChannelEntity() {
+        return channelEntity;
+    }
+
+    public void setChannelEntity(ChannelEntity channelEntity) {
+        this.channelEntity = channelEntity;
     }
 }
 

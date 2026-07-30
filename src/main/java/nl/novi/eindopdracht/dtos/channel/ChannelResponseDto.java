@@ -6,8 +6,6 @@ public class ChannelResponseDto {
 
     private Integer number;
 
-    private String label;
-
     private Long mixerId;
 
     private Long sourceId;
@@ -30,14 +28,6 @@ public class ChannelResponseDto {
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public Long getMixerId() {

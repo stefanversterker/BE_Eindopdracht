@@ -16,9 +16,8 @@ public class ChannelDtoMapper implements DtoMapper<ChannelResponseDto, ChannelRe
         var result = new ChannelResponseDto();
         result.setId(entity.getId());
         result.setNumber(entity.getNumber());
-        result.setLabel(entity.getLabel());
         result.setMixerId(entity.getMixerEntity().getId());
-        // Users should be able to create a channel without filling in the source name. Null should be allowed.
+        // A channel may exist without a source being assigned yet.
         result.setSourceId(
                 entity.getSourceEntity() != null
                         ? entity.getSourceEntity().getId()
@@ -41,7 +40,6 @@ public class ChannelDtoMapper implements DtoMapper<ChannelResponseDto, ChannelRe
     public ChannelEntity mapToEntity(ChannelRequestDto requestDto){
         var entity = new ChannelEntity();
         entity.setNumber(requestDto.getNumber());
-        entity.setLabel(requestDto.getLabel());
         return entity;
     }
 }
