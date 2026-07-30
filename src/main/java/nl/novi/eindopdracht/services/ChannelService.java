@@ -3,9 +3,11 @@ package nl.novi.eindopdracht.services;
 import nl.novi.eindopdracht.dtos.channel.ChannelRequestDto;
 import nl.novi.eindopdracht.dtos.channel.ChannelResponseDto;
 import nl.novi.eindopdracht.entities.ChannelEntity;
+import nl.novi.eindopdracht.entities.SourceEntity;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.ChannelDtoMapper;
 import nl.novi.eindopdracht.repositories.ChannelRepository;
+import nl.novi.eindopdracht.repositories.SourceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +18,17 @@ public class ChannelService {
 
     private final ChannelRepository channelRepository;
     private final ChannelDtoMapper channelDtoMapper;
+    private final SourceRepository sourceRepository;
 
 
-    public ChannelService(ChannelRepository channelRepository, ChannelDtoMapper channelDtoMapper) {
+    public ChannelService(
+            ChannelRepository channelRepository,
+            ChannelDtoMapper channelDtoMapper,
+            SourceRepository sourceRepository
+    ) {
         this.channelRepository = channelRepository;
         this.channelDtoMapper = channelDtoMapper;
+        this.sourceRepository = sourceRepository;
     }
 
     @Transactional(readOnly = true)
@@ -39,8 +47,23 @@ public class ChannelService {
     public ChannelResponseDto createChannel(ChannelRequestDto channelRequestDto) {
         // Create the entity the repository expects
         ChannelEntity channelEntity = channelDtoMapper.mapToEntity(channelRequestDto);
+
+        // Extract sourceId
+        Long sourceId = channelRequestDto.getSourceId();
+
+        // Find sourceEntity
+        if (sourceId != null) {
+            SourceEntity source = sourceRepository.findById(sourceId)
+                    .orElseThrow(() ->
+                            new RecordNotFoundException("Source with id " + sourceId + " not found."));
+
+            // Set the related source
+            channelEntity.setSourceEntity(source);
+        }
+
         // Save the entity in the repository
         channelEntity = channelRepository.save(channelEntity);
+
         // Convert the saved entity to a response DTO
         return channelDtoMapper.mapToDto(channelEntity);
     }
@@ -49,9 +72,20 @@ public class ChannelService {
         // Retrieve the entity from the database with its current values
         ChannelEntity existingChannelEntity = getChannelEntity(id);
 
-        // Change field
+        Long sourceId = channelRequestDto.getSourceId();
+
+        // Set number entity
         existingChannelEntity.setNumber(channelRequestDto.getNumber());
-        existingChannelEntity.setLabel(channelRequestDto.getLabel());
+
+        // Verify and set sourceEntity
+        if (sourceId != null) {
+            SourceEntity source = sourceRepository.findById(sourceId)
+                    .orElseThrow(() ->
+                            new RecordNotFoundException("Source with id " + sourceId + " not found."));
+            existingChannelEntity.setSourceEntity(source);
+        } else {
+            existingChannelEntity.setSourceEntity(null);
+        }
 
         // Save update to repository
         existingChannelEntity = channelRepository.save(existingChannelEntity);
@@ -62,15 +96,13 @@ public class ChannelService {
 
     public void deleteChannel(Long id) {
         ChannelEntity channel = getChannelEntity(id);
-        // If there are any relations, remove these first by setting the fields to null.
         channelRepository.delete(channel);
     }
 
     // Helper: gets entity from repository
     private ChannelEntity getChannelEntity(Long id) {
-        ChannelEntity channelEntity = channelRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Channel " + id + " not found"));
-        return channelEntity;
+        return channelRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Channel with id " + id + " not found."));
     }
-    
 }

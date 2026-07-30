@@ -71,7 +71,6 @@ public class EmployeeProfileService {
         existingEmployeeProfileEntity.setPersonEntity(person);
         existingEmployeeProfileEntity.setDriversLicense(employeeProfileRequestDto.getDriversLicense());
 
-
         // Save update to repository
         existingEmployeeProfileEntity = employeeProfileRepository.save(existingEmployeeProfileEntity);
 
