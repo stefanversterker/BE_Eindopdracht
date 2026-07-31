@@ -1,10 +1,15 @@
 package nl.novi.eindopdracht.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
+// I used the @UniqueConstraint because an act should only be allowed to perform once at an event.
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"event_id", "act_id"}
+        )
+)
+
 public class PerformanceEntity extends BaseEntity {
 
     @ManyToOne
