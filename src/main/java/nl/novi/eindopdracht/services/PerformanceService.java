@@ -53,6 +53,7 @@ public class PerformanceService {
         // Create the entity the repository expects
         PerformanceEntity performanceEntity = performanceDtoMapper.mapToEntity(performanceRequestDto);
 
+        // Act
         // Extract ActProfileId
         Long actId = performanceRequestDto.getActId();
 
@@ -63,8 +64,8 @@ public class PerformanceService {
         // Set related Act
         performanceEntity.setAct(act);
 
-
-        // Extract EventProfileId
+        // Event
+        // Extract EventId
         Long eventId = performanceRequestDto.getEventId();
 
         // Find EventEntity
