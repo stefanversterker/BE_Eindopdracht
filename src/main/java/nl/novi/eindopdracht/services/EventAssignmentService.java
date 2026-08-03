@@ -43,10 +43,7 @@ public class EventAssignmentService {
 
     @Transactional(readOnly = true)
     public EventAssignmentResponseDto getEventAssignmentById(long id) {
-        EventAssignmentEntity entity = eventAssignmentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("EventAssignment with id " + id + " not found."));
-
-        return eventAssignmentDtoMapper.mapToDto(entity);
+        return eventAssignmentDtoMapper.mapToDto(getEventAssignmentEntity(id));
     }
 
     public EventAssignmentResponseDto createEventAssignment(EventAssignmentRequestDto eventAssignmentRequestDto) {
@@ -58,8 +55,7 @@ public class EventAssignmentService {
         Long personId = eventAssignmentRequestDto.getPersonId();
 
         // Find PersonEntity
-        PersonEntity person = personRepository.findById(personId)
-                .orElseThrow(() -> new RecordNotFoundException("Person with id " + personId + " not found."));
+        PersonEntity person = getPersonEntity(personId);
 
         // Set related Person
         eventAssignmentEntity.setPerson(person);
@@ -70,8 +66,7 @@ public class EventAssignmentService {
         Long eventId = eventAssignmentRequestDto.getEventId();
 
         // Find EventEntity
-        EventEntity event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + eventId + " not found."));
+        EventEntity event = getEventEntity(eventId);
 
         // Set related Event
         eventAssignmentEntity.setEvent(event);
@@ -92,8 +87,7 @@ public class EventAssignmentService {
         Long personId = eventAssignmentRequestDto.getPersonId();
 
         // Find PersonEntity
-        PersonEntity person = personRepository.findById(personId)
-                .orElseThrow(() -> new RecordNotFoundException("Person with id " + personId + " not found."));
+        PersonEntity person = getPersonEntity(personId);
 
         // Update field
         existingEventAssignmentEntity.setPerson(person);
@@ -103,9 +97,7 @@ public class EventAssignmentService {
         Long eventId = eventAssignmentRequestDto.getEventId();
 
         // Find EventEntity
-        EventEntity event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + eventId + " not found."));
-
+        EventEntity event = getEventEntity(eventId);
 
         // Update field
         existingEventAssignmentEntity.setEvent(event);
@@ -126,11 +118,23 @@ public class EventAssignmentService {
         eventAssignmentRepository.delete(eventAssignment);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private EventAssignmentEntity getEventAssignmentEntity(Long id) {
-        EventAssignmentEntity eventAssignmentEntity = eventAssignmentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("EventAssignment with id " + id + " not found"));
-        return eventAssignmentEntity;
+        return eventAssignmentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("EventAssignment with id " + id + " not found."));
+    }
+
+    private PersonEntity getPersonEntity(Long id) {
+        return personRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Person with id " + id + " not found."));
+    }
+
+    private EventEntity getEventEntity(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Event with id " + id + " not found."));
     }
     
 }

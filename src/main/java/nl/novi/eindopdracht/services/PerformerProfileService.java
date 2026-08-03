@@ -24,7 +24,6 @@ public class PerformerProfileService {
         this.performerProfileRepository = performerProfileRepository;
         this.performerProfileDtoMapper = performerProfileDtoMapper;
         this.personRepository = personRepository;
-
     }
 
     @Transactional(readOnly = true)
@@ -34,24 +33,25 @@ public class PerformerProfileService {
 
     @Transactional(readOnly = true)
     public PerformerProfileResponseDto getPerformerProfileById(long id) {
-        PerformerProfileEntity entity = performerProfileRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerProfile with id " + id + " not found."));
-
-        return performerProfileDtoMapper.mapToDto(entity);
+        return performerProfileDtoMapper.mapToDto(getPerformerProfileEntity(id));
     }
 
     public PerformerProfileResponseDto createPerformerProfile(PerformerProfileRequestDto performerProfileRequestDto) {
         // Create the entity the repository expects
         PerformerProfileEntity performerProfileEntity = performerProfileDtoMapper.mapToEntity(performerProfileRequestDto);
+
         // Extract personId
         Long personId = performerProfileRequestDto.getPersonId();
+
         // Find PersonEntity
-        PersonEntity person = personRepository.findById(personId)
-                .orElseThrow(() -> new RecordNotFoundException("Person with id " + personId + " not found."));
+        PersonEntity person = getPersonEntity(personId);
+
         // Set the related person
         performerProfileEntity.setPersonEntity(person);
+
         // Save the entity in the repository
         performerProfileEntity = performerProfileRepository.save(performerProfileEntity);
+
         // Convert the saved entity to a response DTO
         return performerProfileDtoMapper.mapToDto(performerProfileEntity);
     }
@@ -64,9 +64,7 @@ public class PerformerProfileService {
         Long personId = performerProfileRequestDto.getPersonId();
 
         // Get PersonEntity from repository
-        PersonEntity person = personRepository.findById(personId)
-                .orElseThrow(() ->
-                        new RecordNotFoundException("Person with id " + personId + " not found."));
+        PersonEntity person = getPersonEntity(personId);
 
         // Update Person field
         existingPerformerProfileEntity.setPersonEntity(person);
@@ -83,10 +81,15 @@ public class PerformerProfileService {
         performerProfileRepository.delete(performerProfile);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private PerformerProfileEntity getPerformerProfileEntity(Long id) {
-        PerformerProfileEntity performerProfileEntity = performerProfileRepository.findById(id)
+        return performerProfileRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("PerformerProfile with id " + id + " not found."));
-        return performerProfileEntity;
+    }
+
+    private PersonEntity getPersonEntity(Long id) {
+        return personRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Person with id " + id + " not found."));
     }
 }

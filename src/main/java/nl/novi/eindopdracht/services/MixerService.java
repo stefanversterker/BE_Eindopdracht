@@ -30,17 +30,17 @@ public class MixerService {
 
     @Transactional(readOnly = true)
     public MixerResponseDto getMixerById(long id) {
-        MixerEntity entity = mixerRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Mixer with id " + id + " not found."));
-
-        return mixerDtoMapper.mapToDto(entity);
+        return mixerDtoMapper.mapToDto(getMixerEntity(id));
     }
 
     public MixerResponseDto createMixer(MixerRequestDto mixerRequestDto) {
+
         // Create the entity the repository expects
         MixerEntity mixerEntity = mixerDtoMapper.mapToEntity(mixerRequestDto);
+
         // Save the entity in the repository
         mixerEntity = mixerRepository.save(mixerEntity);
+
         // Convert the saved entity to a response DTO
         return mixerDtoMapper.mapToDto(mixerEntity);
     }
@@ -62,14 +62,14 @@ public class MixerService {
 
     public void deleteMixer(Long id) {
         MixerEntity mixer = getMixerEntity(id);
-        // If there are any relations, remove these first by setting the fields to null.
         mixerRepository.delete(mixer);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private MixerEntity getMixerEntity(Long id) {
-        MixerEntity mixerEntity = mixerRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Mixer " + id + " not found"));
-        return mixerEntity;
+        return mixerRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Mixer " + id + " not found."));
     }
+
 }

@@ -8,9 +8,7 @@ import nl.novi.eindopdracht.entities.PerformerInstrumentEntity;
 import nl.novi.eindopdracht.entities.PerformerProfileEntity;
 import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
-import nl.novi.eindopdracht.mappers.InstrumentDtoMapper;
 import nl.novi.eindopdracht.mappers.PerformerInstrumentDtoMapper;
-import nl.novi.eindopdracht.mappers.PerformerProfileDtoMapper;
 import nl.novi.eindopdracht.repositories.InstrumentRepository;
 import nl.novi.eindopdracht.repositories.PerformerInstrumentRepository;
 import nl.novi.eindopdracht.repositories.PerformerProfileRepository;
@@ -47,10 +45,7 @@ public class PerformerInstrumentService {
 
     @Transactional(readOnly = true)
     public PerformerInstrumentResponseDto getPerformerInstrumentById(long id) {
-        PerformerInstrumentEntity entity = performerInstrumentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerInstrument with id " + id + " not found."));
-
-        return performerInstrumentDtoMapper.mapToDto(entity);
+        return performerInstrumentDtoMapper.mapToDto(getPerformerInstrumentEntity(id));
     }
 
     public PerformerInstrumentResponseDto createPerformerInstrument(PerformerInstrumentRequestDto performerInstrumentRequestDto) {
@@ -61,8 +56,7 @@ public class PerformerInstrumentService {
         Long performerProfileId = performerInstrumentRequestDto.getPerformerProfileId();
 
         // Find PerformerProfileEntity
-        PerformerProfileEntity performer = performerProfileRepository.findById(performerProfileId)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerProfile with id " + performerProfileId + " not found."));
+        PerformerProfileEntity performer = getPerformerProfileEntity(performerProfileId);
 
         // Set related performerProfile
         performerInstrumentEntity.setPerformerProfileEntity(performer);
@@ -71,8 +65,7 @@ public class PerformerInstrumentService {
         Long instrumentId = performerInstrumentRequestDto.getInstrumentId();
 
         // Find InstrumentEntity
-        InstrumentEntity instrument = instrumentRepository.findById(instrumentId)
-                .orElseThrow(() -> new RecordNotFoundException("Instrument with id " + instrumentId + " not found."));
+        InstrumentEntity instrument = getInstrumentEntity(instrumentId);
 
         // Set Related instrument
         performerInstrumentEntity.setInstrumentEntity(instrument);
@@ -93,8 +86,7 @@ public class PerformerInstrumentService {
         Long performerProfileId = performerInstrumentRequestDto.getPerformerProfileId();
 
         // Find PerformerProfileEntity
-        PerformerProfileEntity performer = performerProfileRepository.findById(performerProfileId)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerProfile with id " + performerProfileId + " not found."));
+        PerformerProfileEntity performer = getPerformerProfileEntity(performerProfileId);
 
         // Update field
         existingPerformerInstrumentEntity.setPerformerProfileEntity(performer);
@@ -103,9 +95,8 @@ public class PerformerInstrumentService {
         // Extract InstrumentId
         Long instrumentId = performerInstrumentRequestDto.getInstrumentId();
 
-        // Find PerformerProfileEntity
-        InstrumentEntity instrument = instrumentRepository.findById(instrumentId)
-                .orElseThrow(() -> new RecordNotFoundException("Instrument with id " + instrumentId + " not found."));
+        // Find InstrumentEntity
+        InstrumentEntity instrument = getInstrumentEntity(instrumentId);
 
         // Update field
         existingPerformerInstrumentEntity.setInstrumentEntity(instrument);
@@ -129,10 +120,22 @@ public class PerformerInstrumentService {
         performerInstrumentRepository.delete(performerInstrument);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private PerformerInstrumentEntity getPerformerInstrumentEntity(Long id) {
-        PerformerInstrumentEntity performerInstrumentEntity = performerInstrumentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerInstrument with id " + id + " not found"));
-        return performerInstrumentEntity;
+        return performerInstrumentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("PerformerInstrument with id " + id + " not found."));
+    }
+
+    private PerformerProfileEntity getPerformerProfileEntity(Long id) {
+        return performerProfileRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("PerformerProfile with id " + id + " not found."));
+    }
+
+    private InstrumentEntity getInstrumentEntity(Long id) {
+        return instrumentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Instrument with id " + id + " not found."));
     }
 }

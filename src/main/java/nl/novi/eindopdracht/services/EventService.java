@@ -30,17 +30,16 @@ public class EventService {
 
     @Transactional(readOnly = true)
     public EventResponseDto getEventById(long id) {
-        EventEntity entity = eventRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + id + " not found."));
-
-        return eventDtoMapper.mapToDto(entity);
+        return eventDtoMapper.mapToDto(getEventEntity(id));
     }
 
     public EventResponseDto createEvent(EventRequestDto eventRequestDto) {
         // Create the entity the repository expects
         EventEntity eventEntity = eventDtoMapper.mapToEntity(eventRequestDto);
+
         // Save the entity in the repository
         eventEntity = eventRepository.save(eventEntity);
+
         // Convert the saved entity to a response DTO
         return eventDtoMapper.mapToDto(eventEntity);
     }
@@ -65,10 +64,11 @@ public class EventService {
         eventRepository.delete(event);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private EventEntity getEventEntity(Long id) {
-        EventEntity eventEntity = eventRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + id + " not found"));
-        return eventEntity;
+        return eventRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Event with id " + id + " not found."));
+
     }
 }

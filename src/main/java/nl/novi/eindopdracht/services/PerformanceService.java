@@ -43,10 +43,7 @@ public class PerformanceService {
 
     @Transactional(readOnly = true)
     public PerformanceResponseDto getPerformanceById(long id) {
-        PerformanceEntity entity = performanceRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Performance with id " + id + " not found."));
-
-        return performanceDtoMapper.mapToDto(entity);
+        return performanceDtoMapper.mapToDto(getPerformanceEntity(id));
     }
 
     public PerformanceResponseDto createPerformance(PerformanceRequestDto performanceRequestDto) {
@@ -58,8 +55,7 @@ public class PerformanceService {
         Long actId = performanceRequestDto.getActId();
 
         // Find ActEntity
-        ActEntity act = actRepository.findById(actId)
-                .orElseThrow(() -> new RecordNotFoundException("Act with id " + actId + " not found."));
+        ActEntity act = getActEntity(actId);
 
         // Set related Act
         performanceEntity.setAct(act);
@@ -69,8 +65,7 @@ public class PerformanceService {
         Long eventId = performanceRequestDto.getEventId();
 
         // Find EventEntity
-        EventEntity event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + eventId + " not found."));
+        EventEntity event = getEventEntity(eventId);
 
         // Set related Event
         performanceEntity.setEvent(event);
@@ -91,8 +86,7 @@ public class PerformanceService {
         Long actId = performanceRequestDto.getActId();
 
         // Find ActEntity
-        ActEntity act = actRepository.findById(actId)
-                .orElseThrow(() -> new RecordNotFoundException("Act with id " + actId + " not found."));
+        ActEntity act = getActEntity(actId);
 
         // Update fields
         existingPerformanceEntity.setAct(act);
@@ -102,9 +96,7 @@ public class PerformanceService {
         Long eventId = performanceRequestDto.getEventId();
 
         // Find EventEntity
-        EventEntity event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + eventId + " not found."));
-
+        EventEntity event = getEventEntity(eventId);
 
         // Update fields
         existingPerformanceEntity.setEvent(event);
@@ -121,10 +113,24 @@ public class PerformanceService {
         performanceRepository.delete(performance);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private PerformanceEntity getPerformanceEntity(Long id) {
-        PerformanceEntity performanceEntity = performanceRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Performance " + id + " not found"));
-        return performanceEntity;
+        return performanceRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Performance " + id + " not found"));
     }
+
+    private EventEntity getEventEntity(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Event with id " + id + " not found."));
+    }
+
+    private ActEntity getActEntity(Long id) {
+        return actRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Act with id " + id + " not found."));
+    }
+
+
 }

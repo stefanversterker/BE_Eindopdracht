@@ -39,10 +39,7 @@ public class PerformerActService {
 
     @Transactional(readOnly = true)
     public PerformerActResponseDto getPerformerActById(long id) {
-        PerformerActEntity entity = performerActRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerAct with id " + id + " not found."));
-
-        return performerActDtoMapper.mapToDto(entity);
+        return performerActDtoMapper.mapToDto(getPerformerActEntity(id));
     }
 
     public PerformerActResponseDto createPerformerAct(PerformerActRequestDto performerActRequestDto) {
@@ -54,8 +51,7 @@ public class PerformerActService {
         Long performerId = performerActRequestDto.getPerformerId();
 
         // Find PerformerEntity
-        PerformerProfileEntity performer = performerProfileRepository.findById(performerId)
-                .orElseThrow(() -> new RecordNotFoundException("Performer with id " + performerId + " not found."));
+        PerformerProfileEntity performer = getPerformerEntity(performerId);
 
         // Set related PerformerProfile
         performerActEntity.setPerformerEntity(performer);
@@ -65,8 +61,7 @@ public class PerformerActService {
         Long actId = performerActRequestDto.getActId();
 
         // Find ActEntity
-        ActEntity act = actRepository.findById(actId)
-                .orElseThrow(() -> new RecordNotFoundException("Act with id " + actId + " not found."));
+        ActEntity act = getActEntity(actId);
 
         // Set related Event
         performerActEntity.setActEntity(act);
@@ -87,8 +82,7 @@ public class PerformerActService {
         Long performerId = performerActRequestDto.getPerformerId();
 
         // Find PerformerEntity
-        PerformerProfileEntity performer = performerProfileRepository.findById(performerId)
-                .orElseThrow(() -> new RecordNotFoundException("Performer with id " + performerId + " not found."));
+        PerformerProfileEntity performer = getPerformerEntity(performerId);
 
         // Update field
         existingPerformerActEntity.setPerformerEntity(performer);
@@ -98,8 +92,7 @@ public class PerformerActService {
         Long actId = performerActRequestDto.getActId();
 
         // Find ActEntity
-        ActEntity act = actRepository.findById(actId)
-                .orElseThrow(() -> new RecordNotFoundException("Act with id " + actId + " not found."));
+        ActEntity act = getActEntity(actId);
 
         // Update field
         existingPerformerActEntity.setActEntity(act);
@@ -120,10 +113,22 @@ public class PerformerActService {
         performerActRepository.delete(performerAct);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private PerformerActEntity getPerformerActEntity(Long id) {
-        PerformerActEntity performerActEntity = performerActRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerAct with id " + id + " not found."));
-        return performerActEntity;
+        return performerActRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("PerformerAct with id " + id + " not found."));
+    }
+
+    private ActEntity getActEntity(Long id) {
+        return actRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Act with id " + id + " not found."));
+    }
+
+    private PerformerProfileEntity getPerformerEntity(Long id) {
+        return performerProfileRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Performer with id " + id + " not found."));
     }
 }

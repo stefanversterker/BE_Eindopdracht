@@ -30,10 +30,7 @@ public class PersonService {
 
     @Transactional(readOnly = true)
     public PersonResponseDto getPersonById(long id) {
-        PersonEntity entity = personRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Person with id " + id + " not found."));
-
-        return personDtoMapper.mapToDto(entity);
+        return personDtoMapper.mapToDto(getPersonEntity(id));
     }
 
     public PersonResponseDto createPerson(PersonRequestDto personRequestDto) {
@@ -68,10 +65,10 @@ public class PersonService {
         personRepository.delete(person);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private PersonEntity getPersonEntity(Long id) {
-        PersonEntity personEntity = personRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Person " + id + " not found"));
-        return personEntity;
+        return personRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Person " + id + " not found."));
     }
 }

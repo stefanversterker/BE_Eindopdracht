@@ -33,24 +33,25 @@ public class EmployeeProfileService {
 
     @Transactional(readOnly = true)
     public EmployeeProfileResponseDto getEmployeeProfileById(long id) {
-        EmployeeProfileEntity entity = employeeProfileRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("EmployeeProfile with id " + id + " not found."));
-
-        return employeeProfileDtoMapper.mapToDto(entity);
+        return employeeProfileDtoMapper.mapToDto(getEmployeeProfileEntity(id));
     }
 
     public EmployeeProfileResponseDto createEmployeeProfile(EmployeeProfileRequestDto employeeProfileRequestDto) {
         // Create the entity the repository expects
         EmployeeProfileEntity employeeProfileEntity = employeeProfileDtoMapper.mapToEntity(employeeProfileRequestDto);
+
         // Extract personId
         Long personId = employeeProfileRequestDto.getPersonId();
+
         // Find PersonEntity
-        PersonEntity person = personRepository.findById(personId)
-                .orElseThrow(() -> new RecordNotFoundException("Person with id " + personId + " not found."));
+        PersonEntity person = getPersonEntity(personId);
+
         // Set the related person
         employeeProfileEntity.setPersonEntity(person);
+
         // Save the entity in the repository
         employeeProfileEntity = employeeProfileRepository.save(employeeProfileEntity);
+
         // Convert the saved entity to a response DTO
         return employeeProfileDtoMapper.mapToDto(employeeProfileEntity);
     }
@@ -63,9 +64,7 @@ public class EmployeeProfileService {
         Long personId = employeeProfileRequestDto.getPersonId();
 
         // Get PersonEntity from repository
-        PersonEntity person = personRepository.findById(personId)
-                .orElseThrow(() ->
-                        new RecordNotFoundException("Person with id " + personId + " not found."));
+        PersonEntity person = getPersonEntity(personId);
 
         // Update Person field
         existingEmployeeProfileEntity.setPersonEntity(person);
@@ -83,10 +82,17 @@ public class EmployeeProfileService {
         employeeProfileRepository.delete(employeeProfile);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private EmployeeProfileEntity getEmployeeProfileEntity(Long id) {
-        EmployeeProfileEntity employeeProfileEntity = employeeProfileRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("EmployeeProfile with id " + id + " not found."));
-        return employeeProfileEntity;
+        return employeeProfileRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("EmployeeProfile with id " + id + " not found."));
     }
+
+    private PersonEntity getPersonEntity(Long id) {
+        return personRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Person with id " + id + " not found."));
+    }
+
 }

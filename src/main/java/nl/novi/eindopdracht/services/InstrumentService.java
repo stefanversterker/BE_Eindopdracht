@@ -33,17 +33,16 @@ public class InstrumentService {
 
     @Transactional(readOnly = true)
     public InstrumentResponseDto getInstrumentById(long id) {
-        InstrumentEntity entity = instrumentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Instrument with id " + id + " not found."));
-
-        return instrumentDtoMapper.mapToDto(entity);
+        return instrumentDtoMapper.mapToDto(getInstrumentEntity(id));
     }
 
     public InstrumentResponseDto createInstrument(InstrumentRequestDto instrumentRequestDto) {
         // Create the entity the repository expects
         InstrumentEntity instrumentEntity = instrumentDtoMapper.mapToEntity(instrumentRequestDto);
+
         // Save the entity in the repository
         instrumentEntity = instrumentRepository.save(instrumentEntity);
+
         // Convert the saved entity to a response DTO
         return instrumentDtoMapper.mapToDto(instrumentEntity);
     }
@@ -64,14 +63,13 @@ public class InstrumentService {
 
     public void deleteInstrument(Long id) {
         InstrumentEntity instrument = getInstrumentEntity(id);
-        // If there are any relations, remove these first by setting the fields to null.
         instrumentRepository.delete(instrument);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private InstrumentEntity getInstrumentEntity(Long id) {
-        InstrumentEntity instrumentEntity = instrumentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Instrument " + id + " not found"));
-        return instrumentEntity;
+        return instrumentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Instrument " + id + " not found."));
     }
 }

@@ -43,10 +43,7 @@ public class EquipmentEventAssignmentService {
 
     @Transactional(readOnly = true)
     public EquipmentEventAssignmentResponseDto getEquipmentEventAssignmentById(long id) {
-        EquipmentEventAssignmentEntity entity = equipmentEventAssignmentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("EquipmentEventAssignment with id " + id + " not found."));
-
-        return equipmentEventAssignmentDtoMapper.mapToDto(entity);
+        return equipmentEventAssignmentDtoMapper.mapToDto(getEquipmentEventAssignmentEntity(id));
     }
 
     public EquipmentEventAssignmentResponseDto createEquipmentEventAssignment(EquipmentEventAssignmentRequestDto equipmentEventAssignmentRequestDto) {
@@ -58,8 +55,7 @@ public class EquipmentEventAssignmentService {
         Long equipmentId = equipmentEventAssignmentRequestDto.getEquipmentId();
 
         // Find EquipmentEntity
-        EquipmentEntity equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new RecordNotFoundException("Equipment with id " + equipmentId + " not found."));
+        EquipmentEntity equipment = getEquipmentEntity(equipmentId);
 
         // Set related Equipment
         equipmentEventAssignmentEntity.setEquipment(equipment);
@@ -69,8 +65,7 @@ public class EquipmentEventAssignmentService {
         Long eventId = equipmentEventAssignmentRequestDto.getEventId();
 
         // Find EventEntity
-        EventEntity event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + eventId + " not found."));
+        EventEntity event = getEventEntity(eventId);
 
         // Set related Event
         equipmentEventAssignmentEntity.setEvent(event);
@@ -91,8 +86,7 @@ public class EquipmentEventAssignmentService {
         Long equipmentId = equipmentEventAssignmentRequestDto.getEquipmentId();
 
         // Find EquipmentEntity
-        EquipmentEntity equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new RecordNotFoundException("Equipment with id " + equipmentId + " not found."));
+        EquipmentEntity equipment = getEquipmentEntity(equipmentId);
 
         // Update fields
         existingEquipmentEventAssignmentEntity.setEquipment(equipment);
@@ -102,9 +96,7 @@ public class EquipmentEventAssignmentService {
         Long eventId = equipmentEventAssignmentRequestDto.getEventId();
 
         // Find EventEntity
-        EventEntity event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RecordNotFoundException("Event with id " + eventId + " not found."));
-
+        EventEntity event = getEventEntity(eventId);
 
         // Update fields
         existingEquipmentEventAssignmentEntity.setEvent(event);
@@ -121,10 +113,23 @@ public class EquipmentEventAssignmentService {
         equipmentEventAssignmentRepository.delete(equipmentEventAssignment);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private EquipmentEventAssignmentEntity getEquipmentEventAssignmentEntity(Long id) {
-        EquipmentEventAssignmentEntity equipmentEventAssignmentEntity = equipmentEventAssignmentRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("EquipmentEventAssignment with id " + id + " not found."));
-        return equipmentEventAssignmentEntity;
+        return equipmentEventAssignmentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("EquipmentEventAssignment with id " + id + " not found."));
     }
+
+    private EquipmentEntity getEquipmentEntity(Long id) {
+        return equipmentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Equipment with id " + id + " not found."));
+    }
+
+    private EventEntity getEventEntity(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Event with id " + id + " not found."));
+    }
+
 }

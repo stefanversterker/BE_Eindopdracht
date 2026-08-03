@@ -30,22 +30,23 @@ public class MicrophoneService {
 
     @Transactional(readOnly = true)
     public MicrophoneResponseDto getMicrophoneById(long id) {
-        MicrophoneEntity entity = microphoneRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Microphone with id " + id + " not found."));
-
-        return microphoneDtoMapper.mapToDto(entity);
+        return microphoneDtoMapper.mapToDto(getMicrophoneEntity(id));
     }
 
     public MicrophoneResponseDto createMicrophone(MicrophoneRequestDto microphoneRequestDto) {
+
         // Create the entity the repository expects
         MicrophoneEntity microphoneEntity = microphoneDtoMapper.mapToEntity(microphoneRequestDto);
+
         // Save the entity in the repository
         microphoneEntity = microphoneRepository.save(microphoneEntity);
+
         // Convert the saved entity to a response DTO
         return microphoneDtoMapper.mapToDto(microphoneEntity);
     }
 
     public MicrophoneResponseDto updateMicrophone(Long id, MicrophoneRequestDto microphoneRequestDto) {
+
         // Retrieve the entity from the database with its current values
         MicrophoneEntity existingMicrophoneEntity = getMicrophoneEntity(id);
 
@@ -65,14 +66,13 @@ public class MicrophoneService {
 
     public void deleteMicrophone(Long id) {
         MicrophoneEntity microphone = getMicrophoneEntity(id);
-        // If there are any relations, remove these first by setting the fields to null.
         microphoneRepository.delete(microphone);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private MicrophoneEntity getMicrophoneEntity(Long id) {
-        MicrophoneEntity microphoneEntity = microphoneRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Microphone " + id + " not found"));
-        return microphoneEntity;
+        return microphoneRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Microphone " + id + " not found."));
     }
 }

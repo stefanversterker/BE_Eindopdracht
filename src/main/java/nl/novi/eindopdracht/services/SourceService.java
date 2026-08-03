@@ -20,8 +20,6 @@ public class SourceService {
     private final SourceDtoMapper sourceDtoMapper;
     private final PerformerInstrumentRepository performerInstrumentRepository;
 
-
-
     public SourceService(
             SourceRepository sourceRepository,
             SourceDtoMapper sourceDtoMapper,
@@ -29,7 +27,6 @@ public class SourceService {
         this.sourceRepository = sourceRepository;
         this.sourceDtoMapper = sourceDtoMapper;
         this.performerInstrumentRepository = performerInstrumentRepository;
-
     }
 
     @Transactional(readOnly = true)
@@ -39,10 +36,7 @@ public class SourceService {
 
     @Transactional(readOnly = true)
     public SourceResponseDto getSourceById(long id) {
-        SourceEntity entity = sourceRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Source with id " + id + " not found."));
-
-        return sourceDtoMapper.mapToDto(entity);
+        return sourceDtoMapper.mapToDto(getSourceEntity(id));
     }
 
     public SourceResponseDto createSource(SourceRequestDto sourceRequestDto) {
@@ -53,8 +47,7 @@ public class SourceService {
         Long performerInstrumentId = sourceRequestDto.getPerformerInstrumentId();
 
         // Find PerformerInstrumentEntity
-        PerformerInstrumentEntity performerInstrument = performerInstrumentRepository.findById(performerInstrumentId)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerInstrument with id " + performerInstrumentId + " not found."));
+        PerformerInstrumentEntity performerInstrument = getPerformerInstrumentEntity(performerInstrumentId);
 
         // Set related PerformerInstrument
         sourceEntity.setPerformerInstrumentEntity(performerInstrument);
@@ -77,8 +70,7 @@ public class SourceService {
         Long performerInstrumentId = sourceRequestDto.getPerformerInstrumentId();
 
         // Find PerformerInstrumentEntity
-        PerformerInstrumentEntity performerInstrument = performerInstrumentRepository.findById(performerInstrumentId)
-                .orElseThrow(() -> new RecordNotFoundException("PerformerInstrument with id " + performerInstrumentId + " not found."));
+        PerformerInstrumentEntity performerInstrument = getPerformerInstrumentEntity(performerInstrumentId);
 
         // Update PerformerInstrument field
         existingSourceEntity.setPerformerInstrumentEntity(performerInstrument);
@@ -95,10 +87,15 @@ public class SourceService {
         sourceRepository.delete(source);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private SourceEntity getSourceEntity(Long id) {
-        SourceEntity sourceEntity = sourceRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Source with id " + id + " not found"));
-        return sourceEntity;
+        return sourceRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Source with id " + id + " not found."));
+    }
+
+    private PerformerInstrumentEntity getPerformerInstrumentEntity(Long id) {
+        return performerInstrumentRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("PerformerInstrument with id " + id + " not found."));
     }
 }

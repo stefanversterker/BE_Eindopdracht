@@ -38,10 +38,7 @@ public class ChannelService {
 
     @Transactional(readOnly = true)
     public ChannelResponseDto getChannelById(long id) {
-        ChannelEntity entity = channelRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Channel with id " + id + " not found."));
-
-        return channelDtoMapper.mapToDto(entity);
+        return channelDtoMapper.mapToDto(getChannelEntity(id));
     }
 
     public ChannelResponseDto createChannel(ChannelRequestDto channelRequestDto) {
@@ -53,9 +50,7 @@ public class ChannelService {
 
         // Find sourceEntity
         if (sourceId != null) {
-            SourceEntity source = sourceRepository.findById(sourceId)
-                    .orElseThrow(() ->
-                            new RecordNotFoundException("Source with id " + sourceId + " not found."));
+            SourceEntity source = getSourceEntity(sourceId);
 
             // Set the related source
             channelEntity.setSourceEntity(source);
@@ -79,9 +74,9 @@ public class ChannelService {
 
         // Verify and set sourceEntity
         if (sourceId != null) {
-            SourceEntity source = sourceRepository.findById(sourceId)
-                    .orElseThrow(() ->
-                            new RecordNotFoundException("Source with id " + sourceId + " not found."));
+            SourceEntity source = getSourceEntity(sourceId);
+
+
             existingChannelEntity.setSourceEntity(source);
         } else {
             existingChannelEntity.setSourceEntity(null);
@@ -99,10 +94,16 @@ public class ChannelService {
         channelRepository.delete(channel);
     }
 
-    // Helper: gets entity from repository
+    // Helpers
     private ChannelEntity getChannelEntity(Long id) {
         return channelRepository.findById(id)
                 .orElseThrow(() ->
                         new RecordNotFoundException("Channel with id " + id + " not found."));
+    }
+
+    private SourceEntity getSourceEntity(Long id) {
+        return sourceRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Source with id " + id + " not found."));
     }
 }
