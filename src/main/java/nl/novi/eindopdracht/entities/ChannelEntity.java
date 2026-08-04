@@ -12,10 +12,8 @@ public class ChannelEntity extends BaseEntity {
 
     private Integer number;
 
-    private String label;
-
-    @ManyToOne
-    @JoinColumn(name = "source_id")
+    @OneToOne
+    @JoinColumn(name = "source_id", unique = true)
     private SourceEntity sourceEntity;
 
     // Getters and setters
@@ -36,14 +34,6 @@ public class ChannelEntity extends BaseEntity {
         this.number = number;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
     public SourceEntity getSourceEntity() {
         return sourceEntity;
     }
@@ -51,5 +41,7 @@ public class ChannelEntity extends BaseEntity {
     public void setSourceEntity(SourceEntity sourceEntity) {
         this.sourceEntity = sourceEntity;
     }
+
+
 
 }

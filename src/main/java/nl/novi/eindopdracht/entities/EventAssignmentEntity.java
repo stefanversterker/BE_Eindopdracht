@@ -4,6 +4,14 @@ import jakarta.persistence.*;
 import nl.novi.eindopdracht.enums.EventRole;
 
 @Entity
+// I used the @UniqueConstraint because a person should not be assigned the same role twice at the same event.
+@Table(
+        name = "event_assignments",
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"person_id", "event_id", "event_role"}
+        )
+)
+
 public class EventAssignmentEntity extends BaseEntity {
 
     @ManyToOne

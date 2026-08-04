@@ -17,6 +17,11 @@ public class SourceDtoMapper implements DtoMapper<SourceResponseDto, SourceReque
         result.setId(entity.getId());
         result.setName(entity.getName());
         result.setPerformerInstrumentId(entity.getPerformerInstrumentEntity().getId());
+        result.setChannelId(
+                entity.getChannelEntity() != null
+                        ? entity.getChannelEntity().getId()
+                        : null
+        );
         return result;
     }
 

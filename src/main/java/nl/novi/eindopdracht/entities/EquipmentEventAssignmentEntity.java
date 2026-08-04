@@ -1,12 +1,14 @@
 package nl.novi.eindopdracht.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "EquipmentEventAssignments")
+@Table(
+        name = "equipment_event_assignments",
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"equipment_id", "event_id"}
+        )
+)
 public class EquipmentEventAssignmentEntity extends BaseEntity {
 
     @ManyToOne
@@ -23,7 +25,7 @@ public class EquipmentEventAssignmentEntity extends BaseEntity {
         return equipmentEntity;
     }
 
-    public void setEquipmentEntity(EquipmentEntity equipmentEntity) {
+    public void setEquipment(EquipmentEntity equipmentEntity) {
         this.equipmentEntity = equipmentEntity;
     }
 
@@ -31,7 +33,7 @@ public class EquipmentEventAssignmentEntity extends BaseEntity {
         return eventEntity;
     }
 
-    public void setEventEntity(EventEntity eventEntity) {
+    public void setEvent(EventEntity eventEntity) {
         this.eventEntity = eventEntity;
     }
 }

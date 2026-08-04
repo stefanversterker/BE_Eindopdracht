@@ -9,10 +9,7 @@ public class ChannelRequestDto {
     @Max(value = 99, message = "Channel number cannot exceed 99.")
     private Integer number;
 
-    @NotBlank(message = "Label is required.")
-    @Size(min = 2, max = 10,
-            message = "Label must be between 2 and 10 characters.")
-    private String label;
+    private Long sourceId;
 
     // Getters and setters
 
@@ -24,14 +21,13 @@ public class ChannelRequestDto {
         this.number = number;
     }
 
-    public String getLabel() {
-        return label;
+    public Long getSourceId() {
+        return sourceId;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setSourceId(Long sourceId) {
+        this.sourceId = sourceId;
     }
-
     // I left mixer id and source id out of this dto, I will expose them in the urls
 
 }
