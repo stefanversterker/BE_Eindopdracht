@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employeeprofiles")
+@RequestMapping("/employee-profiles")
 public class EmployeeProfileController {
 
     private final EmployeeProfileService employeeProfileService;
