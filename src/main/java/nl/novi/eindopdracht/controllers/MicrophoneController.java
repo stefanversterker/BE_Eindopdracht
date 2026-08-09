@@ -21,7 +21,7 @@ public class MicrophoneController {
     public MicrophoneController(
             MicrophoneService microphoneService,
             UrlHelper urlHelper
-    ) {
+    )   {
         this.microphoneService = microphoneService;
         this.urlHelper = urlHelper;
     }
