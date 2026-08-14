@@ -1,4 +1,11 @@
 -- Insert into person
+    insert into person (first_name, last_name, email, phone)
+    values ('Bart', 'Brosens', 'bart@ritalynn.zu', '06 18031976'),
+           ('Mark', 'Schrauwen', 'mark@ritalynn.zu', '06 23061985'),
+           ('Barry', 'Stuijts', 'barry@ritalynn.zu', '06 19081979'),
+           ('Olaf', 'van den Berg', 'olaf@ritalynn.zu', '06 15111984'),
+           ('Stefan', 'Verster', 'stefan@ritalynn.zu' ,'06 24041982')
+
 
 -- Insert into instrument
 
