@@ -4,10 +4,18 @@
            ('Mark', 'Schrauwen', 'mark@ritalynn.zu', '06 23061985'),
            ('Barry', 'Stuijts', 'barry@ritalynn.zu', '06 19081979'),
            ('Olaf', 'van den Berg', 'olaf@ritalynn.zu', '06 15111984'),
-           ('Stefan', 'Verster', 'stefan@ritalynn.zu' ,'06 24041982')
-
+           ('Stefan', 'Verster', 'stefan@ritalynn.zu' ,'06 24041982'),
+           ('Kees', 'Paneermeel', 'kees@paneermeel.nl', '06 15051965');
 
 -- Insert into instrument
+    insert into instrument (name)
+    values ('lead vocals'),
+           ('backing vocals'),
+           ('electric bass guitar'),
+           ('acoustic guitar'),
+           ('electric guitar'),
+           ('blues harp'),
+           ('drums');
 
 -- Insert into event
 
