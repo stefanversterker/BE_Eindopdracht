@@ -5,13 +5,13 @@
            (3, 'Barry', 'Stuijts', 'barry@ritalynn.zu', '06 19081979'),
            (4, 'Olaf', 'van den Berg', 'olaf@ritalynn.zu', '06 15111984'),
            (5, 'Stefan', 'Verster', 'stefan@ritalynn.zu' ,'06 24041982'),
-           (6, 'Kees', 'Paneermeel', 'kees@paneermeel.nl', '06 15051965'),
-           (7, 'Rick', 'Paneermeel', 'rick@paneermeel.nl', '06 12281996'),
-           (8, 'Abi', 'Borcic', 'abi@rbpine.nl', '06 63547483'),
-           (9, 'Rens', 'Geubbels', 'rens@gmail.com', '06 49724952'),
-           (10, 'Leon', 'van den Langenberg', 'leon@fifihengsten.nl', '456787834'),
-           (11, 'Wies', 'Arts', 'wies@fifihengsten.nl', '06 99834756'),
-           (12, 'Rop', 'van de Laar', 'rop@fifihengsten.nl', '06 74673392');
+           (6, 'Abi', 'Borcic', 'abi@rbpine.nl', '06 63547483'),
+           (7, 'Rens', 'Geubbels', 'rens@gmail.com', '06 49724952'),
+           (8, 'Leon', 'van den Langenberg', 'leon@fifihengsten.nl', '456787834'),
+           (9, 'Wies', 'Arts', 'wies@fifihengsten.nl', '06 99834756'),
+           (10, 'Rop', 'van de Laar', 'rop@fifihengsten.nl', '06 74673392'),
+           (11, 'Kees', 'Paneermeel', 'kees@paneermeel.nl', '06 15051965'),
+           (12, 'Rick', 'Paneermeel', 'rick@paneermeel.nl', '06 12281996');
 
 -- Insert into instrument
     insert into instruments (id, name)
@@ -112,6 +112,17 @@
 
 
 -- Insert into performerProfile (needs person)
+    insert into performer_profiles (id, person_id)
+    values (1, 1),
+           (2, 2),
+           (3, 3),
+           (4, 4),
+           (5, 5),
+           (6, 6),
+           (7, 7),
+           (8, 8),
+           (9, 9),
+           (10, 10);
 
 -- Insert into employeeProfile (needs person)
 
