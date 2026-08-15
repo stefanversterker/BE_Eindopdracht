@@ -1,17 +1,18 @@
 -- Insert into person
     insert into persons (id, first_name, last_name, email, phone)
-    values (1, 'Bart', 'Brosens', 'bart@ritalynn.zu', '06 18031976'),
-           (2, 'Mark', 'Schrauwen', 'mark@ritalynn.zu', '06 23061985'),
-           (3, 'Barry', 'Stuijts', 'barry@ritalynn.zu', '06 19081979'),
-           (4, 'Olaf', 'van den Berg', 'olaf@ritalynn.zu', '06 15111984'),
-           (5, 'Stefan', 'Verster', 'stefan@ritalynn.zu' ,'06 24041982'),
-           (6, 'Abi', 'Borcic', 'abi@rbpine.nl', '06 63547483'),
+    values (1, 'Bart', 'Brosens', 'bart@gmail.com', '06 18031976'),
+           (2, 'Mark', 'Schrauwen', 'mark@gmail.com', '06 23061985'),
+           (3, 'Barry', 'Stuijts', 'barry@gmail.com', '06 19081979'),
+           (4, 'Olaf', 'van den Berg', 'olaf@gmail.com', '06 15111984'),
+           (5, 'Stefan', 'Verster', 'stefan@gmail.com' ,'06 24041982'),
+           (6, 'Abi', 'Borcic', 'abi@gmail.com', '06 63547483'),
            (7, 'Rens', 'Geubbels', 'rens@gmail.com', '06 49724952'),
-           (8, 'Leon', 'van den Langenberg', 'leon@fifihengsten.nl', '456787834'),
-           (9, 'Wies', 'Arts', 'wies@fifihengsten.nl', '06 99834756'),
-           (10, 'Rop', 'van de Laar', 'rop@fifihengsten.nl', '06 74673392'),
-           (11, 'Kees', 'Paneermeel', 'kees@paneermeel.nl', '06 15051965'),
-           (12, 'Rick', 'Paneermeel', 'rick@paneermeel.nl', '06 12281996');
+           (8, 'Leon', 'van den Langenberg', 'leon@gmail.com', '456787834'),
+           (9, 'Wies', 'Arts', 'wies@gmail.com', '06 99834756'),
+           (10, 'Rop', 'van de Laar', 'rop@gmail.com', '06 74673392'),
+           (11, 'Suzanne', 'van der Leeden', 'suzanne@soundrental.nl', '06 15051965'),
+           (12, 'Fien', 'Verster', 'fien@soundrental.nl', '06 12281996'),
+           (13, 'Elise', 'Verheyden', 'elise@soundrental.nl', '06 12281996');
 
 -- Insert into instrument
     insert into instruments (id, name)
@@ -33,7 +34,7 @@
     insert into acts (id, name, phone, email)
     values (1, 'Rita Lynn', '06 45188510', 'info@ritalynn.zu'),
            (2, 'R.B. Pine', '06 63547483', 'info@rbpine.nl'),
-           (3, 'Fifi Hengsten', '06 53889223', 'info@fifihengsten.nl')
+           (3, 'Fifi Hengsten', '06 53889223', 'info@fifihengsten.nl');
 
 -- Insert into equipment
     insert into equipment (id, brand, model)
@@ -125,6 +126,10 @@
            (10, 10);
 
 -- Insert into employeeProfile (needs person)
+    insert into employee_profiles (id, person_id, drivers_license)
+    values (1, 11, AUTO),
+           (2, 12, VRACHTWAGEN),
+           (3, 13, KLEINE_BUS);
 
 -- Insert into performer-instrument (needs performer-profile + instrument)
 
