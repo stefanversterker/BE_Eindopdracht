@@ -37,6 +37,25 @@
 
 
 -- Insert into equipment
+    insert into equipment (id, brand, model)
+    values (1, 'Shure', 'SM58'),
+           (2, 'Shure', 'SM58'),
+           (3, 'Shure', 'SM58'),
+           (4, 'Shure', 'SM58'),
+           (5, 'Shure', 'SM57'),
+           (6, 'Shure', 'SM57'),
+           (7, 'Shure', 'Beta 52A'),
+           (8, 'Sennheiser', 'e904'),
+           (9, 'Sennheiser', 'e904'),
+           (10, 'Sennheiser', 'e904'),
+           (11, 'Sennheiser', 'e904'),
+           (12, 'Sennheiser', 'e906'),
+           (13, 'Sennheiser', 'e906'),
+           (14, 'AKG', 'C414 XLS'),
+           (15, 'AKG', 'C414 XLS'),
+           (16, 'AKG', 'C411 PP'),
+           (17, 'AKG', 'C411 PP');
+
 
 -- Insert into performerProfile (needs person)
 

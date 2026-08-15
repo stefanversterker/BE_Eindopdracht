@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "microphones")
 public class MicrophoneEntity extends EquipmentEntity {
 
     @ElementCollection(targetClass = PolarPattern.class)

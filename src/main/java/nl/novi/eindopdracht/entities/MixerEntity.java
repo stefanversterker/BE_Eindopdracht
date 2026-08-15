@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "mixers")
 public class MixerEntity extends EquipmentEntity {
 
     @OneToMany(mappedBy = "mixerEntity")
