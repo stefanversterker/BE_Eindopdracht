@@ -35,7 +35,6 @@
            (2, 'R.B. Pine', '06 63547483', 'info@rbpine.nl'),
            (3, 'Fifi Hengsten', '06 53889223', 'info@fifihengsten.nl')
 
-
 -- Insert into equipment
     insert into equipment (id, brand, model)
     values (1, 'Shure', 'SM58'),
@@ -54,7 +53,62 @@
            (14, 'AKG', 'C414 XLS'),
            (15, 'AKG', 'C414 XLS'),
            (16, 'AKG', 'C411 PP'),
-           (17, 'AKG', 'C411 PP');
+           (17, 'AKG', 'C411 PP'),
+           (18, 'Allen & Heath', 'CQ18T'),
+           (19, 'Allen & Heath', 'QU-5D'),
+           (20, 'Allen & Heath', 'QU-7D');
+
+
+-- Insert into microphones
+    insert into microphones (id, phantom_required)
+    values (1, false),
+           (2, false),
+           (3, false),
+           (4, false),
+           (5, false),
+           (6, false),
+           (7, false),
+           (8, false),
+           (9, false),
+           (10, false),
+           (11, false),
+           (12, false),
+           (13, false),
+           (14, true),
+           (15, true),
+           (16, true),
+           (17, true);
+
+-- Insert into microphone_polar_patterns
+    insert into microphone_polar_patterns (microphone_id, polar_pattern)
+    values (1, CARDIOID),
+           (2, CARDIOID),
+           (3, CARDIOID),
+           (4, CARDIOID),
+           (5, CARDIOID),
+           (6, CARDIOID),
+           (7, CARDIOID),
+           (8, CARDIOID),
+           (9, CARDIOID),
+           (10, CARDIOID),
+           (11, CARDIOID),
+           (12, CARDIOID),
+           (13, CARDIOID),
+           (14, CARDIOID),
+           (14, OMNIDIRECTIONAL),
+           (14, FIGURE_8),
+           (15, CARDIOID),
+           (15, OMNIDIRECTIONAL),
+           (15, FIGURE_8),
+           (16, FIGURE_8),
+           (17, FIGURE_8);
+
+
+-- Insert into mixers
+    insert into mixers (id)
+    values (18),
+           (19),
+           (20);
 
 
 -- Insert into performerProfile (needs person)
