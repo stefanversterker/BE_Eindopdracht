@@ -26,7 +26,7 @@
 
 -- Insert into event
     insert into events (id, date, venue)
-    values (1, 2027-07-23, 'Mezz'),
+    values (1, 2027-07-23, 'cafe de Bommel'),
            (2, 2027-06-29, 'cafe de Kerel'),
            (3, 2027-08-02, 'Electron');
 
@@ -34,7 +34,7 @@
     insert into acts (id, name, phone, email)
     values (1, 'Rita Lynn', '06 45188510', 'info@ritalynn.zu'),
            (2, 'R.B. Pine', '06 63547483', 'info@rbpine.nl'),
-           (3, 'Fifi Hengsten', '06 53889223', 'info@fifihengsten.nl');
+           (3, 'Blabber n Smoke', '06 53889223', 'info@blabbernsmoke.nl');
 
 -- Insert into equipment
     insert into equipment (id, brand, model)
@@ -236,6 +236,10 @@
            (51,20,16, null);
 
 -- Insert into performance (needs event + act)
+    insert into performance (id, event_id, act_id,)
+    values (1, 1, 2),
+           (2, 2, 1),
+           (3, 3, 3);
 
 -- Insert into performer-act (needs performer-profile + act)
 
