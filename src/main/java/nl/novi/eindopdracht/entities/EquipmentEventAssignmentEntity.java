@@ -16,7 +16,7 @@ public class EquipmentEventAssignmentEntity extends BaseEntity {
     private EquipmentEntity equipmentEntity;
 
     @ManyToOne
-    @JoinColumn(name = "event_entity")
+    @JoinColumn(name = "event_id")
     private EventEntity eventEntity;
 
     // Getters and setters
