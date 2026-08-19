@@ -272,5 +272,9 @@
            (6,'drummer');
 
 -- Insert into event-assignment (event + person)
+    insert into event_assignments (id, event_id, person_id, event_role)
+    values (1, 1, 12),
+           (2, 2, 11),
+           (3, 3, 13);
 
 -- Insert into equipment-event-assignment (needs event + equipment)
