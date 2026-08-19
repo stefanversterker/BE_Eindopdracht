@@ -82,27 +82,27 @@
 
 -- Insert into microphone_polar_patterns
     insert into microphone_polar_patterns (id, polar_pattern)
-    values (1,CARDIOID),
-           (2,CARDIOID),
-           (3,CARDIOID),
-           (4,CARDIOID),
-           (5,CARDIOID),
-           (6,CARDIOID),
-           (7,CARDIOID),
-           (8,CARDIOID),
-           (9,CARDIOID),
-           (10,CARDIOID),
-           (11,CARDIOID),
-           (12,CARDIOID),
-           (13,CARDIOID),
-           (14,CARDIOID),
-           (14,OMNIDIRECTIONAL),
-           (14,FIGURE_8),
-           (15,CARDIOID),
-           (15,OMNIDIRECTIONAL),
-           (15,FIGURE_8),
-           (16,FIGURE_8),
-           (17,FIGURE_8);
+    values (1,'CARDIOID'),
+           (2,'CARDIOID'),
+           (3,'CARDIOID'),
+           (4,'CARDIOID'),
+           (5,'CARDIOID'),
+           (6,'CARDIOID'),
+           (7,'CARDIOID'),
+           (8,'CARDIOID'),
+           (9,'CARDIOID'),
+           (10,'CARDIOID'),
+           (11,'CARDIOID'),
+           (12,'CARDIOID'),
+           (13,'CARDIOID'),
+           (14,'CARDIOID'),
+           (14,'OMNIDIRECTIONAL'),
+           (14,'FIGURE_8'),
+           (15,'CARDIOID'),
+           (15,'OMNIDIRECTIONAL'),
+           (15,'FIGURE_8'),
+           (16,'FIGURE_8'),
+           (17,'FIGURE_8');
 
 
 -- Insert into mixers
@@ -242,7 +242,7 @@
            (3,3,3);
 
 -- Insert into performer-act (needs performer-profile + act)
-    insert into performer_act (id, performer_id, act_id, performer_act_role_id)
+    insert into performer_acts (id, performer_id, act_id, performer_act_role_id)
     values (1,1,1,1),
            (2,1,1,4),
            (3,2,1,5),
@@ -264,12 +264,12 @@
 
 -- Insert into performer_act_roles
     insert into performer_act_roles (id, role)
-    values (1,"lead singer"),
-           (2,"background singer"),
-           (3,"bass player"),
-           (4,"guitar player"),
-           (5,"blues harp player"),
-           (6,"drummer");
+    values (1,'lead singer'),
+           (2,'background singer'),
+           (3,'bass player'),
+           (4,'guitar player'),
+           (5,'blues harp player'),
+           (6,'drummer');
 
 -- Insert into event-assignment (event + person)
 
