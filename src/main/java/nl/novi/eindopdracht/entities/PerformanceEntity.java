@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 // I used the @UniqueConstraint because an act should only be allowed to perform once at an event.
 @Table(
+        name = "performances",
         uniqueConstraints = @UniqueConstraint(
                 columnNames = {"event_id", "act_id"}
         )

@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "performers")
+@Table(name = "performer_profiles")
 public class PerformerProfileEntity extends BaseEntity {
 
 
     @OneToMany(mappedBy = "performerProfileEntity")
     private List<PerformerInstrumentEntity> performerInstruments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "performer")
+    @OneToMany(mappedBy = "performerEntity")
     private List<PerformerActEntity> acts = new ArrayList<>();
 
     @OneToOne

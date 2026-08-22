@@ -3,7 +3,13 @@ package nl.novi.eindopdracht.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "channels")
+@Table(
+        name = "channels",
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"mixer_id", "number"}
+        )
+)
+
 public class ChannelEntity extends BaseEntity {
 
     @ManyToOne
@@ -12,8 +18,8 @@ public class ChannelEntity extends BaseEntity {
 
     private Integer number;
 
-    @OneToOne
-    @JoinColumn(name = "source_id", unique = true)
+    @ManyToOne
+    @JoinColumn(name = "source_id")
     private SourceEntity sourceEntity;
 
     // Getters and setters

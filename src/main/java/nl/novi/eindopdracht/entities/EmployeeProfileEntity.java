@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import nl.novi.eindopdracht.enums.DriversLicense;
 
 @Entity
+@Table(name = "employee_profiles")
 public class EmployeeProfileEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)

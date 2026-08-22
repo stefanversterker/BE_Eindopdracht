@@ -27,9 +27,9 @@ values (1, 'lead vocals'),
 
 -- Insert into event
 insert into events (id, date, venue)
-values (1, 2027 - 07 - 23, 'cafe de Bommel'),
-       (2, 2027 - 06 - 29, 'cafe de Kerel'),
-       (3, 2027 - 08 - 02, 'Electron');
+values (1, '2027-07-23', 'cafe de Bommel'),
+       (2, '2027-06-29', 'cafe de Kerel'),
+       (3, '2027-08-02', 'Electron');
 
 -- Insert into act
 insert into acts (id, name, phone, email)
@@ -88,7 +88,7 @@ values (1, false),
        (20, true);
 
 -- Insert into microphone_polar_patterns
-insert into microphone_polar_patterns (id, polar_pattern)
+insert into microphone_polar_patterns (microphone_id, polar_pattern)
 values (1, 'CARDIOID'),
        (2, 'CARDIOID'),
        (3, 'CARDIOID'),
@@ -137,9 +137,9 @@ values (1, 1),
 
 -- Insert into employeeProfile (needs person)
 insert into employee_profiles (id, person_id, drivers_license)
-values (1, 11, AUTO),
-       (2, 12, VRACHTWAGEN),
-       (3, 13, KLEINE_BUS);
+values (1, 11, 'AUTO'),
+       (2, 12, 'VRACHTWAGEN'),
+       (3, 13, 'KLEINE_BUS');
 
 -- Insert into performer-instrument (needs performer-profile + instrument)
 insert into performer_instruments (id, performer_profile_id, instrument_id)
@@ -246,40 +246,48 @@ values (1, 21, 1, 11),
        (51, 23, 16, null);
 
 -- Insert into performance (needs event + act)
-insert into performance (id, event_id, act_id)
+insert into performances (id, event_id, act_id)
 values (1, 1, 2),
        (2, 2, 1),
        (3, 3, 3);
 
 -- Insert into performer-act (needs performer-profile + act)
-insert into performer_acts (id, performer_id, act_id, performer_act_role_id)
-values (1, 1, 1, 1),
-       (2, 1, 1, 4),
-       (3, 2, 1, 5),
-       (4, 2, 1, 2),
-       (5, 3, 1, 3),
-       (6, 3, 1, 2),
-       (7, 4, 1, 4),
-       (8, 5, 1, 6),
-       (9, 5, 2, 6),
-       (10, 5, 3, 6),
-       (11, 6, 2, 1),
-       (12, 6, 2, 4),
-       (13, 7, 2, 3),
-       (14, 8, 3, 4),
-       (15, 8, 3, 4),
-       (16, 9, 3, 1),
-       (17, 9, 3, 5),
-       (18, 10, 3, 3);
+insert into performer_acts (id, performer_id, act_id)
+values (1, 1, 1),
+       (2, 2, 1),
+       (3, 3, 1),
+       (4, 4, 1),
+       (5, 5, 1),
+       (6, 5, 2),
+       (7, 5, 3),
+       (8, 6, 2),
+       (9, 7, 2),
+       (10, 8, 3),
+       (11, 9, 3),
+       (12, 10, 3);
 
 -- Insert into performer_act_roles
-insert into performer_act_roles (id, role)
-values (1, 'lead singer'),
-       (2, 'background singer'),
-       (3, 'bass player'),
-       (4, 'guitar player'),
-       (5, 'blues harp player'),
-       (6, 'drummer');
+insert into performer_act_roles (performer_act_id, role)
+values (1, 'lead_singer'),
+       (1, 'guitar_player'),
+       (2, 'blues_harp_player'),
+       (2, 'background_singer'),
+       (3, 'bass_player'),
+       (3, 'background_singer'),
+       (4, 'guitar_player'),
+       (5, 'drummer'),
+       (6, 'drummer'),
+       (7, 'drummer'),
+       (8, 'lead_singer'),
+       (8, 'guitar_player'),
+       (9, 'bass_player'),
+       (10, 'guitar_player'),
+       (10, 'background_singer'),
+       (11, 'lead_singer'),
+       (11, 'blues_harp_player'),
+       (12, 'bass_player');
+
+
 
 -- Insert into event-assignment (event + person)
 insert into event_assignments (id, event_id, person_id, event_role)

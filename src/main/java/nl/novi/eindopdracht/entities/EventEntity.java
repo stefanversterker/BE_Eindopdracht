@@ -3,12 +3,14 @@ package nl.novi.eindopdracht.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "events")
 public class EventEntity extends BaseEntity {
 
     private LocalDate date;
