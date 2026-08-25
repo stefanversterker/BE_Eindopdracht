@@ -50,7 +50,18 @@ public class PerformerProfileEntity extends BaseEntity {
         return personEntity;
     }
 
+    // Custom setter ensures that performerProfile -> person and person -> performerProfile stay in sync.
     public void setPersonEntity(PersonEntity personEntity) {
+
+        if (this.personEntity != null) {
+            this.personEntity.setPerformerProfileEntity(null);
+        }
+
         this.personEntity = personEntity;
+
+        if (personEntity != null &&
+                personEntity.getPerformerProfileEntity() != this) {
+            personEntity.setPerformerProfileEntity(this);
+        }
     }
 }

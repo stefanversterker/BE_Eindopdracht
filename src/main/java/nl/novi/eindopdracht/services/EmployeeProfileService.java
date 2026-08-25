@@ -36,6 +36,7 @@ public class EmployeeProfileService {
         return employeeProfileDtoMapper.mapToDto(getEmployeeProfileEntity(id));
     }
 
+    @Transactional
     public EmployeeProfileResponseDto createEmployeeProfile(EmployeeProfileRequestDto employeeProfileRequestDto) {
         // Create the entity the repository expects
         EmployeeProfileEntity employeeProfileEntity = employeeProfileDtoMapper.mapToEntity(employeeProfileRequestDto);
@@ -46,7 +47,7 @@ public class EmployeeProfileService {
         // Find PersonEntity
         PersonEntity person = getPersonEntity(personId);
 
-        // Set the related person and employeeProfile
+        // Set the related person
         employeeProfileEntity.setPersonEntity(person);
 
         // Save the entity in the repository
@@ -56,6 +57,7 @@ public class EmployeeProfileService {
         return employeeProfileDtoMapper.mapToDto(employeeProfileEntity);
     }
 
+    @Transactional
     public EmployeeProfileResponseDto updateEmployeeProfile(Long id, EmployeeProfileRequestDto employeeProfileRequestDto) {
         // Retrieve the entity from the database with its current values
         EmployeeProfileEntity existingEmployeeProfileEntity = getEmployeeProfileEntity(id);
@@ -87,7 +89,6 @@ public class EmployeeProfileService {
         PersonEntity person = employeeProfile.getPersonEntity();
 
         if (person != null) {
-            person.setEmployeeProfileEntity(null);
             employeeProfile.setPersonEntity(null);
         }
 
