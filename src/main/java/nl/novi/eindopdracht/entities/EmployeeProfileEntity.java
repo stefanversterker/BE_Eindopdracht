@@ -31,8 +31,19 @@ public class EmployeeProfileEntity extends BaseEntity {
         return personEntity;
     }
 
+    // Custom setter ensures that employeeProfile -> person and person -> employeeProfile stay in sync.
     public void setPersonEntity(PersonEntity personEntity) {
+
+        if (this.personEntity != null) {
+            this.personEntity.setEmployeeProfileEntity(null);
+        }
+
         this.personEntity = personEntity;
+
+        if (personEntity != null &&
+                personEntity.getEmployeeProfileEntity() != this) {
+            personEntity.setEmployeeProfileEntity(this);
+        }
     }
 
 }

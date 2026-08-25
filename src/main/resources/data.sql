@@ -344,3 +344,16 @@ values (1,22,2),
        (38,2,3),
        (39,3,3),
        (40,13,3);
+
+-- Synchronize sequences
+SELECT setval('acts_id_seq', (SELECT MAX(id) FROM acts));
+SELECT setval('events_id_seq', (SELECT MAX(id) FROM events));
+SELECT setval('performer_profiles_id_seq', (SELECT MAX(id) FROM performer_profiles));
+SELECT setval('persons_id_seq', (SELECT MAX(id) FROM persons));
+SELECT setval('instruments_id_seq', (SELECT MAX(id) FROM instruments));
+SELECT setval('employee_profiles_id_seq', (SELECT MAX(id) FROM employee_profiles));
+SELECT setval('performer_acts_id_seq', (SELECT MAX(id) FROM performer_acts));
+SELECT setval('performances_id_seq', (SELECT MAX(id) FROM performances));
+SELECT setval('sources_id_seq', (SELECT MAX(id) FROM sources));
+SELECT setval('channels_id_seq', (SELECT MAX(id) FROM channels));
+SELECT setval('equipment_id_seq', (SELECT MAX(id) FROM equipment));

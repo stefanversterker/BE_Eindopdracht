@@ -46,7 +46,7 @@ public class EmployeeProfileService {
         // Find PersonEntity
         PersonEntity person = getPersonEntity(personId);
 
-        // Set the related person
+        // Set the related person and employeeProfile
         employeeProfileEntity.setPersonEntity(person);
 
         // Save the entity in the repository
@@ -63,12 +63,15 @@ public class EmployeeProfileService {
         // Get PersonId from requestDto
         Long personId = employeeProfileRequestDto.getPersonId();
 
-        // Get PersonEntity from repository
-        PersonEntity person = getPersonEntity(personId);
+        // Get the old person
+        PersonEntity newPerson = getPersonEntity(personId);
 
-        // Update Person field
-        existingEmployeeProfileEntity.setPersonEntity(person);
-        existingEmployeeProfileEntity.setDriversLicense(employeeProfileRequestDto.getDriversLicense());
+        existingEmployeeProfileEntity.setPersonEntity(newPerson);
+
+        // Update other fields
+        existingEmployeeProfileEntity.setDriversLicense(
+                employeeProfileRequestDto.getDriversLicense()
+        );
 
         // Save update to repository
         existingEmployeeProfileEntity = employeeProfileRepository.save(existingEmployeeProfileEntity);
@@ -77,8 +80,17 @@ public class EmployeeProfileService {
         return employeeProfileDtoMapper.mapToDto(existingEmployeeProfileEntity);
     }
 
+    @Transactional
     public void deleteEmployeeProfile(Long id) {
         EmployeeProfileEntity employeeProfile = getEmployeeProfileEntity(id);
+
+        PersonEntity person = employeeProfile.getPersonEntity();
+
+        if (person != null) {
+            person.setEmployeeProfileEntity(null);
+            employeeProfile.setPersonEntity(null);
+        }
+
         employeeProfileRepository.delete(employeeProfile);
     }
 
@@ -94,5 +106,6 @@ public class EmployeeProfileService {
                 .orElseThrow(() ->
                         new RecordNotFoundException("Person with id " + id + " not found."));
     }
+
 
 }

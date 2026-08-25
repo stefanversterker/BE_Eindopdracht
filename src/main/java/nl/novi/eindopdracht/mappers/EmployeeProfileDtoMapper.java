@@ -15,7 +15,9 @@ public class EmployeeProfileDtoMapper implements DtoMapper<EmployeeProfileRespon
         var result = new EmployeeProfileResponseDto();
         result.setId(entity.getId());
         result.setDriversLicense(entity.getDriversLicense());
-        result.setPersonId(entity.getPersonEntity().getId());
+        if (entity.getPersonEntity() != null) {
+            result.setPersonId(entity.getPersonEntity().getId());
+        }
         return result;
     }
 
