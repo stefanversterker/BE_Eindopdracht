@@ -36,6 +36,7 @@ public class PerformerProfileService {
         return performerProfileDtoMapper.mapToDto(getPerformerProfileEntity(id));
     }
 
+    @Transactional
     public PerformerProfileResponseDto createPerformerProfile(PerformerProfileRequestDto performerProfileRequestDto) {
         // Create the entity the repository expects
         PerformerProfileEntity performerProfileEntity = performerProfileDtoMapper.mapToEntity(performerProfileRequestDto);
@@ -56,6 +57,7 @@ public class PerformerProfileService {
         return performerProfileDtoMapper.mapToDto(performerProfileEntity);
     }
 
+    @Transactional
     public PerformerProfileResponseDto updatePerformerProfile(Long id, PerformerProfileRequestDto performerProfileRequestDto) {
         // Retrieve the entity from the database with its current values
         PerformerProfileEntity existingPerformerProfileEntity = getPerformerProfileEntity(id);
@@ -63,11 +65,10 @@ public class PerformerProfileService {
         // Get PersonId from requestDto
         Long personId = performerProfileRequestDto.getPersonId();
 
-        // Get PersonEntity from repository
-        PersonEntity person = getPersonEntity(personId);
+        // Get the old person
+        PersonEntity newPerson = getPersonEntity(personId);
 
-        // Update Person field
-        existingPerformerProfileEntity.setPersonEntity(person);
+        existingPerformerProfileEntity.setPersonEntity(newPerson);
 
         // Save update to repository
         existingPerformerProfileEntity = performerProfileRepository.save(existingPerformerProfileEntity);
@@ -76,8 +77,16 @@ public class PerformerProfileService {
         return performerProfileDtoMapper.mapToDto(existingPerformerProfileEntity);
     }
 
+    @Transactional
     public void deletePerformerProfile(Long id) {
         PerformerProfileEntity performerProfile = getPerformerProfileEntity(id);
+
+        PersonEntity person = performerProfile.getPersonEntity();
+
+        if (person != null) {
+            performerProfile.setPersonEntity(null);
+        }
+
         performerProfileRepository.delete(performerProfile);
     }
 

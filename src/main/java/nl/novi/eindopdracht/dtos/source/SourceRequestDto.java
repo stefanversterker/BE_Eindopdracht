@@ -12,7 +12,7 @@ public class SourceRequestDto {
     private String name;
 
     @NotNull(message = "PerformerInstrument ID is required.")
-    private Long PerformerInstrumentId;
+    private Long performerInstrumentId;
 
     // Getters and Setters
 
@@ -25,10 +25,10 @@ public class SourceRequestDto {
     }
 
     public Long getPerformerInstrumentId() {
-        return PerformerInstrumentId;
+        return performerInstrumentId;
     }
 
     public void setPerformerInstrumentId(Long performerInstrumentId) {
-        PerformerInstrumentId = performerInstrumentId;
+        this.performerInstrumentId = performerInstrumentId;
     }
 }

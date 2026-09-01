@@ -50,9 +50,9 @@ public class ActService {
         ActEntity existingActEntity = getActEntity(id);
 
         // Change field
+        existingActEntity.setEmail(actRequestDto.getEmail());
         existingActEntity.setName(actRequestDto.getName());
         existingActEntity.setPhone(actRequestDto.getPhone());
-        existingActEntity.setEmail(actRequestDto.getEmail());
 
         // Save update to repository
         existingActEntity = actRepository.save(existingActEntity);

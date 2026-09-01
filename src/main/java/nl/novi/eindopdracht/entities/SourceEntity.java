@@ -2,6 +2,8 @@ package nl.novi.eindopdracht.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "sources")
 public class SourceEntity extends BaseEntity {
@@ -14,8 +16,8 @@ public class SourceEntity extends BaseEntity {
             nullable = false)
     private PerformerInstrumentEntity performerInstrumentEntity;
 
-    @OneToOne(mappedBy = "sourceEntity")
-    private ChannelEntity channelEntity;
+    @OneToMany(mappedBy = "sourceEntity")
+    private List<ChannelEntity> channels;
 
     // Getters and Setters
 
@@ -35,12 +37,12 @@ public class SourceEntity extends BaseEntity {
         this.performerInstrumentEntity = performerInstrumentEntity;
     }
 
-    public ChannelEntity getChannelEntity() {
-        return channelEntity;
+    public List<ChannelEntity> getChannels() {
+        return channels;
     }
 
-    public void setChannelEntity(ChannelEntity channelEntity) {
-        this.channelEntity = channelEntity;
+    public void setChannels(List<ChannelEntity> channels) {
+        this.channels = channels;
     }
 }
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(
+        name = "performer_instruments",
         uniqueConstraints = @UniqueConstraint(
                 columnNames = {
                         "performer_profile_id",

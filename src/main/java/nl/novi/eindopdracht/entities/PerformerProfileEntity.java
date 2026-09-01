@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "performers")
+@Table(name = "performer_profiles")
 public class PerformerProfileEntity extends BaseEntity {
 
 
     @OneToMany(mappedBy = "performerProfileEntity")
     private List<PerformerInstrumentEntity> performerInstruments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "performer")
+    @OneToMany(mappedBy = "performerEntity")
     private List<PerformerActEntity> acts = new ArrayList<>();
 
     @OneToOne
@@ -50,7 +50,18 @@ public class PerformerProfileEntity extends BaseEntity {
         return personEntity;
     }
 
+    // Custom setter ensures that performerProfile -> person and person -> performerProfile stay in sync.
     public void setPersonEntity(PersonEntity personEntity) {
+
+        if (this.personEntity != null) {
+            this.personEntity.setPerformerProfileEntity(null);
+        }
+
         this.personEntity = personEntity;
+
+        if (personEntity != null &&
+                personEntity.getPerformerProfileEntity() != this) {
+            personEntity.setPerformerProfileEntity(this);
+        }
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 //Here I use @Entity instead of @MappedSuperclass because I want to enable users to request an Equipment Table, so it's more than just a superclass.
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "equipment")
 public abstract class EquipmentEntity extends BaseEntity {
 

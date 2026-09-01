@@ -36,6 +36,7 @@ public class EmployeeProfileService {
         return employeeProfileDtoMapper.mapToDto(getEmployeeProfileEntity(id));
     }
 
+    @Transactional
     public EmployeeProfileResponseDto createEmployeeProfile(EmployeeProfileRequestDto employeeProfileRequestDto) {
         // Create the entity the repository expects
         EmployeeProfileEntity employeeProfileEntity = employeeProfileDtoMapper.mapToEntity(employeeProfileRequestDto);
@@ -56,6 +57,7 @@ public class EmployeeProfileService {
         return employeeProfileDtoMapper.mapToDto(employeeProfileEntity);
     }
 
+    @Transactional
     public EmployeeProfileResponseDto updateEmployeeProfile(Long id, EmployeeProfileRequestDto employeeProfileRequestDto) {
         // Retrieve the entity from the database with its current values
         EmployeeProfileEntity existingEmployeeProfileEntity = getEmployeeProfileEntity(id);
@@ -63,12 +65,15 @@ public class EmployeeProfileService {
         // Get PersonId from requestDto
         Long personId = employeeProfileRequestDto.getPersonId();
 
-        // Get PersonEntity from repository
-        PersonEntity person = getPersonEntity(personId);
+        // Get the old person
+        PersonEntity newPerson = getPersonEntity(personId);
 
-        // Update Person field
-        existingEmployeeProfileEntity.setPersonEntity(person);
-        existingEmployeeProfileEntity.setDriversLicense(employeeProfileRequestDto.getDriversLicense());
+        existingEmployeeProfileEntity.setPersonEntity(newPerson);
+
+        // Update other fields
+        existingEmployeeProfileEntity.setDriversLicense(
+                employeeProfileRequestDto.getDriversLicense()
+        );
 
         // Save update to repository
         existingEmployeeProfileEntity = employeeProfileRepository.save(existingEmployeeProfileEntity);
@@ -77,8 +82,16 @@ public class EmployeeProfileService {
         return employeeProfileDtoMapper.mapToDto(existingEmployeeProfileEntity);
     }
 
+    @Transactional
     public void deleteEmployeeProfile(Long id) {
         EmployeeProfileEntity employeeProfile = getEmployeeProfileEntity(id);
+
+        PersonEntity person = employeeProfile.getPersonEntity();
+
+        if (person != null) {
+            employeeProfile.setPersonEntity(null);
+        }
+
         employeeProfileRepository.delete(employeeProfile);
     }
 
@@ -94,5 +107,6 @@ public class EmployeeProfileService {
                 .orElseThrow(() ->
                         new RecordNotFoundException("Person with id " + id + " not found."));
     }
+
 
 }
