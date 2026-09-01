@@ -8,6 +8,8 @@ public class EquipmentResponseDto {
 
     private String model;
 
+    private Long imageId;
+
 
     // Getters and Setters
 
@@ -35,4 +37,11 @@ public class EquipmentResponseDto {
         this.model = model;
     }
 
+    public Long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
+    }
 }
