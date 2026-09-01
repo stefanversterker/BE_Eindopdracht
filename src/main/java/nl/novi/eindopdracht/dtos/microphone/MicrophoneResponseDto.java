@@ -14,6 +14,8 @@ public class MicrophoneResponseDto extends EquipmentResponseDto {
 
     private boolean phantomRequired;
 
+    private Long imageId;
+
     // Getters and Setters
 
     public Long getId() {
@@ -40,4 +42,13 @@ public class MicrophoneResponseDto extends EquipmentResponseDto {
         this.phantomRequired = phantomRequired;
     }
 
+    @Override
+    public Long getImageId() {
+        return imageId;
+    }
+
+    @Override
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
+    }
 }
