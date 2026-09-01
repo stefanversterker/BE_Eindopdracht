@@ -16,7 +16,9 @@ public class ChannelDtoMapper implements DtoMapper<ChannelResponseDto, ChannelRe
         var result = new ChannelResponseDto();
         result.setId(entity.getId());
         result.setNumber(entity.getNumber());
-        result.setMixerId(entity.getMixerEntity().getId());
+        if (entity.getMixerEntity() != null) {
+            result.setMixerId(entity.getMixerEntity().getId());
+        }
         // A channel may exist without a source being assigned yet.
         result.setSourceId(
                 entity.getSourceEntity() != null

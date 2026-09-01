@@ -137,9 +137,10 @@ values (1, 1),
 
 -- Insert into employeeProfile (needs person)
 insert into employee_profiles (id, person_id, drivers_license)
-values (1, 11, 'AUTO'),
-       (2, 12, 'VRACHTWAGEN'),
-       (3, 13, 'KLEINE_BUS');
+values (1,11,'AUTO'),
+       (2,12,'VRACHTWAGEN'),
+       (3,13,'KLEINE_BUS'),
+       (4,6,'AUTO');
 
 -- Insert into performer-instrument (needs performer-profile + instrument)
 insert into performer_instruments (id, performer_profile_id, instrument_id)
@@ -186,7 +187,7 @@ values (1, 1, 'lead vocals Bart'),
        (20, 13, 'electric bass Rens'),
        (21, 14, 'bgv Arne'),
        (22, 15, 'electric guitar Arne'),
-       (23, 16, 'lead vocals harp Erik'),
+       (23, 16, 'lead vocals Erik'),
        (24, 17, 'blues harp Erik'),
        (25, 18, 'electric bass Henning');
 
@@ -357,3 +358,7 @@ SELECT setval('performances_id_seq', (SELECT MAX(id) FROM performances));
 SELECT setval('sources_id_seq', (SELECT MAX(id) FROM sources));
 SELECT setval('channels_id_seq', (SELECT MAX(id) FROM channels));
 SELECT setval('equipment_id_seq', (SELECT MAX(id) FROM equipment));
+SELECT setval('performer_profiles_id_seq', (SELECT MAX(id) FROM performer_profiles));
+SELECT setval('performer_instruments_id_seq', (SELECT MAX(id) FROM performer_instruments));
+SELECT setval('event_assignments_id_seq', (SELECT MAX(id) FROM event_assignments));
+SELECT setval('equipment_event_assignments_id_seq', (SELECT MAX(id) FROM equipment_event_assignments));

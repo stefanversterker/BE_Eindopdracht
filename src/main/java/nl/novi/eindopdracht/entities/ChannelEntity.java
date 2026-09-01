@@ -48,6 +48,4 @@ public class ChannelEntity extends BaseEntity {
         this.sourceEntity = sourceEntity;
     }
 
-
-
 }

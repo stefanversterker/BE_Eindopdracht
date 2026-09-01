@@ -31,6 +31,6 @@ public class SourceResponseDto {
     }
 
     public void setPerformerInstrumentId(Long performerInstrumentId) {
-        performerInstrumentId = performerInstrumentId;
+        this.performerInstrumentId = performerInstrumentId;
     }
 }

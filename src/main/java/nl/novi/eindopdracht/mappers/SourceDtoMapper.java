@@ -14,9 +14,15 @@ public class SourceDtoMapper implements DtoMapper<SourceResponseDto, SourceReque
     @Override
     public SourceResponseDto mapToDto(SourceEntity entity){
         var result = new SourceResponseDto();
+
         result.setId(entity.getId());
         result.setName(entity.getName());
-        result.setPerformerInstrumentId(entity.getPerformerInstrumentEntity().getId());
+        if (entity.getPerformerInstrumentEntity() != null) {
+            result.setPerformerInstrumentId(
+                    entity.getPerformerInstrumentEntity().getId()
+            );
+        }
+
         return result;
     }
 

@@ -38,12 +38,6 @@ public class ChannelController {
         return new ResponseEntity<>(channel, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<ChannelResponseDto> createChannel(@RequestBody  @Valid ChannelRequestDto channelRequestDto) {
-        ChannelResponseDto newChannel = channelService.createChannel(channelRequestDto);
-        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newChannel.getId())).body(newChannel);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<ChannelResponseDto> updateChannel(@PathVariable Long id, @RequestBody  @Valid ChannelRequestDto channelRequestDto)  {
         ChannelResponseDto updatedChannel = channelService.updateChannel(id, channelRequestDto);
