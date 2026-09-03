@@ -51,6 +51,11 @@ public class ImageService {
         return imageDtoMapper.mapToDto(imageEntity);
     }
 
+    @Transactional(readOnly = true)
+    public ImageEntity downloadImage(Long id) {
+        return getImageEntity(id);
+    }
+
     public void deleteImage(Long id) {
         ImageEntity image = getImageEntity(id);
         imageRepository.delete(image);
