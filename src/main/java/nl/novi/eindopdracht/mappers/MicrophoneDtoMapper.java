@@ -19,6 +19,11 @@ public class MicrophoneDtoMapper implements DtoMapper<MicrophoneResponseDto, Mic
         result.setModel(entity.getModel());
         result.setPolarPatterns(entity.getPolarPatterns());
         result.setPhantomRequired(entity.isPhantomRequired());
+
+        if (entity.getImage() != null) {
+            result.setImageId(entity.getImage().getId());
+        }
+
         return result;
     }
 
