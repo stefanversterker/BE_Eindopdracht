@@ -1,5 +1,6 @@
 package nl.novi.eindopdracht.services;
 
+import nl.novi.eindopdracht.dtos.event.EventResponseDto;
 import nl.novi.eindopdracht.entities.EquipmentEntity;
 import nl.novi.eindopdracht.entities.ImageEntity;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
@@ -7,6 +8,8 @@ import nl.novi.eindopdracht.repositories.EquipmentRepository;
 import nl.novi.eindopdracht.repositories.ImageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class EquipmentService {
