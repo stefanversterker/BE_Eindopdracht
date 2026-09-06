@@ -18,6 +18,10 @@ public abstract class EquipmentEntity extends BaseEntity {
     @OneToMany(mappedBy = "equipmentEntity")
     private List<EquipmentEventAssignmentEntity> equipmentEventAssignments = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "image_id")
+    private ImageEntity image;
+
     // Getters and Setters
 
     public String getBrand() {
@@ -42,5 +46,13 @@ public abstract class EquipmentEntity extends BaseEntity {
 
     public void setEquipmentEventAssignments(List<EquipmentEventAssignmentEntity> equipmentEventAssignments) {
         this.equipmentEventAssignments = equipmentEventAssignments;
+    }
+
+    public ImageEntity getImage() {
+        return image;
+    }
+
+    public void setImage(ImageEntity image) {
+        this.image = image;
     }
 }

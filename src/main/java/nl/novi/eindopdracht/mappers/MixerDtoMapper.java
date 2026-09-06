@@ -20,6 +20,11 @@ public class MixerDtoMapper implements DtoMapper<MixerResponseDto, MixerRequestD
         result.setId(entity.getId());
         result.setBrand(entity.getBrand());
         result.setModel(entity.getModel());
+
+        if (entity.getImage() != null) {
+            result.setImageId(entity.getImage().getId());
+        }
+
         return result;
     }
 
