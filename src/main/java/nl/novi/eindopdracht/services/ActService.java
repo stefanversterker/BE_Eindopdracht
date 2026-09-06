@@ -31,7 +31,7 @@ public class ActService {
     @Transactional(readOnly = true)
     public ActResponseDto getActById(long id) {
         ActEntity entity = actRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Act with id " + id + "not found."));
+                .orElseThrow(() -> new RecordNotFoundException("Act with id " + id + " not found."));
 
         return actDtoMapper.mapToDto(entity);
     }
