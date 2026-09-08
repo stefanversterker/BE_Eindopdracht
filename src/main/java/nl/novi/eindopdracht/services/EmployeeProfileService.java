@@ -4,6 +4,7 @@ import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileRequestDto;
 import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileResponseDto;
 import nl.novi.eindopdracht.entities.EmployeeProfileEntity;
 import nl.novi.eindopdracht.entities.PersonEntity;
+import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.EmployeeProfileDtoMapper;
 import nl.novi.eindopdracht.repositories.EmployeeProfileRepository;
@@ -43,6 +44,14 @@ public class EmployeeProfileService {
 
         // Extract personId
         Long personId = employeeProfileRequestDto.getPersonId();
+
+        // Check for duplicates
+        if (employeeProfileRepository.existsByPersonEntityId(
+                        personId)) {
+
+            throw new DuplicateRecordException(
+                    "This person already has an employee profile.");
+        }
 
         // Find PersonEntity
         PersonEntity person = getPersonEntity(personId);
