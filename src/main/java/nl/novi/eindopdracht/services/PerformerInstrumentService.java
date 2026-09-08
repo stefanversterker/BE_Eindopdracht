@@ -6,6 +6,7 @@ import nl.novi.eindopdracht.dtos.performerInstrument.PerformerInstrumentResponse
 import nl.novi.eindopdracht.entities.InstrumentEntity;
 import nl.novi.eindopdracht.entities.PerformerInstrumentEntity;
 import nl.novi.eindopdracht.entities.PerformerProfileEntity;
+import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
 import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.PerformerInstrumentDtoMapper;
@@ -55,17 +56,27 @@ public class PerformerInstrumentService {
         // Extract PerformerProfileId
         Long performerProfileId = performerInstrumentRequestDto.getPerformerProfileId();
 
-        // Find PerformerProfileEntity
-        PerformerProfileEntity performer = getPerformerProfileEntity(performerProfileId);
-
-        // Set related performerProfile
-        performerInstrumentEntity.setPerformerProfileEntity(performer);
-
         // Extract InstrumentId
         Long instrumentId = performerInstrumentRequestDto.getInstrumentId();
 
+        // Check for duplicates
+        if (performerInstrumentRepository
+                .existsByPerformerProfileEntityIdAndInstrumentEntityId(
+                        performerProfileId,
+                        instrumentId)) {
+
+            throw new DuplicateRecordException(
+                    "This performer is already linked to this instrument.");
+        }
+
+        // Find PerformerProfileEntity
+        PerformerProfileEntity performer = getPerformerProfileEntity(performerProfileId);
+
         // Find InstrumentEntity
         InstrumentEntity instrument = getInstrumentEntity(instrumentId);
+
+        // Set related performerProfile
+        performerInstrumentEntity.setPerformerProfileEntity(performer);
 
         // Set Related instrument
         performerInstrumentEntity.setInstrumentEntity(instrument);

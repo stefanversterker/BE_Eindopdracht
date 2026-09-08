@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PerformerInstrumentRepository extends JpaRepository<PerformerInstrumentEntity, Long> {
+
+    boolean existsByPerformerProfileEntityIdAndInstrumentEntityId(
+            Long performerProfileId,
+            Long instrumentId);
+
 }

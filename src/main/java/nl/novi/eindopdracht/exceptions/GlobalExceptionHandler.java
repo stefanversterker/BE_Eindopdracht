@@ -41,7 +41,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleRecordInUseException(
             RecordInUseException ex) {
 
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DuplicateRecordException.class)
+    public ResponseEntity<String> handleDuplicateRecordException(
+            DuplicateRecordException ex) {
+
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
 }
