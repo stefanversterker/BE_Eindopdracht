@@ -4,6 +4,7 @@ import nl.novi.eindopdracht.dtos.performerProfile.PerformerProfileRequestDto;
 import nl.novi.eindopdracht.dtos.performerProfile.PerformerProfileResponseDto;
 import nl.novi.eindopdracht.entities.PerformerProfileEntity;
 import nl.novi.eindopdracht.entities.PersonEntity;
+import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.PerformerProfileDtoMapper;
 import nl.novi.eindopdracht.repositories.PerformerProfileRepository;
@@ -43,6 +44,14 @@ public class PerformerProfileService {
 
         // Extract personId
         Long personId = performerProfileRequestDto.getPersonId();
+
+        // Check for duplicates
+        if (performerProfileRepository.existsByPersonEntityId(
+                personId)) {
+
+            throw new DuplicateRecordException(
+                    "This person already has a performer profile.");
+        }
 
         // Find PersonEntity
         PersonEntity person = getPersonEntity(personId);
