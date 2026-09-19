@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.PerformerActService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class PerformerActController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<PerformerActResponseDto>> getAllPerformerActs() {
         List<PerformerActResponseDto> performerActs = performerActService.getAllPerformerActs();
         return new ResponseEntity<>(performerActs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<PerformerActResponseDto> getPerformerActById(@PathVariable Long id)  {
         PerformerActResponseDto performerAct = performerActService.getPerformerActById(id);

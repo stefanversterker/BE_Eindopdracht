@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.SourceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class SourceController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<SourceResponseDto>> getAllSources() {
         List<SourceResponseDto> sources = sourceService.getAllSources();
         return new ResponseEntity<>(sources, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<SourceResponseDto> getSourceById(@PathVariable Long id)  {
         SourceResponseDto source = sourceService.getSourceById(id);

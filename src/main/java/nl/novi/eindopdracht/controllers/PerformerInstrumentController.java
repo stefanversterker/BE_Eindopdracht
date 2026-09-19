@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.PerformerInstrumentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class PerformerInstrumentController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<PerformerInstrumentResponseDto>> getAllPerformerInstruments() {
         List<PerformerInstrumentResponseDto> performerInstruments = performerInstrumentService.getAllPerformerInstruments();
         return new ResponseEntity<>(performerInstruments, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<PerformerInstrumentResponseDto> getPerformerInstrumentById(@PathVariable Long id)  {
         PerformerInstrumentResponseDto performerInstrument = performerInstrumentService.getPerformerInstrumentById(id);

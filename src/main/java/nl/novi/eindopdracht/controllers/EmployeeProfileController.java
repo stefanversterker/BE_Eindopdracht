@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.EmployeeProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class EmployeeProfileController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<EmployeeProfileResponseDto>> getAllEmployeeProfiles() {
         List<EmployeeProfileResponseDto> employeeProfiles = employeeProfileService.getAllEmployeeProfiles();
         return new ResponseEntity<>(employeeProfiles, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeProfileResponseDto> getEmployeeProfileById(@PathVariable Long id)  {
         EmployeeProfileResponseDto employeeProfile = employeeProfileService.getEmployeeProfileById(id);
