@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +27,35 @@ public class EventController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<EventResponseDto>> getAllEvents() {
         List<EventResponseDto> events = eventService.getAllEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<EventResponseDto> getEventById(@PathVariable Long id)  {
         EventResponseDto event = eventService.getEventById(id);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<EventResponseDto> createEvent(@RequestBody  @Valid EventRequestDto eventRequestDto) {
         EventResponseDto newEvent = eventService.createEvent(eventRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newEvent.getId())).body(newEvent);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<EventResponseDto> updateEvent(@PathVariable Long id, @RequestBody  @Valid EventRequestDto eventRequestDto)  {
         EventResponseDto updatedEvent = eventService.updateEvent(id, eventRequestDto);
         return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);
