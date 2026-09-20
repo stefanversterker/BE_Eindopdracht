@@ -41,16 +41,19 @@ public class ChannelController {
         return new ResponseEntity<>(channel, HttpStatus.OK);
     }
 
+    // No PostMapping because channels are created as part of a mixer
+
+    @PreAuthorize("hasRole('ENGINEER')")
     @PutMapping("/{id}")
     public ResponseEntity<ChannelResponseDto> updateChannel(@PathVariable Long id, @RequestBody  @Valid ChannelRequestDto channelRequestDto)  {
         ChannelResponseDto updatedChannel = channelService.updateChannel(id, channelRequestDto);
         return new ResponseEntity<>(updatedChannel, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteChannel(@PathVariable Long id) {
         channelService.deleteChannel(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

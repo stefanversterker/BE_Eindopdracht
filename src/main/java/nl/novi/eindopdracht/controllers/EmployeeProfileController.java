@@ -41,18 +41,21 @@ public class EmployeeProfileController {
         return new ResponseEntity<>(employeeProfile, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<EmployeeProfileResponseDto> createEmployeeProfile(@RequestBody  @Valid EmployeeProfileRequestDto employeeProfileRequestDto) {
         EmployeeProfileResponseDto newEmployeeProfile = employeeProfileService.createEmployeeProfile(employeeProfileRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newEmployeeProfile.getId())).body(newEmployeeProfile);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeProfileResponseDto> updateEmployeeProfile(@PathVariable Long id, @RequestBody  @Valid EmployeeProfileRequestDto employeeProfileRequestDto)  {
         EmployeeProfileResponseDto updatedEmployeeProfile = employeeProfileService.updateEmployeeProfile(id, employeeProfileRequestDto);
         return new ResponseEntity<>(updatedEmployeeProfile, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployeeProfile(@PathVariable Long id) {
         employeeProfileService.deleteEmployeeProfile(id);

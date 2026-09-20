@@ -41,18 +41,21 @@ public class PerformanceController {
         return new ResponseEntity<>(performance, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<PerformanceResponseDto> createPerformance(@RequestBody  @Valid PerformanceRequestDto performanceRequestDto) {
         PerformanceResponseDto newPerformance = performanceService.createPerformance(performanceRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPerformance.getId())).body(newPerformance);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<PerformanceResponseDto> updatePerformance(@PathVariable Long id, @RequestBody  @Valid PerformanceRequestDto performanceRequestDto)  {
         PerformanceResponseDto updatedPerformance = performanceService.updatePerformance(id, performanceRequestDto);
         return new ResponseEntity<>(updatedPerformance, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerformance(@PathVariable Long id) {
         performanceService.deletePerformance(id);

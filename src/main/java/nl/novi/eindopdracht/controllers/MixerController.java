@@ -10,6 +10,7 @@ import nl.novi.eindopdracht.services.ChannelService;
 import nl.novi.eindopdracht.services.MixerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,18 +33,21 @@ public class MixerController {
         this.channelService =channelService;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<MixerResponseDto>> getAllMixers() {
         List<MixerResponseDto> mixers = mixerService.getAllMixers();
         return new ResponseEntity<>(mixers, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<MixerResponseDto> getMixerById(@PathVariable Long id)  {
         MixerResponseDto mixer = mixerService.getMixerById(id);
         return new ResponseEntity<>(mixer, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{mixerId}/channels")
     public ResponseEntity<List<ChannelResponseDto>> getChannelsByMixer(
             @PathVariable Long mixerId) {
@@ -53,12 +57,14 @@ public class MixerController {
         );
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PostMapping
     public ResponseEntity<MixerResponseDto> createMixer(@RequestBody  @Valid MixerRequestDto mixerRequestDto) {
         MixerResponseDto newMixer = mixerService.createMixer(mixerRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newMixer.getId())).body(newMixer);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PostMapping("/{mixerId}/channels")
     public ResponseEntity<ChannelResponseDto> createChannel(
             @PathVariable Long mixerId,
@@ -67,12 +73,14 @@ public class MixerController {
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newChannel.getId())).body(newChannel);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PutMapping("/{id}")
     public ResponseEntity<MixerResponseDto> updateMixer(@PathVariable Long id, @RequestBody  @Valid MixerRequestDto mixerRequestDto)  {
         MixerResponseDto updatedMixer = mixerService.updateMixer(id, mixerRequestDto);
         return new ResponseEntity<>(updatedMixer, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMixer(@PathVariable Long id) {
         mixerService.deleteMixer(id);

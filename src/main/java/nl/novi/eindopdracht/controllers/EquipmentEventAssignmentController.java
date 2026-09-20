@@ -41,18 +41,21 @@ public class EquipmentEventAssignmentController {
         return new ResponseEntity<>(equipmentEventAssignment, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PostMapping
     public ResponseEntity<EquipmentEventAssignmentResponseDto> createEquipmentEventAssignment(@RequestBody  @Valid EquipmentEventAssignmentRequestDto equipmentEventAssignmentRequestDto) {
         EquipmentEventAssignmentResponseDto newEquipmentEventAssignment = equipmentEventAssignmentService.createEquipmentEventAssignment(equipmentEventAssignmentRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newEquipmentEventAssignment.getId())).body(newEquipmentEventAssignment);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PutMapping("/{id}")
     public ResponseEntity<EquipmentEventAssignmentResponseDto> updateEquipmentEventAssignment(@PathVariable Long id, @RequestBody  @Valid EquipmentEventAssignmentRequestDto equipmentEventAssignmentRequestDto)  {
         EquipmentEventAssignmentResponseDto updatedEquipmentEventAssignment = equipmentEventAssignmentService.updateEquipmentEventAssignment(id, equipmentEventAssignmentRequestDto);
         return new ResponseEntity<>(updatedEquipmentEventAssignment, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEquipmentEventAssignment(@PathVariable Long id) {
         equipmentEventAssignmentService.deleteEquipmentEventAssignment(id);

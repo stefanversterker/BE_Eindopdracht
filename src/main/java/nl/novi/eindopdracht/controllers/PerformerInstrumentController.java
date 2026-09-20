@@ -41,18 +41,21 @@ public class PerformerInstrumentController {
         return new ResponseEntity<>(performerInstrument, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<PerformerInstrumentResponseDto> createPerformerInstrument(@RequestBody  @Valid PerformerInstrumentRequestDto performerInstrumentRequestDto) {
         PerformerInstrumentResponseDto newPerformerInstrument = performerInstrumentService.createPerformerInstrument(performerInstrumentRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPerformerInstrument.getId())).body(newPerformerInstrument);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<PerformerInstrumentResponseDto> updatePerformerInstrument(@PathVariable Long id, @RequestBody  @Valid PerformerInstrumentRequestDto performerInstrumentRequestDto)  {
         PerformerInstrumentResponseDto updatedPerformerInstrument = performerInstrumentService.updatePerformerInstrument(id, performerInstrumentRequestDto);
         return new ResponseEntity<>(updatedPerformerInstrument, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerformerInstrument(@PathVariable Long id) {
         performerInstrumentService.deletePerformerInstrument(id);

@@ -41,18 +41,21 @@ public class PerformerActController {
         return new ResponseEntity<>(performerAct, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<PerformerActResponseDto> createPerformerAct(@RequestBody  @Valid PerformerActRequestDto performerActRequestDto) {
         PerformerActResponseDto newPerformerAct = performerActService.createPerformerAct(performerActRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPerformerAct.getId())).body(newPerformerAct);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<PerformerActResponseDto> updatePerformerAct(@PathVariable Long id, @RequestBody  @Valid PerformerActRequestDto performerActRequestDto)  {
         PerformerActResponseDto updatedPerformerAct = performerActService.updatePerformerAct(id, performerActRequestDto);
         return new ResponseEntity<>(updatedPerformerAct, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerformerAct(@PathVariable Long id) {
         performerActService.deletePerformerAct(id);

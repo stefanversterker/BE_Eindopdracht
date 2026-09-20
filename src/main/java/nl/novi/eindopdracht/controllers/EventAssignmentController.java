@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.EventAssignmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +27,35 @@ public class EventAssignmentController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<EventAssignmentResponseDto>> getAllEventAssignments() {
         List<EventAssignmentResponseDto> eventAssignments = eventAssignmentService.getAllEventAssignments();
         return new ResponseEntity<>(eventAssignments, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<EventAssignmentResponseDto> getEventAssignmentById(@PathVariable Long id)  {
         EventAssignmentResponseDto eventAssignment = eventAssignmentService.getEventAssignmentById(id);
         return new ResponseEntity<>(eventAssignment, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<EventAssignmentResponseDto> createEventAssignment(@RequestBody  @Valid EventAssignmentRequestDto eventAssignmentRequestDto) {
         EventAssignmentResponseDto newEventAssignment = eventAssignmentService.createEventAssignment(eventAssignmentRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newEventAssignment.getId())).body(newEventAssignment);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<EventAssignmentResponseDto> updateEventAssignment(@PathVariable Long id, @RequestBody  @Valid EventAssignmentRequestDto eventAssignmentRequestDto)  {
         EventAssignmentResponseDto updatedEventAssignment = eventAssignmentService.updateEventAssignment(id, eventAssignmentRequestDto);
         return new ResponseEntity<>(updatedEventAssignment, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEventAssignment(@PathVariable Long id) {
         eventAssignmentService.deleteEventAssignment(id);

@@ -41,18 +41,21 @@ public class SourceController {
         return new ResponseEntity<>(source, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PostMapping
     public ResponseEntity<SourceResponseDto> createSource(@RequestBody  @Valid SourceRequestDto sourceRequestDto) {
         SourceResponseDto newSource = sourceService.createSource(sourceRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newSource.getId())).body(newSource);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PutMapping("/{id}")
     public ResponseEntity<SourceResponseDto> updateSource(@PathVariable Long id, @RequestBody  @Valid SourceRequestDto sourceRequestDto)  {
         SourceResponseDto updatedSource = sourceService.updateSource(id, sourceRequestDto);
         return new ResponseEntity<>(updatedSource, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSource(@PathVariable Long id) {
         sourceService.deleteSource(id);

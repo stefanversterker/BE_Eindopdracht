@@ -57,6 +57,7 @@ public class ImageController {
                 .body(image.getContents());
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<ImageResponseDto> uploadImage(
 
@@ -72,6 +73,7 @@ public class ImageController {
                 .body(newImage);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         imageService.deleteImage(id);

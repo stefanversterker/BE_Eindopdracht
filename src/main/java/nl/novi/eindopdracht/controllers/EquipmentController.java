@@ -2,6 +2,7 @@ package nl.novi.eindopdracht.controllers;
 
 import nl.novi.eindopdracht.services.EquipmentService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ public class EquipmentController {
         this.equipmentService = equipmentService;
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PutMapping("/{equipmentId}/image/{imageId}")
     public ResponseEntity<Void> assignImage(
             @PathVariable Long equipmentId,
@@ -26,6 +28,7 @@ public class EquipmentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{equipmentId}/image")
     public ResponseEntity<Void> removeImage(
             @PathVariable Long equipmentId) {

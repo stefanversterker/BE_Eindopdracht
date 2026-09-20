@@ -41,18 +41,21 @@ public class PerformerProfileController {
         return new ResponseEntity<>(performerProfile, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<PerformerProfileResponseDto> createPerformerProfile(@RequestBody  @Valid PerformerProfileRequestDto performerProfileRequestDto) {
         PerformerProfileResponseDto newPerformerProfile = performerProfileService.createPerformerProfile(performerProfileRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPerformerProfile.getId())).body(newPerformerProfile);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<PerformerProfileResponseDto> updatePerformerProfile(@PathVariable Long id, @RequestBody  @Valid PerformerProfileRequestDto performerProfileRequestDto)  {
         PerformerProfileResponseDto updatedPerformerProfile = performerProfileService.updatePerformerProfile(id, performerProfileRequestDto);
         return new ResponseEntity<>(updatedPerformerProfile, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerformerProfile(@PathVariable Long id) {
         performerProfileService.deletePerformerProfile(id);
