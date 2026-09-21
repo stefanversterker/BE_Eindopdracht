@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,18 +30,21 @@ public class ImageController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<ImageResponseDto>> getAllImages() {
         List<ImageResponseDto> images = imageService.getAllImages();
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<ImageResponseDto> getImageById(@PathVariable Long id)  {
         ImageResponseDto image = imageService.getImageById(id);
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}/download")
     public ResponseEntity<byte[]> downloadImage(@PathVariable Long id) {
 
@@ -53,6 +57,7 @@ public class ImageController {
                 .body(image.getContents());
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<ImageResponseDto> uploadImage(
 
@@ -68,6 +73,7 @@ public class ImageController {
                 .body(newImage);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         imageService.deleteImage(id);

@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.EmployeeProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +27,35 @@ public class EmployeeProfileController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<EmployeeProfileResponseDto>> getAllEmployeeProfiles() {
         List<EmployeeProfileResponseDto> employeeProfiles = employeeProfileService.getAllEmployeeProfiles();
         return new ResponseEntity<>(employeeProfiles, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeProfileResponseDto> getEmployeeProfileById(@PathVariable Long id)  {
         EmployeeProfileResponseDto employeeProfile = employeeProfileService.getEmployeeProfileById(id);
         return new ResponseEntity<>(employeeProfile, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<EmployeeProfileResponseDto> createEmployeeProfile(@RequestBody  @Valid EmployeeProfileRequestDto employeeProfileRequestDto) {
         EmployeeProfileResponseDto newEmployeeProfile = employeeProfileService.createEmployeeProfile(employeeProfileRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newEmployeeProfile.getId())).body(newEmployeeProfile);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeProfileResponseDto> updateEmployeeProfile(@PathVariable Long id, @RequestBody  @Valid EmployeeProfileRequestDto employeeProfileRequestDto)  {
         EmployeeProfileResponseDto updatedEmployeeProfile = employeeProfileService.updateEmployeeProfile(id, employeeProfileRequestDto);
         return new ResponseEntity<>(updatedEmployeeProfile, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployeeProfile(@PathVariable Long id) {
         employeeProfileService.deleteEmployeeProfile(id);

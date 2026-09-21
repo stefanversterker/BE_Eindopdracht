@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.PerformerActService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +27,35 @@ public class PerformerActController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<PerformerActResponseDto>> getAllPerformerActs() {
         List<PerformerActResponseDto> performerActs = performerActService.getAllPerformerActs();
         return new ResponseEntity<>(performerActs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<PerformerActResponseDto> getPerformerActById(@PathVariable Long id)  {
         PerformerActResponseDto performerAct = performerActService.getPerformerActById(id);
         return new ResponseEntity<>(performerAct, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<PerformerActResponseDto> createPerformerAct(@RequestBody  @Valid PerformerActRequestDto performerActRequestDto) {
         PerformerActResponseDto newPerformerAct = performerActService.createPerformerAct(performerActRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newPerformerAct.getId())).body(newPerformerAct);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<PerformerActResponseDto> updatePerformerAct(@PathVariable Long id, @RequestBody  @Valid PerformerActRequestDto performerActRequestDto)  {
         PerformerActResponseDto updatedPerformerAct = performerActService.updatePerformerAct(id, performerActRequestDto);
         return new ResponseEntity<>(updatedPerformerAct, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerformerAct(@PathVariable Long id) {
         performerActService.deletePerformerAct(id);

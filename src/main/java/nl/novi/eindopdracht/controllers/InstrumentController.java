@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.InstrumentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +27,35 @@ public class InstrumentController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<InstrumentResponseDto>> getAllInstruments() {
         List<InstrumentResponseDto> instruments = instrumentService.getAllInstruments();
         return new ResponseEntity<>(instruments, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<InstrumentResponseDto> getInstrumentById(@PathVariable Long id)  {
         InstrumentResponseDto instrument = instrumentService.getInstrumentById(id);
         return new ResponseEntity<>(instrument, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity<InstrumentResponseDto> createInstrument(@RequestBody  @Valid InstrumentRequestDto instrumentRequestDto) {
         InstrumentResponseDto newInstrument = instrumentService.createInstrument(instrumentRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newInstrument.getId())).body(newInstrument);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<InstrumentResponseDto> updateInstrument(@PathVariable Long id, @RequestBody  @Valid InstrumentRequestDto instrumentRequestDto)  {
         InstrumentResponseDto updatedInstrument = instrumentService.updateInstrument(id, instrumentRequestDto);
         return new ResponseEntity<>(updatedInstrument, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteInstrument(@PathVariable Long id) {
         instrumentService.deleteInstrument(id);

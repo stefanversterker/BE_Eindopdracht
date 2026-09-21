@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.SourceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +27,35 @@ public class SourceController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<SourceResponseDto>> getAllSources() {
         List<SourceResponseDto> sources = sourceService.getAllSources();
         return new ResponseEntity<>(sources, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<SourceResponseDto> getSourceById(@PathVariable Long id)  {
         SourceResponseDto source = sourceService.getSourceById(id);
         return new ResponseEntity<>(source, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PostMapping
     public ResponseEntity<SourceResponseDto> createSource(@RequestBody  @Valid SourceRequestDto sourceRequestDto) {
         SourceResponseDto newSource = sourceService.createSource(sourceRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newSource.getId())).body(newSource);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PutMapping("/{id}")
     public ResponseEntity<SourceResponseDto> updateSource(@PathVariable Long id, @RequestBody  @Valid SourceRequestDto sourceRequestDto)  {
         SourceResponseDto updatedSource = sourceService.updateSource(id, sourceRequestDto);
         return new ResponseEntity<>(updatedSource, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSource(@PathVariable Long id) {
         sourceService.deleteSource(id);

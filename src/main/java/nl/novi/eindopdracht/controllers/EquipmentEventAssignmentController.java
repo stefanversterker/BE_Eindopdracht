@@ -7,6 +7,7 @@ import nl.novi.eindopdracht.helpers.UrlHelper;
 import nl.novi.eindopdracht.services.EquipmentEventAssignmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,30 +27,35 @@ public class EquipmentEventAssignmentController {
         this.urlHelper = urlHelper;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<EquipmentEventAssignmentResponseDto>> getAllEquipmentEventAssignments() {
         List<EquipmentEventAssignmentResponseDto> equipmentEventAssignments = equipmentEventAssignmentService.getAllEquipmentEventAssignments();
         return new ResponseEntity<>(equipmentEventAssignments, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<EquipmentEventAssignmentResponseDto> getEquipmentEventAssignmentById(@PathVariable Long id)  {
         EquipmentEventAssignmentResponseDto equipmentEventAssignment = equipmentEventAssignmentService.getEquipmentEventAssignmentById(id);
         return new ResponseEntity<>(equipmentEventAssignment, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PostMapping
     public ResponseEntity<EquipmentEventAssignmentResponseDto> createEquipmentEventAssignment(@RequestBody  @Valid EquipmentEventAssignmentRequestDto equipmentEventAssignmentRequestDto) {
         EquipmentEventAssignmentResponseDto newEquipmentEventAssignment = equipmentEventAssignmentService.createEquipmentEventAssignment(equipmentEventAssignmentRequestDto);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newEquipmentEventAssignment.getId())).body(newEquipmentEventAssignment);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @PutMapping("/{id}")
     public ResponseEntity<EquipmentEventAssignmentResponseDto> updateEquipmentEventAssignment(@PathVariable Long id, @RequestBody  @Valid EquipmentEventAssignmentRequestDto equipmentEventAssignmentRequestDto)  {
         EquipmentEventAssignmentResponseDto updatedEquipmentEventAssignment = equipmentEventAssignmentService.updateEquipmentEventAssignment(id, equipmentEventAssignmentRequestDto);
         return new ResponseEntity<>(updatedEquipmentEventAssignment, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEquipmentEventAssignment(@PathVariable Long id) {
         equipmentEventAssignmentService.deleteEquipmentEventAssignment(id);
