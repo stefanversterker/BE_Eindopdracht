@@ -19,6 +19,10 @@ public class SourceEntity extends BaseEntity {
     @OneToMany(mappedBy = "sourceEntity")
     private List<ChannelEntity> channels;
 
+    @ManyToOne
+    @JoinColumn(name = "microphone_id")
+    private MicrophoneEntity microphoneEntity;
+
     // Getters and Setters
 
     public String getName() {
@@ -43,6 +47,14 @@ public class SourceEntity extends BaseEntity {
 
     public void setChannels(List<ChannelEntity> channels) {
         this.channels = channels;
+    }
+
+    public MicrophoneEntity getMicrophoneEntity() {
+        return microphoneEntity;
+    }
+
+    public void setMicrophoneEntity(MicrophoneEntity microphoneEntity) {
+        this.microphoneEntity = microphoneEntity;
     }
 }
 

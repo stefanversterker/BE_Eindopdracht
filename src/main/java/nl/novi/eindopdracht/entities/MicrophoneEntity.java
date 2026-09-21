@@ -23,6 +23,9 @@ public class MicrophoneEntity extends EquipmentEntity {
 
     private boolean phantomRequired;
 
+    @OneToMany(mappedBy = "microphoneEntity")
+    private List<SourceEntity> sources;
+
     //Getters and setters
 
     public Set<PolarPattern> getPolarPatterns() {
@@ -41,4 +44,11 @@ public class MicrophoneEntity extends EquipmentEntity {
         this.phantomRequired = phantomRequired;
     }
 
+    public List<SourceEntity> getSources() {
+        return sources;
+    }
+
+    public void setSources(List<SourceEntity> sources) {
+        this.sources = sources;
+    }
 }
