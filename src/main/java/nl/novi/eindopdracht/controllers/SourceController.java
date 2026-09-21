@@ -61,4 +61,28 @@ public class SourceController {
         sourceService.deleteSource(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PreAuthorize("hasRole('ENGINEER')")
+    @PutMapping("/{sourceId}/microphone/{microphoneId}")
+    public ResponseEntity<Void> assignMicrophone(
+            @PathVariable Long sourceId,
+            @PathVariable Long microphoneId) {
+
+        sourceService.assignMicrophone(
+                sourceId,
+                microphoneId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasRole('TECHNICIAN')")
+    @DeleteMapping("/{sourceId}/microphone")
+    public ResponseEntity<Void> removeMicrophone(
+            @PathVariable Long sourceId) {
+
+        sourceService.removeMicrophone(sourceId);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }
