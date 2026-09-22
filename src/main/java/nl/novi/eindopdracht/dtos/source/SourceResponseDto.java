@@ -8,6 +8,8 @@ public class SourceResponseDto {
 
     private Long performerInstrumentId;
 
+    private Long microphoneId;
+
     // Getters and Setters
 
     public Long getId() {
@@ -32,5 +34,13 @@ public class SourceResponseDto {
 
     public void setPerformerInstrumentId(Long performerInstrumentId) {
         this.performerInstrumentId = performerInstrumentId;
+    }
+
+    public Long getMicrophoneId() {
+        return microphoneId;
+    }
+
+    public void setMicrophoneId(Long microphoneId) {
+        this.microphoneId = microphoneId;
     }
 }

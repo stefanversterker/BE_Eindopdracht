@@ -2,10 +2,12 @@ package nl.novi.eindopdracht.services;
 
 import nl.novi.eindopdracht.dtos.source.SourceRequestDto;
 import nl.novi.eindopdracht.dtos.source.SourceResponseDto;
+import nl.novi.eindopdracht.entities.MicrophoneEntity;
 import nl.novi.eindopdracht.entities.PerformerInstrumentEntity;
 import nl.novi.eindopdracht.entities.SourceEntity;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.SourceDtoMapper;
+import nl.novi.eindopdracht.repositories.MicrophoneRepository;
 import nl.novi.eindopdracht.repositories.PerformerInstrumentRepository;
 import nl.novi.eindopdracht.repositories.SourceRepository;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,18 @@ public class SourceService {
     private final SourceRepository sourceRepository;
     private final SourceDtoMapper sourceDtoMapper;
     private final PerformerInstrumentRepository performerInstrumentRepository;
+    private final MicrophoneRepository microphoneRepository;
 
     public SourceService(
             SourceRepository sourceRepository,
             SourceDtoMapper sourceDtoMapper,
-            PerformerInstrumentRepository performerInstrumentRepository) {
+            PerformerInstrumentRepository performerInstrumentRepository,
+            MicrophoneRepository microphoneRepository) {
+
         this.sourceRepository = sourceRepository;
         this.sourceDtoMapper = sourceDtoMapper;
         this.performerInstrumentRepository = performerInstrumentRepository;
+        this.microphoneRepository = microphoneRepository;
     }
 
     @Transactional(readOnly = true)
@@ -82,6 +88,26 @@ public class SourceService {
         return sourceDtoMapper.mapToDto(existingSourceEntity);
     }
 
+    @Transactional
+    public void assignMicrophone(Long sourceId, Long microphoneId) {
+
+        SourceEntity source = getSourceEntity(sourceId);
+
+        MicrophoneEntity microphone =
+                getMicrophoneEntity(microphoneId);
+
+        source.setMicrophoneEntity(microphone);
+    }
+
+    @Transactional
+    public void removeMicrophone(Long sourceId) {
+
+        SourceEntity source = getSourceEntity(sourceId);
+
+        source.setMicrophoneEntity(null);
+    }
+
+    @Transactional
     public void deleteSource(Long id) {
         SourceEntity source = getSourceEntity(id);
         sourceRepository.delete(source);
@@ -97,5 +123,12 @@ public class SourceService {
         return performerInstrumentRepository.findById(id)
                 .orElseThrow(() ->
                         new RecordNotFoundException("PerformerInstrument with id " + id + " not found."));
+    }
+
+    private MicrophoneEntity getMicrophoneEntity(Long id) {
+        return microphoneRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecordNotFoundException(
+                                "Microphone with id " + id + " not found."));
     }
 }
