@@ -107,6 +107,7 @@ public class SourceService {
         source.setMicrophoneEntity(null);
     }
 
+    @Transactional
     public void deleteSource(Long id) {
         SourceEntity source = getSourceEntity(id);
         sourceRepository.delete(source);

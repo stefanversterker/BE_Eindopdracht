@@ -23,6 +23,11 @@ public class SourceDtoMapper implements DtoMapper<SourceResponseDto, SourceReque
             );
         }
 
+        if (entity.getMicrophoneEntity() != null) {
+            result.setMicrophoneId(
+                    entity.getMicrophoneEntity().getId());
+        }
+
         return result;
     }
 
@@ -37,4 +42,7 @@ public class SourceDtoMapper implements DtoMapper<SourceResponseDto, SourceReque
         entity.setName(requestDto.getName());
         return entity;
     }
+
+
+
 }

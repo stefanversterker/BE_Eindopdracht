@@ -75,7 +75,7 @@ public class SourceController {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasRole('TECHNICIAN')")
+    @PreAuthorize("hasRole('ENGINEER')")
     @DeleteMapping("/{sourceId}/microphone")
     public ResponseEntity<Void> removeMicrophone(
             @PathVariable Long sourceId) {
