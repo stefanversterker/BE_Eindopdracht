@@ -49,7 +49,8 @@ class EmployeeProfileServiceTest {
                 new EmployeeProfileService(
                         employeeProfileRepository,
                         employeeProfileDtoMapper,
-                        personRepository);
+                        personRepository
+                );
 
         person = new PersonEntity();
         person.setId(1L);
