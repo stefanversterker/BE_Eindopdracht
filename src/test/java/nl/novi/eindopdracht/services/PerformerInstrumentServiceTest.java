@@ -116,7 +116,20 @@ class PerformerInstrumentServiceTest {
 
     @Test
     void createPerformerInstrument_shouldCreatePerformerInstrumentResponseDto_WhenRequestIsValid() {
+        // Arrange
+        when(performerInstrumentDtoMapper.mapToEntity(requestDto))
+                .thenReturn(performerInstrument);
 
+        when(performerInstrumentRepository.existsByPerformerProfileEntityIdAndInstrumentEntityId(
+                1L,
+                1L
+        ))
+                .thenReturn(false);
+
+        when(performerProfileRepository.findById(1L))
+                .thenReturn(Optional.of(performerProfile));
+
+        when(instrumentRepository.findById(1L))
+                .thenReturn(Optional.of(instrument));
     }
-
 }
