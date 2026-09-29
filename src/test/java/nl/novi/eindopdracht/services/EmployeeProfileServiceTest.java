@@ -4,6 +4,7 @@ import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileRequestDto;
 import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileResponseDto;
 import nl.novi.eindopdracht.entities.EmployeeProfileEntity;
 import nl.novi.eindopdracht.entities.PersonEntity;
+import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.EmployeeProfileDtoMapper;
 import nl.novi.eindopdracht.repositories.EmployeeProfileRepository;
 import nl.novi.eindopdracht.repositories.PersonRepository;
@@ -17,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -84,4 +86,22 @@ class EmployeeProfileServiceTest {
         verify(employeeProfileDtoMapper).mapToDto(employeeProfile);
     }
 
+    @Test
+    void getEmployeeProfileById_shouldThrowRecordNotFoundException_WhenIdDoesNotExist() {
+        //Arrange
+        when(employeeProfileRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        //Act + Assert
+        RecordNotFoundException exception =
+                assertThrows(
+                        RecordNotFoundException.class,
+                        () -> employeeProfileService.getEmployeeProfileById(1L)
+                );
+
+        assertEquals(
+                "EmployeeProfile with id 1 not found.",
+                exception.getMessage()
+        );
+    }
 }

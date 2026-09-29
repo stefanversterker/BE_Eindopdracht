@@ -114,4 +114,9 @@ class PerformerInstrumentServiceTest {
         );
     }
 
+    @Test
+    void createPerformerInstrument_shouldCreatePerformerInstrumentResponseDto_WhenRequestIsValid() {
+
+    }
+
 }
