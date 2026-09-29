@@ -104,4 +104,38 @@ class EmployeeProfileServiceTest {
                 exception.getMessage()
         );
     }
+
+    @Test
+    void createEmployeeProfile_shouldCreateEmployeeProfile_WhenRequestIsValid(){
+        //Arrange
+        when(employeeProfileDtoMapper.mapToEntity(requestDto))
+                .thenReturn(employeeProfile);
+
+        when(employeeProfileRepository.existsByPersonEntityId(
+                1L
+        ))
+                .thenReturn(false);
+
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.of(person));
+
+        when(employeeProfileRepository.save(employeeProfile))
+                .thenReturn(employeeProfile);
+
+        when(employeeProfileDtoMapper.mapToDto(employeeProfile))
+                .thenReturn(responseDto);
+
+        // Act
+        EmployeeProfileResponseDto result =
+                employeeProfileService.createEmployeeProfile(requestDto);
+
+        // Assert
+        assertEquals(1L, result.getId());
+
+        verify(employeeProfileDtoMapper).mapToEntity(requestDto);
+        verify(employeeProfileRepository).existsByPersonEntityId(1L);
+        verify(personRepository).findById(1L);
+        verify(employeeProfileRepository).save(employeeProfile);
+        verify(employeeProfileDtoMapper).mapToDto(employeeProfile);
+    }
 }
