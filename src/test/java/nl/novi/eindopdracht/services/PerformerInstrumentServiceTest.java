@@ -1,6 +1,5 @@
 package nl.novi.eindopdracht.services;
 
-import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileResponseDto;
 import nl.novi.eindopdracht.dtos.performerInstrument.PerformerInstrumentRequestDto;
 import nl.novi.eindopdracht.dtos.performerInstrument.PerformerInstrumentResponseDto;
 import nl.novi.eindopdracht.entities.InstrumentEntity;
@@ -157,5 +156,39 @@ class PerformerInstrumentServiceTest {
         verify(instrumentRepository).findById(1L);
         verify(performerInstrumentRepository).save(performerInstrument);
         verify(performerInstrumentDtoMapper).mapToDto(performerInstrument);
+    }
+
+    @Test
+    void updatePerformerInstrument_shouldUpdatePerformerInstrument_WhenRequestIsValid() {
+        // Arrange
+        when(performerInstrumentRepository.findById(1L))
+                .thenReturn(Optional.of(performerInstrument));
+
+        when(performerProfileRepository.findById(1L))
+                .thenReturn(Optional.of(performerProfile));
+
+        when(instrumentRepository.findById(1L))
+                .thenReturn(Optional.of(instrument));
+
+        when(performerInstrumentRepository.save(performerInstrument))
+                .thenReturn(performerInstrument);
+
+        when(performerInstrumentDtoMapper.mapToDto(performerInstrument))
+                .thenReturn(responseDto);
+
+        // Act
+        PerformerInstrumentResponseDto result =
+                performerInstrumentService.updatePerformerInstrument(1L, requestDto);
+
+        // Assert
+        assertEquals(1L, result.getId());
+        assertEquals(1L, result.getInstrumentId());
+        assertEquals(1L, result.getPerformerProfileId());
+
+        verify(performerProfileRepository).findById(1L);
+        verify(instrumentRepository).findById(1L);
+        verify(performerInstrumentRepository).save(performerInstrument);
+        verify(performerInstrumentDtoMapper).mapToDto(performerInstrument);
+        verify(performerInstrumentRepository).findById(1L);
     }
 }
