@@ -138,4 +138,35 @@ class EmployeeProfileServiceTest {
         verify(employeeProfileRepository).save(employeeProfile);
         verify(employeeProfileDtoMapper).mapToDto(employeeProfile);
     }
+
+    @Test
+    void updateEmployeeProfile_shouldUpdateEmployeeProfile_WhenRequestIsValid() {
+        // Arrange
+        when(employeeProfileRepository.findById(1L))
+                .thenReturn(Optional.of(employeeProfile));
+
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.of(person));
+
+        when(employeeProfileRepository.save(employeeProfile))
+                .thenReturn(employeeProfile);
+
+        when(employeeProfileDtoMapper.mapToDto(employeeProfile))
+                .thenReturn(responseDto);
+
+        // Act
+        EmployeeProfileResponseDto result =
+                employeeProfileService.updateEmployeeProfile(1L, requestDto);
+
+        // Assert
+        assertEquals(1L, result.getId());
+        assertEquals(1L, result.getPersonId());
+
+        verify(employeeProfileRepository).findById(1L);
+        verify(personRepository).findById(1L);
+        verify(employeeProfileRepository).save(employeeProfile);
+        verify(employeeProfileDtoMapper).mapToDto(employeeProfile);
+
+    }
+
 }
