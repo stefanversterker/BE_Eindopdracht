@@ -4,6 +4,7 @@ import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileRequestDto;
 import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileResponseDto;
 import nl.novi.eindopdracht.entities.EmployeeProfileEntity;
 import nl.novi.eindopdracht.entities.PersonEntity;
+import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.EmployeeProfileDtoMapper;
 import nl.novi.eindopdracht.repositories.EmployeeProfileRepository;
@@ -19,8 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeProfileServiceTest {
@@ -106,7 +106,7 @@ class EmployeeProfileServiceTest {
     }
 
     @Test
-    void createEmployeeProfile_shouldCreateEmployeeProfile_WhenRequestIsValid(){
+    void createEmployeeProfile_shouldCreateEmployeeProfile_WhenRequestIsValid() {
         //Arrange
         when(employeeProfileDtoMapper.mapToEntity(requestDto))
                 .thenReturn(employeeProfile);
@@ -137,6 +137,31 @@ class EmployeeProfileServiceTest {
         verify(personRepository).findById(1L);
         verify(employeeProfileRepository).save(employeeProfile);
         verify(employeeProfileDtoMapper).mapToDto(employeeProfile);
+    }
+
+    @Test
+    void createEmployeeProfile_shouldThrowDuplicateRecordException_WhenPersonAlreadyHasEmployeeProfile() {
+        // Arrange
+        when(employeeProfileDtoMapper.mapToEntity(requestDto))
+                .thenReturn(employeeProfile);
+
+        when(employeeProfileRepository.existsByPersonEntityId(
+                1L
+        ))
+                .thenReturn(true);
+
+        // Act + Assert
+        DuplicateRecordException exception =
+                assertThrows(
+                        DuplicateRecordException.class,
+                        () -> employeeProfileService.createEmployeeProfile(requestDto)
+                );
+
+        verify(employeeProfileRepository).existsByPersonEntityId(1L);
+        verify(personRepository, never()).findById(anyLong());
+        verify(employeeProfileRepository, never()).save(any());
+
+
     }
 
     @Test
