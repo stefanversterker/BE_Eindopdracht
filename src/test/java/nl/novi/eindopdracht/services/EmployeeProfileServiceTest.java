@@ -157,11 +157,55 @@ class EmployeeProfileServiceTest {
                         () -> employeeProfileService.createEmployeeProfile(requestDto)
                 );
 
+        assertEquals(
+                "This person already has an employee profile.",
+                exception.getMessage()
+        );
+
         verify(employeeProfileRepository).existsByPersonEntityId(1L);
         verify(personRepository, never()).findById(anyLong());
         verify(employeeProfileRepository, never()).save(any());
+    }
 
+    @Test
+    void createEmployeeProfile_shouldThrowRecordNotFoundException_WhenPersonDoesNotExist() {
+        // Arrange
+        when(employeeProfileDtoMapper.mapToEntity(requestDto))
+                .thenReturn(employeeProfile);
 
+        when(employeeProfileRepository.existsByPersonEntityId(
+                1L
+        ))
+                .thenReturn(false);
+
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        // Act + Assert
+        RecordNotFoundException exception =
+                assertThrows(
+                        RecordNotFoundException.class,
+                        () -> employeeProfileService.createEmployeeProfile(requestDto)
+                );
+
+        assertEquals(
+                "Person with id 1 not found.",
+                exception.getMessage()
+        );
+
+        verify(employeeProfileDtoMapper).mapToEntity(requestDto);
+
+        verify(employeeProfileRepository)
+                .existsByPersonEntityId(1L);
+
+        verify(personRepository)
+                .findById(1L);
+
+        verify(employeeProfileRepository, never())
+                .save(any());
+
+        verify(employeeProfileDtoMapper, never())
+                .mapToDto(any(EmployeeProfileEntity.class));
     }
 
     @Test
