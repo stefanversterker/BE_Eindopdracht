@@ -5,6 +5,7 @@ import nl.novi.eindopdracht.dtos.performerInstrument.PerformerInstrumentResponse
 import nl.novi.eindopdracht.entities.InstrumentEntity;
 import nl.novi.eindopdracht.entities.PerformerInstrumentEntity;
 import nl.novi.eindopdracht.entities.PerformerProfileEntity;
+import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.PerformerInstrumentDtoMapper;
 import nl.novi.eindopdracht.repositories.*;
@@ -156,6 +157,49 @@ class PerformerInstrumentServiceTest {
         verify(instrumentRepository).findById(1L);
         verify(performerInstrumentRepository).save(performerInstrument);
         verify(performerInstrumentDtoMapper).mapToDto(performerInstrument);
+    }
+
+    @Test
+    void createPerformerInstrument_shouldThrowDuplicateRecordException_WhenPerformerInstrumentCombinationAlreadyExists() {
+        // Arrange
+        when(performerInstrumentDtoMapper.mapToEntity(requestDto))
+                .thenReturn(performerInstrument);
+
+        when(performerInstrumentRepository.existsByPerformerProfileEntityIdAndInstrumentEntityId(
+                1L,
+                1L
+        ))
+                .thenReturn(true);
+
+        // Act + Assert
+        DuplicateRecordException exception =
+                assertThrows(
+                        DuplicateRecordException.class,
+                        () -> performerInstrumentService.createPerformerInstrument(requestDto)
+                );
+
+        assertEquals(
+                "This performer is already linked to this instrument.",
+                exception.getMessage()
+        );
+
+        verify(performerInstrumentDtoMapper).mapToEntity(requestDto);
+
+        verify(performerInstrumentRepository).existsByPerformerProfileEntityIdAndInstrumentEntityId(
+                1L,
+                1L
+        );
+        verify(performerProfileRepository, never())
+                .findById(anyLong());
+
+        verify(instrumentRepository, never())
+                .findById(anyLong());
+
+        verify(performerInstrumentRepository, never())
+                .save(any(PerformerInstrumentEntity.class));
+
+        verify(performerInstrumentDtoMapper, never())
+                .mapToDto(any(PerformerInstrumentEntity.class));
     }
 
     @Test
