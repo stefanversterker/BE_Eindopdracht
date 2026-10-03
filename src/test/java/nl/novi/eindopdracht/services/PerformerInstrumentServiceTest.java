@@ -327,4 +327,35 @@ class PerformerInstrumentServiceTest {
         verify(performerInstrumentDtoMapper).mapToDto(performerInstrument);
         verify(performerInstrumentRepository).findById(1L);
     }
+
+    @Test
+    void updatePerformerInstrument_shouldThrowRecordNotFoundException_WhenPerformerInstrumentDoesNotExist() {
+        // Arrange
+        when(performerInstrumentRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        // Act + Assert
+        RecordNotFoundException exception =
+                assertThrows(
+                        RecordNotFoundException.class,
+                        () -> performerInstrumentService.updatePerformerInstrument(1L, requestDto)
+                );
+
+        assertEquals(
+                "PerformerInstrument with id 1 not found.",
+                exception.getMessage()
+        );
+
+        verify(performerInstrumentRepository).findById(1L);
+
+        verify(performerProfileRepository, never()).findById(anyLong());
+        verify(instrumentRepository, never()).findById(anyLong());
+
+        verify(performerInstrumentRepository, never())
+                .save(any(PerformerInstrumentEntity.class));
+
+        verify(performerInstrumentDtoMapper, never())
+                .mapToDto(any(PerformerInstrumentEntity.class));
+
+    }
 }
