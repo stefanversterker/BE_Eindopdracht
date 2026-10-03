@@ -238,4 +238,28 @@ class EmployeeProfileServiceTest {
 
     }
 
+    @Test
+    void updateEmployeeProfile_shouldThrowRecordNotFoundException_WhenEmployeeProfileDoesNotExist() {
+        // Arrange
+        when(employeeProfileRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        // Act + Assert
+        RecordNotFoundException exception =
+                assertThrows(
+                        RecordNotFoundException.class,
+                        () -> employeeProfileService.updateEmployeeProfile(1L, requestDto)
+                );
+
+        assertEquals(
+                "EmployeeProfile with id 1 not found.",
+                exception.getMessage()
+        );
+
+        verify(employeeProfileRepository).findById(1L);
+        verify(personRepository, never()).findById(anyLong());
+        verify(employeeProfileRepository, never()).save(any(EmployeeProfileEntity.class));
+        verify(employeeProfileDtoMapper, never()).mapToDto(any(EmployeeProfileEntity.class));
+    }
+
 }
