@@ -5,7 +5,9 @@ import nl.novi.eindopdracht.dtos.performerInstrument.PerformerInstrumentResponse
 import nl.novi.eindopdracht.entities.InstrumentEntity;
 import nl.novi.eindopdracht.entities.PerformerInstrumentEntity;
 import nl.novi.eindopdracht.entities.PerformerProfileEntity;
+import nl.novi.eindopdracht.entities.SourceEntity;
 import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.PerformerInstrumentDtoMapper;
 import nl.novi.eindopdracht.repositories.*;
@@ -14,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -456,6 +457,33 @@ class PerformerInstrumentServiceTest {
 
         assertEquals(
                 "PerformerInstrument with id 1 not found.",
+                exception.getMessage()
+        );
+
+        verify(performerInstrumentRepository).findById(1L);
+
+        verify(performerInstrumentRepository, never())
+                .delete(any(PerformerInstrumentEntity.class));
+    }
+
+    @Test
+    void deletePerformerInstrument_shouldThrowRecordInUseException_WhenPerformerInstrumentHasSources() {
+        // Arrange
+        SourceEntity source = new SourceEntity();
+        performerInstrument.getSources().add(source);
+
+        when(performerInstrumentRepository.findById(1L))
+                .thenReturn(Optional.of(performerInstrument));
+
+        // Act + Assert
+        RecordInUseException exception =
+                assertThrows(
+                        RecordInUseException.class,
+                        () -> performerInstrumentService.deletePerformerInstrument(1L)
+                );
+
+        assertEquals(
+                "Cannot delete PerformerInstrument with id 1 because it still has associated sources.",
                 exception.getMessage()
         );
 
