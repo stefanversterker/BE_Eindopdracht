@@ -305,6 +305,31 @@ class EmployeeProfileServiceTest {
         assertNull(employeeProfile.getPersonEntity());
     }
 
+    @Test
+    void deleteEmployeeProfile_shouldThrowRecordNotFoundException_WhenEmployeeProfileDoesNotExist() {
+        //Arrange
+        when(employeeProfileRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        // Act + Assert
+        RecordNotFoundException exception =
+                assertThrows(
+                        RecordNotFoundException.class,
+                        () -> employeeProfileService.deleteEmployeeProfile(1L)
+                );
+
+        assertEquals(
+                "EmployeeProfile with id 1 not found.",
+                exception.getMessage()
+        );
+
+        verify(employeeProfileRepository).findById(1L);
+
+        verify(employeeProfileRepository, never())
+                .delete(any(EmployeeProfileEntity.class));
+
+    }
+
 
 
 }
