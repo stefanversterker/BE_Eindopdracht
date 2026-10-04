@@ -18,8 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -260,6 +259,51 @@ class EmployeeProfileServiceTest {
         verify(personRepository, never()).findById(anyLong());
         verify(employeeProfileRepository, never()).save(any(EmployeeProfileEntity.class));
         verify(employeeProfileDtoMapper, never()).mapToDto(any(EmployeeProfileEntity.class));
+    }
+
+    @Test
+    void updateEmployeeProfile_shouldThrowRecordNotFoundException_WhenPersonDoesNotExist() {
+        // Arrange
+        when(employeeProfileRepository.findById(1L))
+                .thenReturn(Optional.of(employeeProfile));
+
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        // Act + Assert
+        RecordNotFoundException exception =
+                assertThrows(
+                        RecordNotFoundException.class,
+                        () -> employeeProfileService.updateEmployeeProfile(1L, requestDto)
+                );
+
+        assertEquals(
+                "Person with id 1 not found.",
+                exception.getMessage()
+        );
+
+        verify(employeeProfileRepository).findById(1L);
+        verify(personRepository).findById(1L);
+        verify(employeeProfileRepository, never()).save(any(EmployeeProfileEntity.class));
+        verify(employeeProfileDtoMapper, never()).mapToDto(any(EmployeeProfileEntity.class));
+    }
+
+    @Test
+    void deleteEmployeeProfile_shouldDeleteEmployeeProfile_WhenEmployeeProfileExists() {
+        // Arrange
+        employeeProfile.setPersonEntity(person);
+
+        when(employeeProfileRepository.findById(1L))
+                .thenReturn(Optional.of(employeeProfile));
+
+        // Act
+        employeeProfileService.deleteEmployeeProfile(1L);
+
+        // Assert
+        verify(employeeProfileRepository).delete(employeeProfile);
+
+        assertNull(employeeProfile.getPersonEntity());
+
     }
 
 }
