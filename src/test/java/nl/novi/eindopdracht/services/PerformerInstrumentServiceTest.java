@@ -439,7 +439,30 @@ class PerformerInstrumentServiceTest {
 
         // Assert
         verify(performerInstrumentRepository).delete(performerInstrument);
-
-
     }
+
+    @Test
+    void deletePerformerInstrument_shouldThrowRecordNotFoundException_WhenPerformerDoesNotExist() {
+        // Arrange
+        when(performerInstrumentRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        // Act + Arrange
+        RecordNotFoundException exception =
+                assertThrows(
+                        RecordNotFoundException.class,
+                        () -> performerInstrumentService.deletePerformerInstrument(1L)
+                );
+
+        assertEquals(
+                "PerformerInstrument with id 1 not found.",
+                exception.getMessage()
+        );
+
+        verify(performerInstrumentRepository).findById(1L);
+
+        verify(performerInstrumentRepository, never())
+                .delete(any(PerformerInstrumentEntity.class));
+    }
+
 }
