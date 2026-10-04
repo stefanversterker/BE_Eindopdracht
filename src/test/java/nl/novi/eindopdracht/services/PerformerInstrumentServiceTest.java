@@ -426,6 +426,20 @@ class PerformerInstrumentServiceTest {
 
         verify(performerInstrumentDtoMapper, never())
                 .mapToDto(any(PerformerInstrumentEntity.class));
+    }
+
+    @Test
+    void deletePerformerInstrument_shouldDeletePerformerInstrument_WhenPerformerInstrumentExists() {
+        // Arrange
+        when(performerInstrumentRepository.findById(1L))
+                .thenReturn(Optional.of(performerInstrument));
+
+        // Act
+        performerInstrumentService.deletePerformerInstrument(1L);
+
+        // Assert
+        verify(performerInstrumentRepository).delete(performerInstrument);
+
 
     }
 }

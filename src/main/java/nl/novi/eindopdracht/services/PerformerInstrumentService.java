@@ -123,6 +123,7 @@ public class PerformerInstrumentService {
     @Transactional
     public void deletePerformerInstrument(Long id) {
         PerformerInstrumentEntity performerInstrument = getPerformerInstrumentEntity(id);
+
         if (!performerInstrument.getSources().isEmpty()) {
             throw new RecordInUseException(
                     "Cannot delete PerformerInstrument with id " + id +
