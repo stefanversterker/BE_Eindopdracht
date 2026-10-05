@@ -1,11 +1,9 @@
 package nl.novi.eindopdracht.services;
 
+import nl.novi.eindopdracht.dtos.employeeProfile.EmployeeProfileResponseDto;
 import nl.novi.eindopdracht.dtos.performerInstrument.PerformerInstrumentRequestDto;
 import nl.novi.eindopdracht.dtos.performerInstrument.PerformerInstrumentResponseDto;
-import nl.novi.eindopdracht.entities.InstrumentEntity;
-import nl.novi.eindopdracht.entities.PerformerInstrumentEntity;
-import nl.novi.eindopdracht.entities.PerformerProfileEntity;
-import nl.novi.eindopdracht.entities.SourceEntity;
+import nl.novi.eindopdracht.entities.*;
 import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
 import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
@@ -16,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,6 +76,29 @@ class PerformerInstrumentServiceTest {
         requestDto.setInstrumentId(1L);
         requestDto.setPerformerProfileId(1L);
 
+    }
+
+    @Test
+    void getAllPerformerInstruments_shouldReturnListOfEmployeeProfiles() {
+        // Arrange
+        List<PerformerInstrumentEntity> entities = List.of(performerInstrument);
+        List<PerformerInstrumentResponseDto> dtos = List.of(responseDto);
+
+        when(performerInstrumentRepository.findAll())
+                .thenReturn(entities);
+
+        when(performerInstrumentDtoMapper.mapToDto(entities))
+                .thenReturn(dtos);
+
+        // Act
+        List<PerformerInstrumentResponseDto> result =
+                performerInstrumentService.getAllPerformerInstruments();
+
+        // Assert
+        assertEquals(1, result.size());
+
+        verify(performerInstrumentRepository).findAll();
+        verify(performerInstrumentDtoMapper).mapToDto(entities);
     }
 
     @Test
