@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,6 +65,29 @@ class EmployeeProfileServiceTest {
 
         requestDto = new EmployeeProfileRequestDto();
         requestDto.setPersonId(1L);
+    }
+
+    @Test
+    void getAllEmployeeProfiles_shouldReturnListOfEmployeeProfiles() {
+        // Arrange
+        List<EmployeeProfileEntity> entities = List.of(employeeProfile);
+        List<EmployeeProfileResponseDto> dtos = List.of(responseDto);
+
+        when(employeeProfileRepository.findAll())
+                .thenReturn(entities);
+
+        when(employeeProfileDtoMapper.mapToDto(entities))
+                .thenReturn(dtos);
+
+        // Act
+        List<EmployeeProfileResponseDto> result =
+                employeeProfileService.getAllEmployeeProfiles();
+
+        // Assert
+        assertEquals(1, result.size());
+
+        verify(employeeProfileRepository).findAll();
+        verify(employeeProfileDtoMapper).mapToDto(entities);
     }
 
     @Test
@@ -326,5 +350,22 @@ class EmployeeProfileServiceTest {
 
         verify(employeeProfileRepository, never())
                 .delete(any(EmployeeProfileEntity.class));
+    }
+
+    @Test
+    void deleteEmployeeProfile_shouldRemovePersonReferenceBeforeDeleting() {
+        // Arrange
+        employeeProfile.setPersonEntity(person);
+
+        when(employeeProfileRepository.findById(1L))
+                .thenReturn(Optional.of(employeeProfile));
+
+        // Act
+        employeeProfileService.deleteEmployeeProfile(1L);
+
+        // Assert
+        assertNull(employeeProfile.getPersonEntity());
+
+        verify(employeeProfileRepository).delete(employeeProfile);
     }
 }
