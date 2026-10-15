@@ -1,7 +1,6 @@
 package nl.novi.eindopdracht.controllers;
 
 import nl.novi.eindopdracht.repositories.EmployeeProfileRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,9 +20,6 @@ class EmployeeProfileControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private EmployeeProfileRepository employeeProfileRepository;
 
     @Test
     @WithMockUser(roles = "USER")
