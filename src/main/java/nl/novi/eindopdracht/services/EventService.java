@@ -3,8 +3,10 @@ package nl.novi.eindopdracht.services;
 import nl.novi.eindopdracht.dtos.event.EventRequestDto;
 import nl.novi.eindopdracht.dtos.event.EventResponseDto;
 import nl.novi.eindopdracht.entities.EventEntity;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.EventDtoMapper;
+import nl.novi.eindopdracht.repositories.EquipmentEventAssignmentRepository;
 import nl.novi.eindopdracht.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +18,15 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final EventDtoMapper eventDtoMapper;
+    private final EquipmentEventAssignmentRepository equipmentEventAssignmentRepository;
 
 
-    public EventService(EventRepository eventRepository, EventDtoMapper eventDtoMapper) {
+    public EventService(EventRepository eventRepository,
+                        EventDtoMapper eventDtoMapper,
+                        EquipmentEventAssignmentRepository equipmentEventAssignmentRepository) {
         this.eventRepository = eventRepository;
         this.eventDtoMapper = eventDtoMapper;
+        this.equipmentEventAssignmentRepository = equipmentEventAssignmentRepository;
     }
 
     @Transactional(readOnly = true)
@@ -59,9 +65,20 @@ public class EventService {
         return eventDtoMapper.mapToDto(existingEventEntity);
     }
 
-    public void deleteEvent(Long id) {
+/*    public void deleteEvent(Long id) {
         EventEntity event = getEventEntity(id);
         eventRepository.delete(event);
+    }*/
+
+    public void deleteEvent(Long id) {
+        EventEntity event = getEventEntity(id);
+
+        if (equipmentEventAssignmentRepository.existsByEventEntityId(id)) {
+            throw new RecordInUseException(
+                    "Cannot delete event " + id
+                            + " because it is in use."
+            );
+        }
     }
 
     // Helpers

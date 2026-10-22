@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface EquipmentEventAssignmentRepository extends JpaRepository<EquipmentEventAssignmentEntity, Long> {
 
     boolean existsByEquipmentEntityId(Long equipmentId);
+    boolean existsByEventEntityId(Long eventId);
 
 }
