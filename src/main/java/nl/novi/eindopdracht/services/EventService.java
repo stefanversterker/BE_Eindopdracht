@@ -65,11 +65,6 @@ public class EventService {
         return eventDtoMapper.mapToDto(existingEventEntity);
     }
 
-/*    public void deleteEvent(Long id) {
-        EventEntity event = getEventEntity(id);
-        eventRepository.delete(event);
-    }*/
-
     public void deleteEvent(Long id) {
         EventEntity event = getEventEntity(id);
 

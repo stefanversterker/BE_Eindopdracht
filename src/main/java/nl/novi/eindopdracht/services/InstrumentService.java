@@ -4,9 +4,11 @@ package nl.novi.eindopdracht.services;
 import nl.novi.eindopdracht.dtos.instrument.InstrumentRequestDto;
 import nl.novi.eindopdracht.dtos.instrument.InstrumentResponseDto;
 import nl.novi.eindopdracht.entities.InstrumentEntity;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.InstrumentDtoMapper;
 import nl.novi.eindopdracht.repositories.InstrumentRepository;
+import nl.novi.eindopdracht.repositories.PerformerInstrumentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +21,15 @@ public class InstrumentService {
 
     private final InstrumentRepository instrumentRepository;
     private final InstrumentDtoMapper instrumentDtoMapper;
+    private final PerformerInstrumentRepository performerInstrumentRepository;
 
 
-    public InstrumentService(InstrumentRepository instrumentRepository, InstrumentDtoMapper instrumentDtoMapper) {
+    public InstrumentService(InstrumentRepository instrumentRepository,
+                             InstrumentDtoMapper instrumentDtoMapper,
+                             PerformerInstrumentRepository performerInstrumentRepository) {
         this.instrumentRepository = instrumentRepository;
         this.instrumentDtoMapper = instrumentDtoMapper;
+        this.performerInstrumentRepository = performerInstrumentRepository;
     }
 
     @Transactional(readOnly = true)
@@ -63,6 +69,14 @@ public class InstrumentService {
 
     public void deleteInstrument(Long id) {
         InstrumentEntity instrument = getInstrumentEntity(id);
+
+        if (performerInstrumentRepository.existsByInstrumentEntityId(id)) {
+            throw new RecordInUseException(
+                    "Cannot delete instrument " + id
+                            + " because it is associated with a performer."
+            );
+        }
+
         instrumentRepository.delete(instrument);
     }
 
