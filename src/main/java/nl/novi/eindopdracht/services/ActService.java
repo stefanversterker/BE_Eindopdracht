@@ -3,9 +3,11 @@ package nl.novi.eindopdracht.services;
 import nl.novi.eindopdracht.dtos.act.ActRequestDto;
 import nl.novi.eindopdracht.dtos.act.ActResponseDto;
 import nl.novi.eindopdracht.entities.ActEntity;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.ActDtoMapper;
 import nl.novi.eindopdracht.repositories.ActRepository;
+import nl.novi.eindopdracht.repositories.PerformanceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +18,15 @@ public class ActService {
 
     private final ActRepository actRepository;
     private final ActDtoMapper actDtoMapper;
+    private final PerformanceRepository performanceRepository;
 
 
-    public ActService(ActRepository actRepository, ActDtoMapper actDtoMapper) {
+    public ActService(ActRepository actRepository,
+                      ActDtoMapper actDtoMapper,
+                      PerformanceRepository performanceRepository) {
         this.actRepository = actRepository;
         this.actDtoMapper = actDtoMapper;
+        this.performanceRepository = performanceRepository;
     }
 
     @Transactional(readOnly = true)
@@ -63,7 +69,14 @@ public class ActService {
 
     public void deleteAct(Long id) {
         ActEntity act = getActEntity(id);
-        // If there are any relations, remove these first by setting the fields to null.
+
+        if (performanceRepository.existsByActEntityId(id)) {
+            throw new RecordInUseException(
+                    "Cannot delete act " + id
+                            + " because it is scheduled for an event."
+            );
+        }
+
         actRepository.delete(act);
     }
 
