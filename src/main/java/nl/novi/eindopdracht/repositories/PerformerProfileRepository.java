@@ -9,4 +9,5 @@ public interface PerformerProfileRepository extends JpaRepository<PerformerProfi
 
     boolean existsByPersonEntityId(Long personId);
 
+
 }
