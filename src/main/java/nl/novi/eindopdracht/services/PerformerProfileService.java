@@ -5,8 +5,10 @@ import nl.novi.eindopdracht.dtos.performerProfile.PerformerProfileResponseDto;
 import nl.novi.eindopdracht.entities.PerformerProfileEntity;
 import nl.novi.eindopdracht.entities.PersonEntity;
 import nl.novi.eindopdracht.exceptions.DuplicateRecordException;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.PerformerProfileDtoMapper;
+import nl.novi.eindopdracht.repositories.PerformerActRepository;
 import nl.novi.eindopdracht.repositories.PerformerProfileRepository;
 import nl.novi.eindopdracht.repositories.PersonRepository;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,16 @@ public class PerformerProfileService {
     private final PerformerProfileRepository performerProfileRepository;
     private final PerformerProfileDtoMapper performerProfileDtoMapper;
     private final PersonRepository personRepository;
+    private final PerformerActRepository performerActRepository;
 
-    public PerformerProfileService(PerformerProfileRepository performerProfileRepository, PerformerProfileDtoMapper performerProfileDtoMapper, PersonRepository personRepository) {
+    public PerformerProfileService(PerformerProfileRepository performerProfileRepository,
+                                   PerformerProfileDtoMapper performerProfileDtoMapper,
+                                   PersonRepository personRepository,
+                                   PerformerActRepository performerActRepository) {
         this.performerProfileRepository = performerProfileRepository;
         this.performerProfileDtoMapper = performerProfileDtoMapper;
         this.personRepository = personRepository;
+        this.performerActRepository =performerActRepository;
     }
 
     @Transactional(readOnly = true)
@@ -94,6 +101,15 @@ public class PerformerProfileService {
 
         if (person != null) {
             performerProfile.setPersonEntity(null);
+        }
+
+        if (performerActRepository.existsByPerformerEntityId(id)) {
+            throw new RecordInUseException(
+                    "Cannot delete performer " + id
+                            + " because it is associated with an act."
+            );
+
+
         }
 
         performerProfileRepository.delete(performerProfile);

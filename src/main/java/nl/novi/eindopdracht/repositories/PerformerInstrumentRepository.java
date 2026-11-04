@@ -11,4 +11,6 @@ public interface PerformerInstrumentRepository extends JpaRepository<PerformerIn
             Long performerProfileId,
             Long instrumentId);
 
+    boolean existsByInstrumentEntityId(Long id);
+
 }

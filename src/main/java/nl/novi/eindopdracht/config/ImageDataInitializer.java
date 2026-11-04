@@ -26,15 +26,15 @@ public class ImageDataInitializer {
 
     @PostConstruct
     public void loadImage() {
-        String fileName = "image.jpg";
+        String fileName = "shure_sm58.jpg";
 
-        if (imageRepository.existsByFileName(fileName)) {
+        if (imageRepository.existsByFileName("shure_sm58.jpg")) {
             return;
         }
 
         try {
             Resource resource = resourceLoader.getResource(
-                    "classpath:static/images/image.jpg"
+                    "classpath:static/images/shure_sm58.jpg"
             );
 
             if (!resource.exists()) {

@@ -3,8 +3,10 @@ package nl.novi.eindopdracht.services;
 import nl.novi.eindopdracht.dtos.mixer.MixerRequestDto;
 import nl.novi.eindopdracht.dtos.mixer.MixerResponseDto;
 import nl.novi.eindopdracht.entities.MixerEntity;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.MixerDtoMapper;
+import nl.novi.eindopdracht.repositories.EquipmentEventAssignmentRepository;
 import nl.novi.eindopdracht.repositories.MixerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +18,15 @@ public class MixerService {
 
     private final MixerRepository mixerRepository;
     private final MixerDtoMapper mixerDtoMapper;
+    private final EquipmentEventAssignmentRepository equipmentEventAssignmentRepository;
 
 
-    public MixerService(MixerRepository mixerRepository, MixerDtoMapper mixerDtoMapper) {
+    public MixerService(MixerRepository mixerRepository,
+                        MixerDtoMapper mixerDtoMapper,
+                        EquipmentEventAssignmentRepository equipmentEventAssignmentRepository) {
         this.mixerRepository = mixerRepository;
         this.mixerDtoMapper = mixerDtoMapper;
+        this.equipmentEventAssignmentRepository = equipmentEventAssignmentRepository;
     }
 
     @Transactional(readOnly = true)
@@ -62,6 +68,14 @@ public class MixerService {
 
     public void deleteMixer(Long id) {
         MixerEntity mixer = getMixerEntity(id);
+
+        if (equipmentEventAssignmentRepository.existsByEquipmentEntityId(id)) {
+            throw new RecordInUseException(
+                    "Cannot delete mixer " + id
+                            + " because it is assigned to an event."
+            );
+        }
+
         mixerRepository.delete(mixer);
     }
 

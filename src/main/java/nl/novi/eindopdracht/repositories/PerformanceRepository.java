@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PerformanceRepository extends JpaRepository<PerformanceEntity, Long> {
+
+    boolean existsByActEntityId(Long performanceId);
+
 }

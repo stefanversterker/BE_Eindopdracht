@@ -3,8 +3,10 @@ package nl.novi.eindopdracht.services;
 import nl.novi.eindopdracht.dtos.microphone.MicrophoneRequestDto;
 import nl.novi.eindopdracht.dtos.microphone.MicrophoneResponseDto;
 import nl.novi.eindopdracht.entities.MicrophoneEntity;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.MicrophoneDtoMapper;
+import nl.novi.eindopdracht.repositories.EquipmentEventAssignmentRepository;
 import nl.novi.eindopdracht.repositories.MicrophoneRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +18,15 @@ public class MicrophoneService {
 
     private final MicrophoneRepository microphoneRepository;
     private final MicrophoneDtoMapper microphoneDtoMapper;
+    private final EquipmentEventAssignmentRepository equipmentEventAssignmentRepository;
 
 
-    public MicrophoneService(MicrophoneRepository microphoneRepository, MicrophoneDtoMapper microphoneDtoMapper) {
+    public MicrophoneService(MicrophoneRepository microphoneRepository,
+                             MicrophoneDtoMapper microphoneDtoMapper,
+                             EquipmentEventAssignmentRepository equipmentEventAssignmentRepository) {
         this.microphoneRepository = microphoneRepository;
         this.microphoneDtoMapper = microphoneDtoMapper;
+        this.equipmentEventAssignmentRepository = equipmentEventAssignmentRepository;
     }
 
     @Transactional(readOnly = true)
@@ -66,6 +72,14 @@ public class MicrophoneService {
 
     public void deleteMicrophone(Long id) {
         MicrophoneEntity microphone = getMicrophoneEntity(id);
+
+        if (equipmentEventAssignmentRepository.existsByEquipmentEntityId(id)) {
+            throw new RecordInUseException(
+                    "Cannot delete microphone " + id
+                            + " because it is assigned to an event."
+            );
+        }
+
         microphoneRepository.delete(microphone);
     }
 

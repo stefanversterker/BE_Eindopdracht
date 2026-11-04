@@ -3,8 +3,11 @@ package nl.novi.eindopdracht.services;
 import nl.novi.eindopdracht.dtos.person.PersonRequestDto;
 import nl.novi.eindopdracht.dtos.person.PersonResponseDto;
 import nl.novi.eindopdracht.entities.PersonEntity;
+import nl.novi.eindopdracht.exceptions.RecordInUseException;
 import nl.novi.eindopdracht.exceptions.RecordNotFoundException;
 import nl.novi.eindopdracht.mappers.PersonDtoMapper;
+import nl.novi.eindopdracht.repositories.EmployeeProfileRepository;
+import nl.novi.eindopdracht.repositories.PerformerProfileRepository;
 import nl.novi.eindopdracht.repositories.PersonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +19,18 @@ public class PersonService {
 
     private final PersonRepository personRepository;
     private final PersonDtoMapper personDtoMapper;
+    private final EmployeeProfileRepository employeeProfileRepository;
+    private final PerformerProfileRepository performerProfileRepository;
 
 
-    public PersonService(PersonRepository personRepository, PersonDtoMapper personDtoMapper) {
+    public PersonService(PersonRepository personRepository,
+                         PersonDtoMapper personDtoMapper,
+                         EmployeeProfileRepository employeeProfileRepository,
+                         PerformerProfileRepository performerProfileRepository) {
         this.personRepository = personRepository;
         this.personDtoMapper = personDtoMapper;
+        this.employeeProfileRepository = employeeProfileRepository;
+        this.performerProfileRepository = performerProfileRepository;
     }
 
     @Transactional(readOnly = true)
@@ -61,7 +71,15 @@ public class PersonService {
 
     public void deletePerson(Long id) {
         PersonEntity person = getPersonEntity(id);
-        // If there are any relations, remove these first by setting the fields to null.
+
+        if (employeeProfileRepository.existsByPersonEntityId(id)
+                || performerProfileRepository.existsByPersonEntityId(id)) {
+            throw new RecordInUseException(
+                    "Cannot delete person " + id
+                            + " because they have an associated profile."
+            );
+        }
+
         personRepository.delete(person);
     }
 
