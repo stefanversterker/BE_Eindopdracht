@@ -2,9 +2,15 @@ package nl.novi.eindopdracht.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "images")
@@ -17,7 +23,8 @@ public class ImageEntity extends BaseEntity {
     @OneToMany(mappedBy = "image")
     private List<EquipmentEntity> equipmentItems = new ArrayList<>();
 
-    @Lob
+    @JdbcTypeCode(SqlTypes.VARBINARY)
+    @Column(name = "contents")
     private byte[] contents;
 
     // Getters and Setters
